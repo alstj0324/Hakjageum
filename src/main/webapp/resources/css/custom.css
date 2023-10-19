@@ -7,7 +7,6 @@ div.banner-content-banner {
 	height: 60px;
 }
 
-
 div.banner-content-login {
   position: absolute;
   top: 50%;
@@ -268,11 +267,12 @@ div.banner-content-board:not(p) {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
   margin-top:10px;
   width:90%;
   height:650px;
   background-color: rgba(255, 255, 255, 0.9);
-  color:white
+  color: white;
 }
 .banner-content-board h2{
 	background-color: rgba(0,0,0,0.6);
@@ -466,7 +466,7 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	height: 50px;
 	margin: 0;
 	margin-top: 3px;
-	border-color: gray;
+	border-color: rgb(128, 128, 128);
 	border-radius: 50px;
 }
 .banner-content-board .book-content {
@@ -474,17 +474,17 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	margin-top: 30px;
 	height: 500px;
 	text-align: center;
-	overflow-y: scroll;
+	overflow: scroll;
 }
 .banner-content-board .book-content .book-content-item {
 	display: inline-block;
 	width: 288px;
 	height: 480px;
-	margin-bottom:20px;
+	margin-bottom: 30px;
 	overflow: hidden;
 }
 .banner-content-board .book-content .book-content-img {
-	margin: 5px 55px 0px 55px;
+	margin: 5px 55px 0 55px;
 	display: inline-block;
 	width: 164px;
 	height: 232px;
@@ -503,33 +503,33 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	margin: 2px auto 0px auto;
 	width: 230px;
 	height: 38px;
-    font-size: 16px;
-    color:black;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-    line-height: 1.2;
-    text-align: center;
-    word-wrap: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 2 ;
-    -webkit-box-orient: vertical;
+	font-size: 16px;
+	color:black;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	line-height: 1.2;
+	text-align: center;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 2 ;
+	-webkit-box-orient: vertical;
 }
 .banner-content-board .book-content .book-content-result .item2 {
-	margin: 5px auto 0px auto;
+	margin: 5px auto 0 auto;
 	width: 230px;
 	height: 19px;
-    font-size: 16px;
-    color:black;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-    line-height: 1.2;
-    text-align: center;
-    word-wrap: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 1 ;
-    -webkit-box-orient: vertical;
+	font-size: 16px;
+	color:black;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	line-height: 1.2;
+	text-align: center;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 1 ;
+	-webkit-box-orient: vertical;
 }
 .banner-content-board .book-content .book-content-result .item3 {
 	margin: 5px auto 0px auto;
