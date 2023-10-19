@@ -10,7 +10,7 @@ public class JDBCUtil {
       
       try {
     	  Class.forName("com.mysql.cj.jdbc.Driver");
-          return DriverManager.getConnection("jdbc:mysql://localhost:3306/test?useUnicode=true&serverTimezone=Asia/Seoul", "root", "wjdqhqhdks@1");
+          return DriverManager.getConnection("jdbc:mysql://minnowseo.iptime.org:3306/test?useUnicode=true&serverTimezone=Asia/Seoul", "root", "wjdqhqhdks@1");
       }catch(Exception e){
          System.out.println("Exception[Connection]: "+e.getMessage());// 콘솔창에 남기는 로그
       }

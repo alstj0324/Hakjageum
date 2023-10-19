@@ -8,7 +8,7 @@
 	<bean id = "dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> <!-- close : 소멸자 -->
 	<!-- 형태 : BasicDataSource dataSource = new BasicDataSource(  ,    ,  ); -->
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://localhost:3306/test"/>
+		<property name="url" value="jdbc:mysql://minnowseo.iptime.org:3306/test"/>
 		<property name="username" value="root"/>
 		<property name="password" value="wjdqhqhdks@1"></property>
 	</bean>
