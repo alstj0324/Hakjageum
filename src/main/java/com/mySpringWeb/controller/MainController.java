@@ -75,8 +75,7 @@ public class MainController {
 		      	  JSONParser parsing = new JSONParser();
 		          Object obj = parsing.parse(res.toString());
 		       	  JSONObject jsonObj = (JSONObject)obj;
-		       	  JSONArray item = (JSONArray)jsonObj.get("items"); 
-		       	  System.out.println(item);
+		       	  JSONArray item = (JSONArray)jsonObj.get("items");
 		       	  List<BookVO> books= null;
 		       	  books = new ArrayList<BookVO>();
 		       	  
