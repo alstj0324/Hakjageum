@@ -49,7 +49,7 @@ public class MainController {
 		String apiURL;
 			apiURL = "https://openapi.naver.com/v1/search/book.json?";
 			apiURL += "query=" + category;
-			apiURL += "&display=100&start=100&sort=sim";
+			apiURL += "&display=100&start=1&sort=sim";
 			
 			try{
 		    	URL url = new URL(apiURL);
