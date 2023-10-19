@@ -474,11 +474,13 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	margin-top: 30px;
 	height: 500px;
 	text-align: center;
+	overflow-y: scroll;
 }
 .banner-content-board .book-content .book-content-item {
 	display: inline-block;
 	width: 288px;
 	height: 480px;
+	margin-bottom:20px;
 	overflow: hidden;
 }
 .banner-content-board .book-content .book-content-img {
