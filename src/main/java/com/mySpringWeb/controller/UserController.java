@@ -39,9 +39,10 @@ public class UserController {
 	@RequestMapping(value="login.do", method=RequestMethod.POST)//로그인 버튼을 눌렀을 경우 로그인 처리
 	public String login(UserVO vo, HttpSession session, Model model) {
 		System.out.println("로그인 처리");                                  
-	    UserVO user = userService.getUser(vo);	  					
+	    UserVO user = userService.getUser(vo);	 
+	    System.out.println(user);
 		if(user != null){                                                 
-			session.setAttribute("nickname", user.getNickname());  
+			session.setAttribute("user", user);  
 	     	return "redirect:main.jsp";
 	    }else {
 	    	return "redirect:login.do";
@@ -206,7 +207,7 @@ public class UserController {
 		userService.insertUser(vo);
 		UserVO user = userService.getUser(vo);
 		if(user != null){                                                 
-	     	session.setAttribute("nickname", user.getNickname());  
+	     	session.setAttribute("user", user);  
 	     	//점프할 대상
 	     	 return "redirect:http://localhost:8080/biz/main.jsp";
 	     }else {
@@ -216,7 +217,7 @@ public class UserController {
 		System.out.println("2번과정");
 		UserVO user = userService.getUser(vo);
 		if(user != null){                                                 
-	     	session.setAttribute("nickname", user.getNickname());  
+	     	session.setAttribute("user", user);  
 	     	//점프할 대상
 	     	 return "redirect:http://localhost:8080/biz/main.jsp";
 	     }else {
