@@ -130,7 +130,6 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-
 	@RequestMapping(value="usermanage.do", method=RequestMethod.GET)
 	public String usermanage(UserVO vo, HttpSession session, Model model) {
 		List<UserVO> userList = userService.getUserList();              
