@@ -9,5 +9,6 @@ public interface UserService {
 	public void deleteUser(UserVO vo);
 	public String checkUser(UserVO vo);
 	public UserVO getUser(UserVO vo);
+	public UserVO getUserLogin(UserVO vo);
 	public List<UserVO> getUserList();
 }
