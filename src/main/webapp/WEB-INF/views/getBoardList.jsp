@@ -13,31 +13,28 @@
     <meta name="description" content="">
     <%@ include file="templates/UseCSS.jsp" %>
   </head>
-  <body class="hompage bg-accent-light">
+  <body class="bg-accent-light">
     <%@ include file="templates/Header.jsp" %>
-    <section id="billboard" class="padding-large no-padding-top position-relative">
-      <div class="image-holder">
-        <img src="resources/images/banner-image.jpg" alt="banner" class="banner-image">
-        <div class="banner-content-board">
-          <h2>Free Board</h2>
-          <table class="board_table">
-            <tr class="board-1th-tr">
-              <td>제목</td>
-              <td>작성자</td>
-              <td>등록일</td>
+    <section id="billboard" class="position-relative">
+      <div class="banner-content banner-content-board">
+        <h2>Free Board</h2>
+        <table class="board_table">
+          <tr class="board-1th-tr">
+            <td>제목</td>
+            <td>작성자</td>
+            <td>등록일</td>
+          </tr>
+          <c:forEach items="${boardList }" var="boardList">
+            <tr class="board_items">
+              <td><a href="getBoard.do?board_id=${boardList.board_id }">${boardList.title }</a></td>
+              <td>${"작성자"}</td>
+              <td>${boardList.create_at}</td>
             </tr>
-            <c:forEach items="${boardList }" var="boardList">
-              <tr class="board_items">
-                <td><a href="getBoard.do?board_id=${boardList.board_id }">${boardList.title }</a></td>
-                <td>${"작성자"}</td>
-                <td>${boardList.create_at}</td>
-              </tr>
-            </c:forEach>
-          </table>
-          <hr>
-          <div class="board-insert">
-            <a href="insertBoard.do?board_id=${nickname }">글작성</a>
-          </div>
+          </c:forEach>
+        </table>
+        <hr>
+        <div class="board-insert">
+          <a href="insertBoard.do?board_id=${nickname }">글작성</a>
         </div>
       </div>
     </section>

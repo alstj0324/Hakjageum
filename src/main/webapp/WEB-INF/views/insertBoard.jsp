@@ -13,29 +13,26 @@
     <meta name="description" content="">
     <%@ include file="templates/UseCSS.jsp" %>
   </head>
-  <body class="hompage bg-accent-light">
+  <body class="bg-accent-light">
     <%@ include file="templates/Header.jsp" %>
-    <section id="billboard" class="padding-large no-padding-top position-relative">
-      <div class="image-holder">
-        <img src="resources/images/banner-image.jpg" alt="banner" class="banner-image">
-        <div class="banner-content-board">
-          <h2>Free Board</h2>
-          <div class="insert-board-form">
-            <form action=insertBoard.do method=post>
-              <div class="insert-1">
-                <input type=text name=title placeholder="제목을 입력해주세요">
-              </div>
-              <div class="insert-2">
-                <textarea class="textarea" name="content" rows="10" cols="40" placeholder="content"></textarea>
-              </div>
-              <div class="insert-3">
-                <input type=submit value=글등록>
-              </div>
-            </form>
-          </div>
-          <div class="board-insert">
-            <a href="getBoardList.do">글목록</a>
-          </div>
+    <section id="billboard" class="position-relative">
+      <div class="banner-content banner-content-board">
+        <h2>Free Board</h2>
+        <div class="insert-board-form">
+          <form action=insertBoard.do method=post>
+            <div class="insert-1">
+              <input type=text name=title placeholder="제목을 입력해주세요">
+            </div>
+            <div class="insert-2">
+              <textarea class="textarea" name="content" rows="10" cols="40" placeholder="content"></textarea>
+            </div>
+            <div class="insert-3">
+              <input type=submit value=글등록>
+            </div>
+          </form>
+        </div>
+        <div class="board-insert">
+          <a href="getBoardList.do">글목록</a>
         </div>
       </div>
     </section>

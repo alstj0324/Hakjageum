@@ -13,49 +13,46 @@
     <meta name="description" content="">
     <%@ include file="templates/UseCSS.jsp" %>
   </head>
-  <body class="hompage bg-accent-light">
+  <body class="bg-accent-light">
     <%@ include file="templates/Header.jsp" %>
-    <section id="billboard" class="padding-large no-padding-top position-relative">
-      <div class="image-holder">
-        <img src="resources/images/banner-image.jpg" alt="banner" class="banner-image">
-        <div class="banner-content-update">
-          <div class="user-update-form">
-            <h2>회원관리</h2>
-        <c:if test="${user != null }">
-        <form action=userupdate.do method="post">
-          <input type="hidden" name="id" value="${user.id }">
-          <table class="user-update-table">
-            <tr>
-              <td>Id</td>
-              <td>${user.id }</td>
-            </tr>
-            <tr>
-              <td>Password</td>
-              <td><input type=text name=pwd value="${user.pwd }" ></td>
-            </tr>
-            <tr>
-              <td>Nickname</td>
-              <td><input type=text name=nickname value="${user.nickname }" ></td>
-            </tr>
-            <tr>
-              <td>Email</td>
-              <td><input type=text name=email value="${user.email }" ></td>
-            </tr>
-            <tr>
-              <td>Provider</td>
-              <td>${user.provider }</td>
-            </tr>
-            <tr>
-              <td>RegisterDate</td>
-              <td>${user.create_at }</td>
-            </tr>
-            <tr>
-              <td colspan="2" id="userupdate-submit"><input type=submit value=회원수정></td>
-            </tr>
-          </table>
-        </form>
-        </c:if>
-      </div>
+    <section id="billboard" class="position-relative">
+      <div class="banner-content banner-content-update">
+        <div class="user-update-form">
+          <h2>회원관리</h2>
+          <c:if test="${user != null }">
+          <form action=userupdate.do method="post">
+            <input type="hidden" name="id" value="${user.id }">
+            <table class="user-update-table">
+              <tr>
+                <td>Id</td>
+                <td>${user.id }</td>
+              </tr>
+              <tr>
+                <td>Password</td>
+                <td><input type=text name=pwd value="${user.pwd }" ></td>
+              </tr>
+              <tr>
+                <td>Nickname</td>
+                <td><input type=text name=nickname value="${user.nickname }" ></td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td><input type=text name=email value="${user.email }" ></td>
+              </tr>
+              <tr>
+                <td>Provider</td>
+                <td>${user.provider }</td>
+              </tr>
+              <tr>
+                <td>RegisterDate</td>
+                <td>${user.create_at }</td>
+              </tr>
+              <tr>
+                <td colspan="2" id="userupdate-submit"><input type=submit value=회원수정></td>
+              </tr>
+            </table>
+          </form>
+          </c:if>
         </div>
       </div>
     </section>

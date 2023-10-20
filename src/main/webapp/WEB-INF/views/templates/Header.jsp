@@ -1,4 +1,5 @@
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <header id="header" class=" content-light ">
   <div class="header-wrap container py-3">
@@ -8,7 +9,7 @@
           <div class="main-menu">
             <ul class="menu-list  list-unstyled d-flex m-0 ">
               <li class="menu-itemhome1 dropdown">
-                <a class="text-uppercase item-anchor" href="<c:url value="/"/>" >Home</a>
+                <a class="text-uppercase item-anchor" href=<c:url value="/" />> Home</a>
               </li>
               <li class="menu-itemhome1">
                 <a href="bookRecommend.do?category=자기계발" class="text-uppercase item-anchor">도서추천</a>
@@ -81,7 +82,7 @@
       </div>
       <div class="col-md-2 col-sm-4 brand-block ">
         <div class="main-logo text-lg-center">
-          <a href="http://localhost:8080/biz/main.jsp">
+          <a href=<c:url value='/' />>
             <img src="resources/images/mainlogo.png" alt="logo" class="brand-image">
           </a>
         </div>
@@ -90,11 +91,11 @@
         <nav class="navbar justify-content-end">
           <div class="user-items">
             <ul class="list-unstyled content-light d-flex align-items-center m-0">
-              <c:if test="${nickname != null }">
+              <c:if test="${user.id != null}">
                 <li>
-                  <a style="color:gold;">[${nickname }]</a>
+                  <a style="color:gold;">[${user.nickname}]</a>
                 </li>
-                <c:if test="${nickname != admin }">
+                <c:if test="${user.role_id != 0}">
                   <li>
                     <a href="usermanage.do" class="text-uppercase item-anchor">MANAGE</a>
                   </li>
@@ -103,7 +104,7 @@
                   <a href="logout.do" class="text-uppercase item-anchor">LOGOUT</a>
                 </li>
               </c:if>
-              <c:if test="${nickname == null }">
+              <c:if test="${user.id == null}">
                 <li>
                   <a href="http://localhost:8080/biz/login.do" class="text-uppercase item-anchor">Sign In/Sign Up</a>
                 </li>

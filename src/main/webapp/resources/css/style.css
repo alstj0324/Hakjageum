@@ -1081,13 +1081,13 @@ fieldset[disabled] a.btn {
   margin-bottom: 40px;
 }
 
-h2.banner-title,
-h1.page-title {
-  font-size: 5.3em;
-  font-weight: 500;
-  line-height: 1em;
-  letter-spacing: -0.02em;
-}
+/*h2.banner-title,*/
+/*h1.page-title {*/
+/*  font-size: 5.3em;*/
+/*  font-weight: 500;*/
+/*  line-height: 1em;*/
+/*  letter-spacing: -0.02em;*/
+/*}*/
 
 h2.section-title {
   font-size: 3.8em;
@@ -1643,7 +1643,11 @@ This is main CSS file that contains custom style rules used in this template
 header#header {
   display: flex;
   justify-content: center;
-  margin-bottom: -130px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 header#header .header-wrap {
@@ -1908,16 +1912,6 @@ a.text-black.text-uppercase.dropdown-item:hover {
 
 /* - Billboard Style1
 --------------------------------------------------------------*/
-#billboard .banner-content {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: 300px auto;
-}
-
-
 #billboard .banner-content h1 {
   font-size: 5.3em;
   line-height: 1.2;

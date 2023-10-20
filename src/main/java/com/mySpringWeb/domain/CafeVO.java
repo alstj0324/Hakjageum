@@ -1,44 +1,28 @@
 package com.mySpringWeb.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class CafeVO {
 	private String name;
 	private String address;
 	private String detail_address;
 	private String latitude;
 	private String longitude;
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getDetail_address() {
-		return detail_address;
-	}
-	public void setDetail_address(String detail_address) {
-		this.detail_address = detail_address;
-	}
-	public String getLatitude() {
-		return latitude;
-	}
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-	public String getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-	
+
 	public String toString() {
-		return "CafeVO [name="+name+",address="+address+",detail_address="+detail_address+",latitute="+latitude+",longitude="+longitude+"]";
+		return (
+			String.format(
+				"CafeVO[\n" +
+				"\tname=%s\n" +
+				"\taddress=%s\n" +
+				"\tdetail_address=%s\n" +
+				"\tlatitude=%s\n" +
+				"\tlongitude=%s\n" +
+				"]",
+				name, address, detail_address, latitude, longitude
+			)
+		);
 	}
 }

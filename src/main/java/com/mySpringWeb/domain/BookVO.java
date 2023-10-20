@@ -1,5 +1,9 @@
 package com.mySpringWeb.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class BookVO {
     private String title;
     private String link;
@@ -8,53 +12,22 @@ public class BookVO {
     private String pubdate;
     private String description;
     private String isbn;
-    
-	public String getTitle() {
-        return title;
+
+    @Override
+    public String toString() {
+        return (
+            String.format(
+                "BookVO[\n" +
+                "\ttitle=%s\n" +
+                "\tlink=%s\n" +
+                "\timage=%s\n" +
+                "\tauthor=%s\n" +
+                "\tpubdate=%s\n" +
+                "\tdescription=%s\n" +
+                "\tisbn=%s\n" +
+                "]",
+                title, link, image, author, pubdate, description, isbn
+            )
+        );
     }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getLink() {
-        return link;
-    }
-    public void setLink(String link) {
-        this.link = link;
-    }
-    public String getImage() {
-        return image;
-    }
-    public void setImage(String image) {
-        this.image = image;
-    }
-    public String getAuthor() {
-        return author;
-    }
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-    
-    public String getPubdate() {
-        return pubdate;
-    }
-    public void setPubdate(String pubdate) {
-        this.pubdate = pubdate;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public String getIsbn() {
-		return isbn;
-	}
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-//    @Override
-//    public String toString() {
-//        return "Book [title=" + title + ", link=" + link + ", image=" + image + ", author=" + author + ", pubdate=" + pubdate + ", description=" + description + "isbn=" + isbn +"]";
-//    }
-    
 }

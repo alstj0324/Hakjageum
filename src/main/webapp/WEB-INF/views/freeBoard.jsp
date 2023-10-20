@@ -13,36 +13,33 @@
     <meta name="description" content="">
     <%@ include file="templates/UseCSS.jsp" %>
   </head>
-  <body class="hompage bg-accent-light">
+  <body class="bg-accent-light">
     <%@ include file="templates/Header.jsp" %>
-    <section id="billboard" class="padding-large no-padding-top position-relative">
-      <div class="image-holder">
-        <img src="resources/images/banner-image.jpg" alt="banner" class="banner-image">
-        <div class="banner-content-manage">
-          <table class="memtable" border=1>
-            <tr>
-              <td id="top" width="200">아이디</td>
-              <td id="top">패스워드</td>
-              <td id="top">닉네임</td>
-              <td id="top">이메일</td>
-              <td id="top">제공자</td>
-              <td id="top">등록일</td>
-              <td id="top">manage</td>
+    <section id="billboard" class="position-relative">
+      <div class="banner-content banner-content-manage">
+        <table class="memtable" border=1>
+          <tr>
+            <td id="top" width="200">아이디</td>
+            <td id="top">패스워드</td>
+            <td id="top">닉네임</td>
+            <td id="top">이메일</td>
+            <td id="top">제공자</td>
+            <td id="top">등록일</td>
+            <td id="top">manage</td>
+          </tr>
+          <c:forEach items="${userList }" var="userList">
+            <tr class="user-manage-el">
+              <td>${userList.id }</td>
+              <td>${userList.pwd }</td>
+              <td>${userList.nickname }</td>
+              <td>${userList.email }</td>
+              <td>${userList.provider }</td>
+              <td>${userList.create_date }</td>
+              <td><a href="userupdate.do?id=${userList.id }">수정</a>|<a href="userdelete.do?id=${userList.id }">삭제</a></td>
             </tr>
-            <c:forEach items="${userList }" var="userList">
-              <tr class="user-manage-el">
-                <td>${userList.id }</td>
-                <td>${userList.pwd }</td>
-                <td>${userList.nickname }</td>
-                <td>${userList.email }</td>
-                <td>${userList.provider }</td>
-                <td>${userList.create_date }</td>
-                <td><a href="userupdate.do?id=${userList.id }">수정</a>|<a href="userdelete.do?id=${userList.id }">삭제</a></td>
-              </tr>
-            </c:forEach>
-          </table>
-          <div>aa</div>
-        </div>
+          </c:forEach>
+        </table>
+        <div>aa</div>
       </div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>

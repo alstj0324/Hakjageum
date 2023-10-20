@@ -112,15 +112,6 @@ public class MainController {
 		System.out.println("placeSearch.do"+data);
 		return data;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@RequestMapping(value="placeSearch.do")
 	@ResponseBody
 	public JSONArray placeSearch(String place) throws UnsupportedEncodingException {
