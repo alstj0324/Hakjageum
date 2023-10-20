@@ -31,6 +31,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	
+	/*---------------------로컬 로그인-----------------------*/
 	@RequestMapping(value="login.do", method=RequestMethod.GET)
 	public String login() {
 		return "login";
@@ -49,7 +51,7 @@ public class UserController {
 	     }
 	}
 	
-	//네이버 로그인
+	/*-----------------------------네이버 로그인----------------------------*/
 	@RequestMapping(value="naverlogin.do", method=RequestMethod.GET)
 	public String request_naver_login(HttpSession session) throws UnsupportedEncodingException {
 		String clientId = "XSL_8Ps7NFtNXXxfpzVY";
@@ -87,7 +89,7 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	//카카오 로그인
+	/*---------------------------------카카오 로그인--------------------------------------*/
 	@RequestMapping(value="kakaologin.do", method=RequestMethod.GET)
 	   public String kakaologin() throws UnsupportedEncodingException {
 		  String kakao_clientId = "bbbc3bb1c878a2317fd7f89dec646ea9";
@@ -154,9 +156,7 @@ public class UserController {
 		      System.out.println(e);
 		    }
 
-	      
-	    
-	    
+
 	    System.out.println("rr="+access_token);
 	    System.out.println("============checkline1====================");
 	    try{
@@ -228,7 +228,7 @@ public class UserController {
 	}
 	
 	
-	//회원가입
+	/*--------------------------------회원 가입----------------------------*/
 	@RequestMapping(value="signin.do", method=RequestMethod.GET)//url입력으로 들어올경우
 	public String signin() {
 		return "signin";
@@ -241,35 +241,26 @@ public class UserController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	@RequestMapping(value="usermanage.do", method=RequestMethod.GET)
+	/*--------------------------------회원관리-------------------------------*/
+	@RequestMapping(value="usermanage.do", method=RequestMethod.GET)//manage 페이지로 이동
 	public String usermanage(UserVO vo, HttpSession session, Model model) {
 		List<UserVO> userList = userService.getUserList();              
     	model.addAttribute("userList", userList);
     	return "usermanage";
 	}
-	
-	@RequestMapping(value="userupdate.do", method=RequestMethod.GET)
-	public String userupdate(UserVO vo, HttpSession session, Model model) {
-		vo = userService.getUser(vo);
-		model.addAttribute("user", vo);
-		return "userupdate";
-	}
-	@RequestMapping(value="userupdate.do", method=RequestMethod.POST)
+	@RequestMapping(value="userupdate.do", method=RequestMethod.POST)//manage 내에서 등급변경 버튼 누를시
 	public String userupdate(UserVO vo) {
 		userService.updateUser(vo);
 		return "redirect:usermanage.do";
 	}
-	@RequestMapping(value="userdelete.do")
+	@RequestMapping(value="userdelete.do")//manage 내에서 X버튼 클릭시
 	public String userdelete(UserVO vo) {
 		userService.deleteUser(vo);
 		return "redirect:usermanage.do";
 	}
 	
+	
+	/*----------------------------------로그아웃---------------------------------*/
 	@RequestMapping(value="logout.do")
 	public String logout(HttpSession session) {
         session.invalidate();
