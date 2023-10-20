@@ -19,7 +19,7 @@ public class BookUtil {
     public void getBookList(String category, Model model) throws UnsupportedEncodingException {
         getBookList(category, model, 1, 100);
     }
-    public void getBookList(String category, Model model, int start, int display) throws UnsupportedEncodingException {// UTF-8 Encoding
+    public void getBookList(String category, Model model, int start, int display) throws UnsupportedEncodingException {
         String clientId = "XSL_8Ps7NFtNXXxfpzVY";
         String clientSecret = "eLE8nAIerK";
 
@@ -72,18 +72,18 @@ public class BookUtil {
     }
 
     private BookVO createBook(JSONObject jsonObject) {
-        	BookVO book = new BookVO();
+        BookVO book = new BookVO();
 
-        	book.setTitle((String) jsonObject.get("title"));
-        	book.setAuthor((String) jsonObject.get("author"));
-        	book.setLink((String) jsonObject.get("link"));
-        	book.setImage((String) jsonObject.get("image"));
-        	book.setPubdate((String) jsonObject.get("pubdate"));
-        	book.setIsbn((String) jsonObject.get("isbn"));
-            String description = (String)jsonObject.get("description");
-            description = description.replaceAll("\"", "'");
-        	book.setDescription(description);
+        book.setTitle((String) jsonObject.get("title"));
+        book.setAuthor((String) jsonObject.get("author"));
+        book.setLink((String) jsonObject.get("link"));
+        book.setImage((String) jsonObject.get("image"));
+        book.setPubdate((String) jsonObject.get("pubdate"));
+        book.setIsbn((String) jsonObject.get("isbn"));
+        String description = (String)jsonObject.get("description");
+        description = description.replaceAll("\"", "'");
+        book.setDescription(description);
 
-        	return book;
+        return book;
     }
 }
