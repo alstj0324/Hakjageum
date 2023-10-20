@@ -32,6 +32,10 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getUser(vo);
 	}
 	@Override
+	public UserVO getUserLogin(UserVO vo) {
+		return userDAO.getUserLogin(vo);
+	}
+	@Override
 	public List<UserVO> getUserList() {
 		return userDAO.getUserList();
 	}

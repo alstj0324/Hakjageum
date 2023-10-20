@@ -228,11 +228,12 @@ a{color:inherit;text-decoration:none}
 /* - manage
 --------------------------------------------------------------*/
 div.banner-content-manage:not(p) {
-  margin-top:80px;
+  margin-top:40px;
   width:1600px;
-  height:800px;
+  height:680px;
   border-radius:50px;
   background-color: rgba(0, 0, 0, 0.7);
+  overflow-y:scroll; 
 }
 div.banner-content-manage td{
 	color:white;
@@ -695,7 +696,6 @@ div.banner-content-board .detail-3 input[type="submit"]{
 .banner-content-board .book-content .book-content-item2 {
 	display: inline-block;
 	position:absolute;
-	margin-top: -20px;
 	right: 0;
 	width: 50%;
 	height: 520px;
@@ -770,6 +770,10 @@ div.banner-content-board .detail-3 input[type="submit"]{
     -webkit-box-orient: vertical;
 }
 
+form.book-Recommand-form,
+form.book-category-form {
+	margin-bottom: 0;
+}
 /* - place Recommend
 --------------------------------------------------------------*/
 .banner-content-board .map-content {

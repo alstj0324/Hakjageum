@@ -91,7 +91,7 @@
         <nav class="navbar justify-content-end">
           <div class="user-items">
             <ul class="list-unstyled content-light d-flex align-items-center m-0">
-              <c:if test="${user.id != null}">
+              <c:if test="${user != null}">
                 <li>
                   <a style="color:gold;">[${user.nickname}]</a>
                 </li>
@@ -104,7 +104,7 @@
                   <a href="logout.do" class="text-uppercase item-anchor">LOGOUT</a>
                 </li>
               </c:if>
-              <c:if test="${user.id == null}">
+              <c:if test="${user == null}">
                 <li>
                   <a href="http://localhost:8080/biz/login.do" class="text-uppercase item-anchor">Sign In/Sign Up</a>
                 </li>

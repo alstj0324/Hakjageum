@@ -25,7 +25,7 @@
         </div>
         <div class="book-select">
           <div class="book-category">
-            <form action="bookRecommend.do">
+            <form action="bookRecommend.do" class="book-category-form">
               <select class="bookRecommend" name="category">
                 <option value="자기계발" selected>카테고리 변경</option>
                 <option value="자기계발">자기계발</option>
@@ -38,13 +38,13 @@
             </form>
           </div>
           <div class="book-search">
-            <form action="bookRecommend.do">
+            <form action="bookRecommend.do" class="book-Recommand-form">
               <input id="category" name="category" type="text" class="book-search-input" placeholder="도서검색 : 도서 제목을 입력하세요">
               <input type="submit" value="Go">
             </form>
           </div>
         </div>
-        <div class="book-content">
+        <div class="book-content" style='overflow:hidden'>
           <div class="book-content-item1">
             <div class="book-content-img">
               <a href="${books[0].link}" target="_blank">
