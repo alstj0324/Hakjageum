@@ -16,6 +16,7 @@ public class UserDAOSpring {
     private final String USER_UPDATE = "update users set role_id=? where id=?";
     private final String USER_DELETE = "delete from users where id=?";
     private final String USER_GET = "select * from users where id=?";
+    private final String USER_LOGIN = "select * from users where id=? and pwd=?";
     private final String USER_LIST = "select * from users";
 
     public void insertUser(UserVO vo) {
@@ -38,7 +39,7 @@ public class UserDAOSpring {
         try {
             Object [] args  = {vo.getId()};
             UserVO user = jdbctemplate.queryForObject(USER_GET, args, new UserRowMapper());
-            String id= user.getId();
+            String id = user.getId();
             System.out.println("["+id+"]");
             return id;
         }catch(EmptyResultDataAccessException e){
@@ -49,15 +50,23 @@ public class UserDAOSpring {
         System.out.println("===>Spring JDBC로 getUser() 기능처리");
         try {
             Object [] args  = {vo.getId()};
-            UserVO user = jdbctemplate.queryForObject(USER_GET, args, new UserRowMapper());
-            return user;
+            return jdbctemplate.queryForObject(USER_GET, args, new UserRowMapper());
+        }catch(EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+
+    public UserVO getUserLogin(UserVO vo) {
+        System.out.println("===>Spring JDBC로 getUserLogin() 기능처리");
+        try {
+            Object [] args  = {vo.getId(), vo.getPwd()};
+            return jdbctemplate.queryForObject(USER_LOGIN, args, new UserRowMapper());
         }catch(EmptyResultDataAccessException e){
             return null;
         }
     }
     public List<UserVO> getUserList() {
         System.out.println("===>Spring JDBC로 getUserList() 기능처리");
-        List<UserVO> userList = jdbctemplate.query(USER_LIST, new UserRowMapper());
-        return userList;
+        return jdbctemplate.query(USER_LIST, new UserRowMapper());
     }
 }
