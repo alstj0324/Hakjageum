@@ -277,6 +277,7 @@ div.banner-content-manage:not(p) {
 	color: white; 
 	height: 40px;
 	line-height: 35px;
+	border: 0;
 }
 .manage-role option {background-color: rgba(0, 0, 0, 0.7);}
 .manage-manage {width: 10%;	}
