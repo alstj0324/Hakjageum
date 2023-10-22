@@ -48,13 +48,13 @@ public class MainController {
 		if(placeCategory.equals("카페")) {
 			System.out.println("카페목록 검색처리");
 			List<CafeVO> cafeList = cafeService.getCafeList();
-			net.sf.json.JSONArray cafeArray = net.sf.json.JSONArray.fromObject(cafeList);
+			JSONArray cafeArray = cafeToObject(cafeList);
 			System.out.println(cafeArray);
 			model.addAttribute("cafeArray", cafeArray);
 		}else if(placeCategory.equals("도서관")) {
 			System.out.println("도서관 목록 검색처리");
 			List<LibraryVO> libraryList = libraryService.getLibraryList();
-			net.sf.json.JSONArray libraryArray = net.sf.json.JSONArray.fromObject(libraryList);
+			JSONArray libraryArray = libraryToObject(libraryList);
 			System.out.println(libraryArray);
 			model.addAttribute("libraryArray", libraryArray);
 		}else System.out.println("placeRecommend.do 실패");
@@ -159,5 +159,41 @@ public class MainController {
 		System.out.println("placeSearch.do"+data);
 		return data;
 	}
-	
+
+	private JSONArray cafeToObject(List<CafeVO> cafelist) {
+		JSONArray jArray = new JSONArray();
+
+		for (CafeVO item : cafelist) {
+			JSONObject jObject = new JSONObject();
+
+			jObject.put("name", item.getName());
+			jObject.put("address", item.getAddress());
+			jObject.put("detail_address", item.getDetail_address());
+			jObject.put("latitude", item.getLatitude());
+			jObject.put("longitude", item.getLongitude());
+
+			jArray.add(jObject);
+		}
+
+		return jArray;
+	}
+
+	private JSONArray libraryToObject(List<LibraryVO> librarylist) {
+		JSONArray jArray = new JSONArray();
+
+		for (LibraryVO item : librarylist) {
+			JSONObject jObject = new JSONObject();
+
+			jObject.put("name", item.getName());
+			jObject.put("address", item.getAddress());
+			jObject.put("detail_address", item.getDetail_address());
+			jObject.put("operating_time", item.getOperating_time());
+			jObject.put("closed", item.getClosed());
+			jObject.put("latitude", item.getLatitude());
+			jObject.put("longitude", item.getLongitude());
+
+			jArray.add(jObject);
+		}
+		return jArray;
+	}
 }
