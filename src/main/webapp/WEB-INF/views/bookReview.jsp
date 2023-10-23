@@ -46,11 +46,16 @@
         </div>
         <div class="book-content" style='overflow:hidden'>
           <div class="book-content-item1">
-            <div class="book-content-img">
-              <a href="${books[0].link}" target="_blank">
-                <img src="${books[0].image }" alt="logo">
-              </a>
-            </div>
+          	<div class="book-content-result0">
+	            <div class="book-content-img">
+	              <a href="${books[0].link}" target="_blank">
+	                <img src="${books[0].image }" alt="logo">
+	              </a>
+	            </div>
+	            <div class="basket-button">
+	            	<input type="button" class="basket" id="addbasket" onclick="check()" value="도서저장">
+	            </div>
+	        </div>
             <div class="book-content-result1">
               <div class="item1">${books[0].title }</div>
               <div class="item2">저자명 : ${fn:replace(books[0].author, '^', ',')}</div>

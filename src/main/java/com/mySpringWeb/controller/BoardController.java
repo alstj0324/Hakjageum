@@ -60,4 +60,5 @@ public class BoardController {
 		boardService.deleteBoard(vo);
     	return "redirect:getBoardList.do";
 	}
+	
 }
