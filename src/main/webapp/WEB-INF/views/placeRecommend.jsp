@@ -122,16 +122,39 @@
 
                     });
                     function initMap(){
-                        var cafeaddress = new Array();
-                        cafeaddress = ${cafeArray}
-                            console.log("이까지는 됨")
-                        console.log(cafeaddress)
-                        let markers=new Array();//마커정보를 담는 배열
-                        let infoWindows=new Array();//정보창을 담는 배열
                         var map = new naver.maps.Map('place-map',{
                             center: new naver.maps.LatLng(37.54815556, 126.851675),
                             zoom: 15
                         });
+
+                        let center = map.getCenter();
+
+                        $.ajax({
+                            type:"get",
+                            url:"/api/place/cafe/" + center.x + "/" + center.y,
+                            dataType:"json",
+                            success: function(data){
+                              console.log(data);
+
+                              $each(data, function(i) {
+                                console.log(data[i].name);
+                              });
+                            }
+                        });
+
+
+
+
+
+
+
+
+
+
+
+
+                        let markers=new Array();//마커정보를 담는 배열
+                        let infoWindows=new Array();//정보창을 담는 배열
 
                         for (var i = 0; i < cafeaddress.length; i++) {
                             // 지역을 담은 배열의 길이만큼 for문으로 마커와 정보창을 채워주자 !
