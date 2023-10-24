@@ -18,13 +18,11 @@ public class LibraryDAOSpring {
 	public LibraryVO getLibrary(LibraryVO vo) {
 		System.out.println("===> Spring JDBC로 getLibrary() 기능처리");
 		Object [] args  = {vo.getAddress()};
-		LibraryVO library = jdbctemplate.queryForObject(LIBRARY_GET, args, new LibraryRowMapper());
-		return library;
+        return jdbctemplate.queryForObject(LIBRARY_GET, new LibraryRowMapper(), args);
 	}
 	
 	public List<LibraryVO> getLibraryList() {
 		System.out.println("===> Spring JDBC로 getLibraryList() 기능처리");
-		List<LibraryVO> libraryList = jdbctemplate.query(LIBRARY_LIST, new LibraryRowMapper());
-		return libraryList;
+        return jdbctemplate.query(LIBRARY_LIST, new LibraryRowMapper());
 	}
 }

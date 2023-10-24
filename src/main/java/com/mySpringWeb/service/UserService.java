@@ -4,11 +4,11 @@ import java.util.List;
 import com.mySpringWeb.domain.UserVO;
 
 public interface UserService {
-	public void insertUser(UserVO vo);
-	public void updateUser(UserVO vo);
-	public void deleteUser(UserVO vo);
-	public String checkUser(UserVO vo);
-	public UserVO getUser(UserVO vo);
-	public UserVO getUserLogin(UserVO vo);
-	public List<UserVO> getUserList();
+	void insertUser(UserVO vo);
+	void updateUser(UserVO vo);
+	void deleteUser(UserVO vo);
+	String checkUser(UserVO vo);
+	UserVO getUser(UserVO vo);
+	UserVO getUserLogin(UserVO vo);
+	List<UserVO> getUserList();
 }

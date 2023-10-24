@@ -18,13 +18,11 @@ public class CafeDAOSpring {
 	public CafeVO getCafe(CafeVO vo) {
 		System.out.println("===> Spring JDBC로 getCafe() 기능처리");
 		Object [] args  = {vo.getAddress()};
-		CafeVO cafe = jdbctemplate.queryForObject(CAFE_GET, args, new CafeRowMapper());
-		return cafe;
+        return jdbctemplate.queryForObject(CAFE_GET, new CafeRowMapper(), args);
 	}
 	
 	public List<CafeVO> getCafeList() {
 		System.out.println("===> Spring JDBC로 getCafeList() 기능처리");
-		List<CafeVO> cafeList = jdbctemplate.query(CAFE_LIST, new CafeRowMapper());
-		return cafeList;
+        return jdbctemplate.query(CAFE_LIST, new CafeRowMapper());
 	}
 }
