@@ -33,10 +33,12 @@ public class BoardDAOSpring {
     public BoardVO getBoard(BoardVO vo) {
         System.out.println("===> Spring JDBC로 getBoard() 기능처리");
         Object [] args  = {vo.getBoard_id()};
-        return jdbctemplate.queryForObject(BOARD_GET, new BoardRowMapper(), args);
+        BoardVO board = jdbctemplate.queryForObject(BOARD_GET, args, new BoardRowMapper());
+        return board;
     }
     public List<BoardVO> getBoardList() {
         System.out.println("===> Spring JDBC로 getBoardList() 기능처리");
-        return jdbctemplate.query(BOARD_LIST, new BoardRowMapper());
+        List<BoardVO> boardList = jdbctemplate.query(BOARD_LIST, new BoardRowMapper());
+        return boardList;
     }
 }
