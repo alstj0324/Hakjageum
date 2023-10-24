@@ -30,6 +30,10 @@ import com.mySpringWeb.service.LibraryService;
 
 @Controller
 public class MainController {
+	@Autowired
+	private CafeService cafeService;
+	@Autowired
+	private LibraryService libraryService;
 
 	@RequestMapping(value = {"/"}, method = RequestMethod.GET)
 	public String main() {
