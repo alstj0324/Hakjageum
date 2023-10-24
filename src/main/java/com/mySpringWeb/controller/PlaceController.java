@@ -1,7 +1,5 @@
 package com.mySpringWeb.controller;
 
-import com.mySpringWeb.controller.api.PlaceApi;
-import com.mySpringWeb.domain.CafeVO;
 import com.mySpringWeb.utils.PlaceUtil;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
