@@ -137,11 +137,18 @@ public class UserController {
     	return "usermanage";
 	}
 	
+	//내 정보수정에서 사용할것
 	@RequestMapping(value="userupdate.do", method=RequestMethod.GET)
 	public String userupdate(UserVO vo, HttpSession session, Model model) {
 		vo = userService.getUser(vo);
 		model.addAttribute("user", vo);
 		return "userupdate";
+	}
+	//관리자 manage에서 사용하는 등급변경
+	@RequestMapping(value="userRoleupdate.do", method=RequestMethod.POST)
+	public String userroleupdate(UserVO vo) {
+		userService.roleupdateUser(vo);	
+		return "redirect:usermanage.do";
 	}
 	@RequestMapping(value="userupdate.do", method=RequestMethod.POST)
 	public String userupdate(UserVO vo) {

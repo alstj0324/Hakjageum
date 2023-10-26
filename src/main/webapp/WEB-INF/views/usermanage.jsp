@@ -17,26 +17,49 @@
     <%@ include file="templates/Header.jsp" %>
     <section id="billboard" class="position-relative">
       <div class="banner-content banner-content-manage">
-        <table class="memtable" border=1>
-          <tr>
-            <td id="top" width="200">아이디</td>
-            <td id="top">닉네임</td>
-            <td id="top">이메일</td>
-            <td id="top">계정 구분</td>
-            <td id="top">등록일</td>
-            <td id="top">관리</td>
-          </tr>
-          <c:forEach items="${userList }" var="userList">
-            <tr class="user-manage-el">
-              <td>${userList.id }</td>
-              <td>${userList.nickname }</td>
-              <td>${userList.email }</td>
-              <td>${userList.provider }</td>
-              <td>${userList.create_at }</td>
-              <td><a href="userupdate.do?id=${userList.id }">수정</a>|<a href="userdelete.do?id=${userList.id }">삭제</a></td>
-            </tr>
-          </c:forEach>
-        </table>
+        <div class="manage-header">
+        	<div class="manage-id" id="man-h">아이디</div>
+        	<div class="manage-nickname" id="man-h">닉네임</div>
+        	<div class="manage-email" id="man-h">이메일</div>
+        	<div class="manage-provider" id="man-h">계정구분</div>
+        	<div class="manage-regdate" id="man-h">등록일</div>
+        	<div class="manage-role" id="man-h">등급</div>
+        	<div class="manage-manage" id="man-h">매니지먼트</div>
+        </div>
+        <div class="manage-container">
+        	<c:forEach items="${userList }" var="userList">
+        		<form action="userRoleupdate.do" method="post">
+        			<input type="hidden" name="id" value="${userList.id }">
+		        	<div class="manage-id" id="man-c">${userList.id }</div>
+		        	<div class="manage-nickname" id="man-c">${userList.nickname }</div>
+		        	<div class="manage-email" id="man-c">${userList.email}</div>
+		        	<div class="manage-provider" id="man-c">${userList.provider }</div>
+		        	<div class="manage-regdate" id="man-c">${userList.create_at }</div>
+		        	<div class="manage-role" id="man-c">
+		        		<c:if test="${userList.role_id eq '0'}">
+		        			<select name="role_id">
+		        				<option value="0" selected>일반</option>
+		        				<option value="1">관리자</option>
+		        			</select>
+		        		</c:if>
+		        		<c:if test="${userList.role_id ne '0'}">
+		        			<select name="role_id">
+		        				<option value="1" selected>관리자</option>
+		        				<option value="0">일반</option>
+		        			</select>
+		        		</c:if>
+		        	</div>
+		        	<div class="manage-manage" id="man-c">
+		        		<div class="change" id="child">
+		        			<input type="submit" value="등급변경">
+		        		</div>
+		        		<div class="delete" id="child">
+		        			<a href="userdelete.do?id=${userList.id }">X</a>
+		        		</div>
+		        	</div>
+	        	 </form>
+        	</c:forEach>
+        </div>
       </div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>
