@@ -114,268 +114,7 @@
                 서울시 도서관 위치정보 (현재 도서관 데이터는 서울시만 존재합니다.)
               </c:if>
             </div>
-            <div class="place-map" id="place-map">
-              <c:if test="${placeCategory eq '카페' }">
-                <script type="text/javascript">
-                    $(function() {
-                        initMap();
-
-                    });
-                    function initMap(){
-                        var map = new naver.maps.Map('place-map',{
-                            center: new naver.maps.LatLng(37.54815556, 126.851675),
-                            zoom: 15
-                        });
-
-                        let center = map.getCenter();
-
-                        $.ajax({
-                            type:"get",
-                            url:"/api/place/cafe/" + center.x + "/" + center.y,
-                            dataType:"json",
-                            success: function(data){
-                              console.log(data);
-
-                              $each(data, function(i) {
-                                console.log(data[i].name);
-                              });
-                            }
-                        });
-
-
-
-
-
-
-
-
-
-
-
-
-                        let markers=new Array();//마커정보를 담는 배열
-                        let infoWindows=new Array();//정보창을 담는 배열
-
-                        for (var i = 0; i < cafeaddress.length; i++) {
-                            // 지역을 담은 배열의 길이만큼 for문으로 마커와 정보창을 채워주자 !
-                            var marker = new naver.maps.Marker({
-                                map: map,
-                                title: cafeaddress[i].name, // 지역구 이름
-                                position: new naver.maps.LatLng(cafeaddress[i].latitude , cafeaddress[i].longitude) // 지역구의 위도 경도 넣기
-                            });
-
-                            /* 정보창 */
-                            var infoWindow = new naver.maps.InfoWindow({
-                                content: '<div style="width:200px;text-align:center;padding:10px;color:black;"><b>' + cafeaddress[i].name + '</b><br></div>'
-                            }); // 클릭했을 때 띄워줄 정보 HTML 작성
-
-                            markers.push(marker); // 생성한 마커를 배열에 담는다.
-                            infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
-                        }
-
-                        function getClickHandler(seq) {
-
-                            return function(e) {  // 마커를 클릭하는 부분
-                                var marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
-                                    infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
-
-                                if (infoWindow.getMap()) {
-                                    infoWindow.close();
-                                } else {
-                                    infoWindow.open(map, marker); // 표출
-                                    map.panTo(e.coord);
-                                    $.ajax({
-                                        type:"get",
-                                        url:"placeSearchFromDB.do",
-                                        dataType:"json",
-                                        data : {                       // 매개변수로 전달할 데이터
-                                            "place" :  "강서구"+" "+ cafeaddress[seq].name  // 검색 시작 위치
-                                        },
-                                        success: function(data){
-                                            console.log("통신성공");
-                                            console.log(data);
-                                            str = "";
-                                            str2 =  '<div class="place-search-container">'+
-                                                '<div class="place-search-item">'+
-                                                '<div class="place-search-item1">'+
-                                                '검색결과가 존재하지 않습니다!' +
-                                                '</div>'+
-                                                '<div class="place-search-item2">'+
-                                                'OTL..'+
-                                                '</div>' +
-                                                '</div>'+
-                                                '<div class="place-search-item3">'+
-                                                '(1) Cafe, Library를 선택합니다(기본선택 Cafe)'+
-                                                '</div>'+
-                                                '<div class="place-search-item4">'+
-                                                '(2) 지도상의 마커 클릭시 마커내의 정보와 비슷한 값을 검색합니다.'+
-                                                '</div>'+
-                                                '<div class="place-search-item5">'+
-                                                '(3) 장소검색에 검색어 입력 후 GO버튼 클릭시 검색이 가능합니다.'+
-                                                '</div>'+
-                                                '</div>';
-                                            $.each(data , function(i){
-                                                str += '<div class="place-search-container">'+
-                                                    '<div class="place-search-item">'+
-                                                    '<div class="place-search-item1">'+
-                                                    data[i].title +
-                                                    '</div>'+
-                                                    '<div class="place-search-item2">'+
-                                                    data[i].category +
-                                                    '</div>' +
-                                                    '</div>'+
-                                                    '<div class="place-search-item3">'+
-                                                    '[주소 정보]'+
-                                                    '</div>'+
-                                                    '<div class="place-search-item4">'+
-                                                    '도로명&nbsp주소&nbsp;:&nbsp;'+data[i].roadAddress+
-                                                    '</div>'+
-                                                    '<div class="place-search-item5">'+
-                                                    '지번&nbsp;주소&nbsp;:&nbsp;'+data[i].address+
-                                                    '</div>'+
-                                                    '</div>';
-                                            });
-                                            if(jQuery.isEmptyObject(data)){
-                                                $('.place-inform-container').html(str2);
-
-                                            }else if(!jQuery.isEmptyObject(data)){
-                                                $('.place-inform-container').html(str);
-                                            }
-                                        },
-                                        error:function(){
-                                            console.log("통신에러");
-                                        }
-                                    })
-
-                                }
-                            }
-                        }
-                        for (var i=0, ii=markers.length; i<ii; i++) {
-                            console.log(markers[i] , getClickHandler(i));
-                            naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
-                        }
-                    }
-
-                </script>
-              </c:if>
-              <c:if test="${placeCategory eq '도서관' }">
-                <script type="text/javascript">
-                    $(function() {
-                        initMap();
-
-                    });
-                    function initMap(){
-                        var libraryaddress = new Array();
-                        libraryaddress = ${libraryArray}
-
-                            let markers=new Array();//마커정보를 담는 배열
-                        let infoWindows=new Array();//정보창을 담는 배열
-                        var map = new naver.maps.Map('place-map',{
-                            center: new naver.maps.LatLng(37.566535, 126.9779692),
-                            zoom: 12
-                        });
-
-                        for (var i = 0; i < libraryaddress.length; i++) {
-                            // 지역을 담은 배열의 길이만큼 for문으로 마커와 정보창을 채워주자 !
-                            var marker = new naver.maps.Marker({
-                                map: map,
-                                title: libraryaddress[i].name, // 지역구 이름
-                                position: new naver.maps.LatLng(libraryaddress[i].latitude , libraryaddress[i].longitude) // 지역구의 위도 경도 넣기
-                            });
-
-                            /* 정보창 */
-                            var infoWindow = new naver.maps.InfoWindow({
-                                content: '<div style="width:200px;text-align:center;padding:10px;color:black;"><b>' + libraryaddress[i].name + '</b><br></div>'
-                            }); // 클릭했을 때 띄워줄 정보 HTML 작성
-
-                            markers.push(marker); // 생성한 마커를 배열에 담는다.
-                            infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
-                        }
-
-                        function getClickHandler(seq) {
-
-                            return function(e) {  // 마커를 클릭하는 부분
-                                var marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
-                                    infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
-
-                                if (infoWindow.getMap()) {
-                                    infoWindow.close();
-                                } else {
-                                    infoWindow.open(map, marker); // 표출
-                                    map.panTo(e.coord);
-                                    $.ajax({
-                                        type:"get",
-                                        url:"placeSearchFromDB.do",
-                                        dataType:"json",
-                                        data : {                       // 매개변수로 전달할 데이터
-                                            "place" :  "서울시"+" "+ libraryaddress[seq].name  // 검색 시작 위치
-                                        },
-                                        success: function(data){
-                                            console.log("통신성공");
-                                            console.log(data);
-                                            str = "";
-                                            str2 =  '<div class="place-search-container">'+
-                                                '<div class="place-search-item">'+
-                                                '<div class="place-search-item1">'+
-                                                '검색결과가 존재하지 않습니다!' +
-                                                '</div>'+
-                                                '<div class="place-search-item2">'+
-                                                'OTL..'+
-                                                '</div>' +
-                                                '</div>'+
-                                                '<div class="place-search-item3">'+
-                                                '(1) Cafe, Library를 선택합니다(기본선택 Cafe)'+
-                                                '</div>'+
-                                                '<div class="place-search-item4">'+
-                                                '(2) 지도상의 마커 클릭시 마커내의 정보와 비슷한 값을 검색합니다.'+
-                                                '</div>'+
-                                                '<div class="place-search-item5">'+
-                                                '(3) 장소검색에 검색어 입력 후 GO버튼 클릭시 검색이 가능합니다.'+
-                                                '</div>'+
-                                                '</div>';
-                                            $.each(data , function(i){
-                                                str += '<div class="place-search-container">'+
-                                                    '<div class="place-search-item">'+
-                                                    '<div class="place-search-item1">'+
-                                                    data[i].title +
-                                                    '</div>'+
-                                                    '<div class="place-search-item2">'+
-                                                    data[i].category +
-                                                    '</div>' +
-                                                    '</div>'+
-                                                    '<div class="place-search-item3">'+
-                                                    '[주소 정보]'+
-                                                    '</div>'+
-                                                    '<div class="place-search-item4">'+
-                                                    '도로명&nbsp주소&nbsp;:&nbsp;'+data[i].roadAddress+
-                                                    '</div>'+
-                                                    '<div class="place-search-item5">'+
-                                                    '지번&nbsp;주소&nbsp;:&nbsp;'+data[i].address+
-                                                    '</div>'+
-                                                    '</div>';
-                                            });
-                                            if(jQuery.isEmptyObject(data)){
-                                                $('.place-inform-container').html(str2);
-
-                                            }else if(!jQuery.isEmptyObject(data)){
-                                                $('.place-inform-container').html(str);
-                                            }
-                                        },
-                                        error:function(){
-                                            console.log("통신에러");
-                                        }
-                                    })
-                                }
-                            }
-                        }
-                        for (var i=0, ii=markers.length; i<ii; i++) {
-                            console.log(markers[i] , getClickHandler(i));
-                            naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
-                        }
-                    }
-                </script>
-              </c:if>
-            </div>
+            <div class="place-map" id="place-map"></div>
           </div>
           <div class="place-content-item2">
             <div class="place-search">
@@ -479,5 +218,86 @@
       </div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>
+    <script>
+        let map;
+        let dataList = [], markerList = [], infoWindowList = [];
+
+        $(function () {
+            initMap();
+            createCafeMap();
+        });
+
+        function initMap() {
+            map = new naver.maps.Map('place-map', {
+                center: new naver.maps.LatLng(37.47781493431073, 127.06229861277323),
+                zoom: 15
+            });
+        }
+
+        function createCafeMap() {
+            let mapCenter = map.getCenter();
+            let cafeList = getCafeList(mapCenter.x, mapCenter.y);
+            markerList = [];
+            infoWindowList = [];
+
+            for (let i = 0; i < cafeList.length; i++) {
+                let cafe = cafeList[i];
+                let marker = new naver.maps.Marker({
+                    map: map,
+                    title: cafe.name,
+                    position: new naver.maps.LatLng(cafe.x, cafe.y)
+                });
+
+                let infoWindow = new naver.maps.InfoWindow({
+                    content: '<div style="width:200px; text-align:center; padding:10px;">' + cafe.name + '</div>'
+                });
+
+                markerList.push(marker);
+                infoWindowList.push(infoWindow);
+            };
+
+            for (let i = 0; i < markerList.length; i++) {
+                naver.maps.Event.addListener(markerList[i], 'click', getClickHandler(i));
+            }
+        }
+
+        function getCafeList(x, y) {
+            let cafeList = [];
+
+            if (x != undefined && y != undefined) {
+                $.ajax({
+                    type: "get",
+                    url: "/biz/api/place/cafe/" + x + "/" + y,
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        console.log("Place API > Get Cafe 성공");
+                        cafeList = data;
+                    },
+                    error: function () {
+                        console.log("Place API > Get Cafe 실패");
+                    }
+                });
+            } else {
+                console.log("x, y 좌표가 없습니다.");
+            }
+
+            return cafeList;
+        }
+
+        function getClickHandler(seq) {
+            let marker = markerList[seq];
+            let infoWindow = infoWindowList[seq];
+            console.log(infoWindow)
+            if (infoWindow.getMap()) {
+                infoWindow.close();
+            } else {
+                infoWindow.open(map, marker);
+                window.map.panTo(seq.coord);
+
+                console.log(seq);
+            }
+        }
+    </script>
   </body>
 </html>
