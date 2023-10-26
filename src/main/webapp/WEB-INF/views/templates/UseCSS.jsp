@@ -17,8 +17,5 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" type="text/css" href="resources/css/fontawesome/font-awesome.min.css">
 
-<!-- Swiper -->
-<link rel="stylesheet" type="text/css" href="resources/css/swiper/swiper-bundle.min.css">
-
 <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 <link rel="stylesheet" type="text/css" href="resources/css/custom.css">

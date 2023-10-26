@@ -93,7 +93,27 @@
             <ul class="list-unstyled content-light d-flex align-items-center m-0">
               <c:if test="${user.id != null}">
                 <li>
-                  <a style="color:gold;">[${user.nickname}]</a>
+                  <a style="color:gold;" href="#" class="text-uppercase item-anchor dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">[${user.nickname}]</a>
+                	<ul class="dropdown-menu" id="name-dropdown">
+                  <li class="sub-page pe-0">
+                    <a class="text-black text-uppercase dropdown-item" href="getBoardBook.do">
+                      겟보드북&nbsp
+                      <span class="badge bg-secondary">Go</span>
+                    </a>
+                  </li>
+                  <li class="sub-page pe-0">
+                    <a class="text-black text-uppercase dropdown-item" href="blog-with-sidebar.html">
+                      도서 게시판&nbsp
+                      <span class="badge bg-secondary">Go</span>
+                    </a>
+                  </li>
+                  <li class="sub-page pe-0">
+                    <a class="text-black text-uppercase dropdown-item" href="single-post.html">
+                      취미 게시판&nbsp
+                      <span class="badge bg-secondary">Go</span>
+                    </a>
+                  </li>
+                </ul>
                 </li>
                 <c:if test="${user.role_id != 0}">
                   <li>
