@@ -14,6 +14,7 @@ public class UserDAOSpring {
 
     private final String USER_INSERT = "insert into users(id,pwd,nickname,email,provider) values(?,?,?,?,?)";
     private final String USER_UPDATE = "update users set pwd=?, nickname=?, email=?, role_id=? where id=?";
+    private final String USER_ROLEUPDATE = "update users set role_id=? where id=?";
     private final String USER_DELETE = "delete from users where id=?";
     private final String USER_GET = "select * from users where id=?";
     private final String USER_LOGIN = "select * from users where id=? and pwd=?";
@@ -27,6 +28,11 @@ public class UserDAOSpring {
     public void updateUser(UserVO vo) {
         System.out.println("===>Spring JDBC로 updateUser() 기능처리");
         jdbctemplate.update(USER_UPDATE,vo.getPwd(),vo.getNickname(),vo.getEmail(), vo.getRole_id(),vo.getId());
+
+    }
+    public void roleupdateUser(UserVO vo) {
+        System.out.println("===>Spring JDBC로 roleupdateUser() 기능처리");
+        jdbctemplate.update(USER_ROLEUPDATE,vo.getRole_id(),vo.getId());
 
     }
     public void deleteUser(UserVO vo) {

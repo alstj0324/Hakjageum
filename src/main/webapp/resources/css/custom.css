@@ -36,7 +36,7 @@ div.banner-content-login a:not(p){
 /* Section */
 /*-----------------------------------------------------------*/
 section#billboard {
-	background-image: url(http://localhost:8080/biz/resources/images/banner-image.jpg);
+	background-image: url(http://minnowseo.iptime.org:8080/biz/resources/images/banner-image.jpg);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -58,6 +58,12 @@ section#billboard {
 	transform: translate(-50%, -50%);
 	color:white;
 }
+/*================================================================== Hedaer.jsp*/
+
+ul#name-dropdown {
+   margin-left: 320px;
+}
+
 
 
 /* - login
@@ -227,34 +233,87 @@ a{color:inherit;text-decoration:none}
 
 /* - manage
 --------------------------------------------------------------*/
+/* --------------- [user manage]----------------*/
 div.banner-content-manage:not(p) {
   margin-top:40px;
   width:1600px;
   height:680px;
   border-radius:50px;
   background-color: rgba(0, 0, 0, 0.7);
-  overflow-y:scroll; 
+  text-align: center;
+  overflow:hidden; 
 }
-div.banner-content-manage td{
-	color:white;
+.manage-container {
+	display: inline-block;
+	position: relative;
+	width: 90%;
+	height: 615px;
+	line-height: 40px;
 }
-div.banner-content-manage #top{
+.manage-header {
+	margin-top:25px;
+	border: 1px solid white;
+	display: inline-block;
+	position: relative;
+	width: 90%;
+	height: 40px;
+	line-height: 40px;
+	font-weight: bold;
+	text-align: left;
 	background-color:rgba(255,255,255,0.5);
 }
-div.banner-content-manage .memtable{
-	margin-top: 42px;
+#man-h {
+	float: left;
+	height: 100%;
+	text-align: center;
 }
-div.banner-content-manage .memtable .hr{
-	width: 1600px;
-	border-bottom:1px solid white; 
+#man-c {
+	float: left;
+	border: 1px solid white;
+	height: 100%;
+	text-align: center;
+	overflow: hidden;
+	height: 40px;
 }
-.user-manage-el {
-	border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+.manage-id {width: 33%;}
+.manage-nickname {width: 10%;}
+.manage-email {width: 20%;	}
+.manage-provider {width: 8%;	}
+.manage-regdate {width: 12%;	}
+.manage-role {width: 7%;}
+.manage-role select{
+	color: white; 
+	height: 40px;
+	line-height: 35px;
+	border: 0;
 }
+.manage-role option {background-color: rgba(0, 0, 0, 0.7);}
+.manage-manage {width: 10%;	}
+.manage-manage input[type="submit"] {
+	background-color: transparent;
+	margin-top: 5px;;
+	padding: 4px;;
+	font-size: 14px;
+	border: 1px solid white;
+	border-radius: 10px;
+}
+.manage-manage #child {
+	float: left;
+	height: 100%;
+	text-align: center;
+	overflow: hidden;
+	height: 40px;
+}
+.manage-manage .change {
+	width: 70%;	
+	border-right: 1px solid white;
+}
+.manage-manage .delete {
+	width: 30%;	
+} 
 
 
-/* - update
---------------------------------------------------------------*/
+/* --------------- [user update] --------------------*/
 div.banner-content-update:not(p) {
   position: absolute;
   top: 50%;
@@ -617,16 +676,38 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	left: 0;
 	border-right: 1px solid rgba(0,0,0,0.3);
 	width: 50%;
-	height: 480px;
+	height: 500px;
 	overflow: hidden;
+}
+.banner-content-board .book-content .book-content-result0 {
+	height: auto;
+	width: 100%;
+}
+.book-content-result0 .basket-button {
+	position: absolute;
+	display: inline-block;
+	width:90px;
+	height: 50px;
+	top: 20px;
+	right: 50px; 
+}
+.book-content-result0 .basket-button .basket{
+	background-color: rgba(200,200,200,0.9);
+	padding: 0;
+	border: 2px solid black;
+	border-radius: 15px;
+	color: black;
+	width: 90px;
+	height: 50px;
+	margin: 0;
 }
 .banner-content-board .book-content .book-content-result1 {
 	position:relative;
 	margin: 5px auto 0px auto;
 	display: block;
 	width: 100%;
-	height: 232px;
-	overflow: hidden;
+	height: 255px;
+	overflow: scroll;
 	text-align: center;
 }
 .banner-content-board .book-content .book-content-result1 .item1 {
@@ -680,18 +761,11 @@ div.banner-content-board .detail-3 input[type="submit"]{
 .banner-content-board .book-content .book-content-result1 .item4 {
 	margin: 7px auto 0px auto;
 	width: 80%;
-	height: 114px;
+	height: auto;
     font-size: 16px;
     color:black;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-    line-height: 1.2;
+    line-height: 1.4;
     text-align: center;
-    word-wrap: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 6 ;
-    -webkit-box-orient: vertical;
 }
 .banner-content-board .book-content .book-content-item2 {
 	display: inline-block;
