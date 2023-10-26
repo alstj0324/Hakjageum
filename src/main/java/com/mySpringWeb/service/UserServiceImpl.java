@@ -20,6 +20,10 @@ public class UserServiceImpl implements UserService{
 		userDAO.updateUser(vo);
 	}
 	@Override
+	public void roleupdateUser(UserVO vo) {
+		userDAO.roleupdateUser(vo);	
+	}
+	@Override
 	public void deleteUser(UserVO vo) {
 		userDAO.deleteUser(vo);
 	}
@@ -39,4 +43,5 @@ public class UserServiceImpl implements UserService{
 	public List<UserVO> getUserList() {
 		return userDAO.getUserList();
 	}
+	
 }
