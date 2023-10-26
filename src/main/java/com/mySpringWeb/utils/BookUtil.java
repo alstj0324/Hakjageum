@@ -59,7 +59,6 @@ public class BookUtil {
                 Object obj = parsing.parse(res.toString());
                 JSONObject jsonObj = (JSONObject)obj;
                 JSONArray items = (JSONArray)jsonObj.get("items");
-
                 for (Object item : items) {
                     books.add(createBook((JSONObject) item));
                 }

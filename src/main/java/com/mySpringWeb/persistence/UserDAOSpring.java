@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.mySpringWeb.domain.BookVO;
 import com.mySpringWeb.domain.UserVO;
 
 @Repository
@@ -69,4 +71,5 @@ public class UserDAOSpring {
         System.out.println("===>Spring JDBC로 getUserList() 기능처리");
         return jdbctemplate.query(USER_LIST, new UserRowMapper());
     }
+ 
 }

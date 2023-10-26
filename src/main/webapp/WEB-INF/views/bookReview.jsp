@@ -53,7 +53,8 @@
 	              </a>
 	            </div>
 	            <div class="basket-button">
-	            	<input type="button" class="basket" id="addbasket" onclick="check()" value="도서저장">
+	            	<!--  <input type="button" class="basket" id="addbasket" onclick="check()" value="도서저장"> -->
+	            	<a class="basket" href="bookBasket.do?user_id=${user.id }">도서저장</a>
 	            </div>
 	        </div>
             <div class="book-content-result1">
