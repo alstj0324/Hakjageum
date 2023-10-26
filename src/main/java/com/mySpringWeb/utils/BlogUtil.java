@@ -21,7 +21,7 @@ public class BlogUtil {
         getBlogList(category, model, 1, 10);
     }
 
-    public void getBlogList(String blog, Model model, int start, int display) throws UnsupportedEncodingException {// UTF-8 Encoding
+    public void getBlogList(String blog, Model model, int start, int display) throws UnsupportedEncodingException {
         String clientId = "XSL_8Ps7NFtNXXxfpzVY";
         String clientSecret = "eLE8nAIerK";
 

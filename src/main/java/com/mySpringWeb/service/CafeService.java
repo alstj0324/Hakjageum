@@ -6,6 +6,6 @@ import com.mySpringWeb.domain.CafeVO;
 
 
 public interface CafeService {
-	public CafeVO getCafe(CafeVO vo);
-	public List<CafeVO> getCafeList();
+	CafeVO getCafe(CafeVO vo);
+	List<CafeVO> getCafeList();
 }
