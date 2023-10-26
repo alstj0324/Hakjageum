@@ -7,21 +7,25 @@ import lombok.Setter;
 public class CafeVO {
 	private String name;
 	private String address;
-	private String detail_address;
-	private String latitude;
-	private String longitude;
+	private String road_address;
+	private String phone;
+	private String url;
+	private String x;
+	private String y;
 
 	public String toString() {
 		return (
-			String.format(
+            String.format(
 				"CafeVO[\n" +
 				"\tname=%s\n" +
 				"\taddress=%s\n" +
-				"\tdetail_address=%s\n" +
-				"\tlatitude=%s\n" +
-				"\tlongitude=%s\n" +
+				"\troad_address=%s\n" +
+				"\tphone=%s\n" +
+				"\turl=%s\n" +
+				"\tx=%s\n" +
+				"\ty=%s\n" +
 				"]",
-				name, address, detail_address, latitude, longitude
+				name, address, road_address, phone, url, x, y
 			)
 		);
 	}
