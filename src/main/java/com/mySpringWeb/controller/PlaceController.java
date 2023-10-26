@@ -7,8 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 public class PlaceController {
     @RequestMapping(value="placeRecommend.do")
@@ -25,6 +23,10 @@ public class PlaceController {
             String coord_y = "";
             JSONArray cafelist = placeUtil.getCafeListToJSON(coord_x, coord_y);
             model.addAttribute("cafelist", cafelist);
+        } else if (placeCategory.equals("도서관")) {
+            System.out.println("도서관 목록 검색처리");
+        } else {
+            System.out.println("placeRecommend.do 실패");
         }
 
         return "placeRecommend";
