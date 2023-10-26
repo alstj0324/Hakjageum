@@ -102,10 +102,10 @@
 	                    </a>
 	                  </li>
 	                  <li class="sub-page pe-0">
-	                    <a class="text-black text-uppercase dropdown-item" href="blog-with-sidebar.html">
+	                    <div class="text-black text-uppercase dropdown-item" id="openbasket">
 	                      내 저장 도서
 	                      <span class="badge bg-secondary">Open</span>
-	                    </a>
+	                    </div>
 	                  </li>
 	                  <c:if test="${user.role_id != 0}">
 		                  <li class="sub-page pe-0">

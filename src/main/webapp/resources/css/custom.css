@@ -64,6 +64,9 @@ ul#name-dropdown {
    margin-left: 320px;
 }
 
+#openbasket:hover {
+	cursor: pointer;
+}
 
 
 /* - login
