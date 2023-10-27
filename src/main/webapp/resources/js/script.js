@@ -3,10 +3,6 @@
   "use strict";
 
   $(document).ready(function () {
-
-
-
-
     $('.navbar').on('click', '.search-toggle', function (e) {
       var selector = $(this).data('selector');
 
@@ -15,7 +11,6 @@
 
       e.preventDefault();
     });
-
 
     // close when click off of container
     $(document).on('click touchstart', function (e) {
@@ -31,7 +26,6 @@
       const navMenu = document.querySelector(".menu-list");
 
       hamburger.addEventListener("click", mobileMenu);
-
       function mobileMenu() {
         hamburger.classList.toggle("active");
         navMenu.classList.toggle("responsive");
@@ -39,7 +33,7 @@
 
       const navLink = document.querySelectorAll(".nav-link");
 
-      navLink.forEach(n => n.addEventListener("click", closeMenu));
+      navLink.forEach(n => n.addListener("click", closeMenu));
 
       function closeMenu() {
         hamburger.classList.remove("active");
@@ -48,25 +42,25 @@
     };
 
     //quantity in product
-    var initquantity = function () {
-      const incrementButton = document.querySelector('.incriment-button');
-      const decrementButton = document.querySelector('.decriment-button');
-      const inputField = document.querySelector('.spin-number-output');
-
-      // Add event listener to increment button
-      incrementButton.addEventListener('click', () => {
-        let currentValue = parseInt(inputField.value);
-        inputField.value = currentValue + 1;
-      });
-
-      // Add event listener to decrement button
-      decrementButton.addEventListener('click', () => {
-        let currentValue = parseInt(inputField.value);
-        if (currentValue > 0) {
-          inputField.value = currentValue - 1;
-        }
-      });
-    };
+    // var initquantity = function () {
+    //   const incrementButton = document.querySelector('.incriment-button');
+    //   const decrementButton = document.querySelector('.decriment-button');
+    //   const inputField = document.querySelector('.spin-number-output');
+    //
+    //   // Add event listener to increment button
+    //   incrementButton.addListener('click', () => {
+    //     let currentValue = parseInt(inputField.value);
+    //     inputField.value = currentValue + 1;
+    //   });
+    //
+    //   // Add event listener to decrement button
+    //   decrementButton.addListener('click', () => {
+    //     let currentValue = parseInt(inputField.value);
+    //     if (currentValue > 0) {
+    //       inputField.value = currentValue - 1;
+    //     }
+    //   });
+    // };
 
 
 
@@ -187,17 +181,10 @@
         },
       });
 
-
       initHamburgerMenu();
       initChocolat();
       initJarallax();
-      initquantity();
-
-
-
-
+      // initquantity();
     });
-
   }); // End of a document
-
 })(jQuery);
