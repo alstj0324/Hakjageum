@@ -44,7 +44,7 @@ public class UserDAOSpring {
         System.out.println("===>Spring JDBC로 getUserCheck() 기능처리");
         try {
             Object [] args  = {vo.getId()};
-            UserVO user = jdbctemplate.queryForObject(USER_GET, args, new UserRowMapper());
+            UserVO user = jdbctemplate.queryForObject(USER_GET, new UserRowMapper(), args);
             String id = user.getId();
             System.out.println("["+id+"]");
             return id;
