@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class CafeVO {
+public class PlaceVO {
 	private String name;
 	private String address;
 	private String road_address;
