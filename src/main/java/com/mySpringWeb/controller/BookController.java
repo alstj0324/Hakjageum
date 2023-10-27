@@ -17,6 +17,10 @@ public class BookController {
 	public String getBoardBook() {
 		return "getBoardBook";
 	}
+	@RequestMapping(value="insertBook.do")
+	public String insertBook() {
+		return "insertBook";
+	}
 	
     @RequestMapping(value="bookRecommend.do", method = RequestMethod.GET)
     public String bookRecommend(
