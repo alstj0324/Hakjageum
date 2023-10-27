@@ -1,6 +1,6 @@
 package com.mySpringWeb.utils;
 
-import com.mySpringWeb.domain.CafeVO;
+import com.mySpringWeb.domain.PlaceVO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -9,30 +9,45 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceUtil {
 
-    public JSONArray getCafeListToJSON(String x, String y) {
-        return cafeToObject(getCafeList(x, y));
+    public JSONArray getAllLibraryToJSON(String x, String y) {
+        return placeToObject(getAllLibrary(x, y));
     }
 
-    public List<CafeVO> getAllCafe(String x, String y, int radius) {
-        List<CafeVO> cafelist = new ArrayList<>();
+    public JSONArray getAllCafeToJSON(String x, String y) {
+        return placeToObject(getAllCafe(x, y));
+    }
+
+    public List<PlaceVO> getAllLibrary(String x, String y) {
+        String query = "도서관";
+        return getPlaceData(x, y, "", query, 1000);
+    }
+
+    public List<PlaceVO> getAllCafe(String x, String y) {
+        String query = "카페";
+        return getPlaceData(x, y, "CE7", query, 200);
+    }
+
+    public List<PlaceVO> getPlaceData(String x, String y, String category_group_code, String query, int radius) {
+        List<PlaceVO> placelist = new ArrayList<>();
         String restapiKey = "78ebcb4c00100253dfd2e6916a21dff5";
+        String apiHost = "https://dapi.kakao.com/v2/local/search/keyword.json";
 
-        String apiHost = "https://dapi.kakao.com/v2/local/search/category";
-
-        for (int page = 1; page <= 45; page++) {
-            String apiURL = String.format(
-                    "%s?category_group_code=CE7&x=%s&y=%s&radius=%s&page=%d&size=45",
-                    apiHost, x, y, radius, page
-            );
-
-            System.out.println(apiURL);
-
+        for (int page = 1; page <= 2; page++) {
             try {
+                String keyword = URLEncoder.encode(query, "UTF-8");
+
+                String apiURL = String.format(
+                        "%s?category_group_code=%s&x=%s&y=%s&radius=%d&page=%d&size=10&query=%s",
+                        apiHost, category_group_code, x, y, radius, page, keyword
+                );
+
                 URL url = new URL(apiURL);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
@@ -56,28 +71,26 @@ public class PlaceUtil {
                     JSONArray documents = (JSONArray) jsonObj.get("documents");
 
                     for (Object item : documents) {
-                        CafeVO cafeVO = createCafe((JSONObject) item);
-                        if (!cafelist.contains(cafeVO)) cafelist.add(cafeVO);
+                        PlaceVO placeVO = createPlace((JSONObject) item);
+                        if (!placelist.contains(placeVO)) placelist.add(placeVO);
                     }
 
-                    if(documents.size() != 45) break;
+                    if(documents.size() != 10) break;
                 }
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
-
-        return cafelist;
+        return placelist;
     }
 
-    public List<CafeVO> getCafeList(String x, String y) {
-        List<CafeVO> cafelist = new ArrayList<>();
-        String restapiKey = "78ebcb4c00100253dfd2e6916a21dff5";
+    public JSONObject getMyloc(String ip) {
+        JSONObject result = new JSONObject();
+        String apiHost = "http://ip-api.com";
 
-        String apiHost = "https://dapi.kakao.com/v2/local/search/category.json";
         String apiURL = String.format(
-                "%s?category_group_code=CE7&x=%s&y=%s&radius=20000",
-                apiHost, x, y
+                "%s/json/%s",
+                apiHost, ip
         );
 
         try {
@@ -85,13 +98,8 @@ public class PlaceUtil {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
             con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization", "KakaoAK " + restapiKey);
 
             int responseCode = con.getResponseCode();
-
-            if (responseCode == 200) System.out.println("주변 카페 검색 API 정상");
-            else System.out.println("주변 카페 검색 API 에러");
-
 
             BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
             StringBuilder res = new StringBuilder();
@@ -100,43 +108,41 @@ public class PlaceUtil {
                 res.append(line);
             }
             br.close();
+
             if (responseCode == 200) {
                 JSONParser parsing = new JSONParser();
                 Object obj = parsing.parse(res.toString());
-                JSONObject jsonObj = (JSONObject)obj;
-                JSONArray documents = (JSONArray) jsonObj.get("documents");
+                JSONObject jsonObj = (JSONObject) obj;
 
-                for (Object item : documents) {
-                    CafeVO cafeVO = createCafe((JSONObject) item);
-                    cafelist.add(cafeVO);
-                }
+                result.put("x", jsonObj.get("lat").toString());
+                result.put("y", jsonObj.get("lon").toString());
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        return cafelist;
+        return result;
     }
 
     // VO 생성이 필요하다면 진행
-    private CafeVO createCafe(JSONObject jsonObject) {
-        CafeVO cafe = new CafeVO();
+    private PlaceVO createPlace(JSONObject jsonObject) {
+        PlaceVO place = new PlaceVO();
 
-        cafe.setAddress((String) jsonObject.get("address_name"));
-        cafe.setRoad_address((String) jsonObject.get("road_address_name"));
-        cafe.setPhone((String) jsonObject.get("phone"));
-        cafe.setName((String) jsonObject.get("place_name"));
-        cafe.setUrl((String) jsonObject.get("place_url"));
-        cafe.setX((String) jsonObject.get("y"));
-        cafe.setY((String) jsonObject.get("x"));
+        place.setAddress((String) jsonObject.get("address_name"));
+        place.setRoad_address((String) jsonObject.get("road_address_name"));
+        place.setPhone((String) jsonObject.get("phone"));
+        place.setName((String) jsonObject.get("place_name"));
+        place.setUrl((String) jsonObject.get("place_url"));
+        place.setX((String) jsonObject.get("y"));
+        place.setY((String) jsonObject.get("x"));
 
-        return cafe;
+        return place;
     }
 
-    public JSONArray cafeToObject(List<CafeVO> cafelist) {
+    // VO를 JSON Object로 변환
+    public JSONArray placeToObject(List<PlaceVO> placelist) {
         JSONArray jArray = new JSONArray();
 
-        for (CafeVO item : cafelist) {
+        for (PlaceVO item : placelist) {
             JSONObject jObject = new JSONObject();
 
             jObject.put("name", item.getName());
@@ -152,41 +158,4 @@ public class PlaceUtil {
 
         return jArray;
     }
-
-//    public JSONArray cafeToObject(List<CafeVO> cafelist) {
-//        JSONArray jArray = new JSONArray();
-//
-//        for (CafeVO item : cafelist) {
-//            JSONObject jObject = new JSONObject();
-//
-//            jObject.put("name", item.getName());
-//            jObject.put("address", item.getAddress());
-//            jObject.put("detail_address", item.getDetail_address());
-//            jObject.put("latitude", item.getLatitude());
-//            jObject.put("longitude", item.getLongitude());
-//
-//            jArray.add(jObject);
-//        }
-//
-//        return jArray;
-//    }
-//
-//    public JSONArray libraryToObject(List<LibraryVO> librarylist) {
-//        JSONArray jArray = new JSONArray();
-//
-//        for (LibraryVO item : librarylist) {
-//            JSONObject jObject = new JSONObject();
-//
-//            jObject.put("name", item.getName());
-//            jObject.put("address", item.getAddress());
-//            jObject.put("detail_address", item.getDetail_address());
-//            jObject.put("operating_time", item.getOperating_time());
-//            jObject.put("closed", item.getClosed());
-//            jObject.put("latitude", item.getLatitude());
-//            jObject.put("longitude", item.getLongitude());
-//
-//            jArray.add(jObject);
-//        }
-//        return jArray;
-//    }
 }
