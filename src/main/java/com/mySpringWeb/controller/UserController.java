@@ -10,6 +10,8 @@ import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,10 +20,16 @@ import com.mySpringWeb.utils.LoginUtil;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mySpringWeb.domain.UserVO;
 import com.mySpringWeb.service.UserService;
@@ -30,7 +38,9 @@ import com.mySpringWeb.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
-
+	@Autowired
+	protected JavaMailSender mailSender;
+	
 	@RequestMapping(value="login.do", method=RequestMethod.GET)
 	public String login() {
 		return "login";
@@ -53,9 +63,55 @@ public class UserController {
 		}
 	}
 
+	/*------------[회원가입중]-----------*/
+	@RequestMapping(value="idCheck.do", method=RequestMethod.GET)
+	@ResponseBody
+	public String idCheck(String id) throws UnsupportedEncodingException{
+		System.out.println("넘어온 아이디" + id);
+		UserVO vo = new UserVO();
+		vo.setId(id);
+		String data = userService.logincheckUser(vo);
+		System.out.println("결과 값"+data);
+		return data;
+	}
+	
+	@RequestMapping(value = "emailCheck.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String mailCheck(@RequestParam("email") String email) throws Exception{
+	    int serti = (int)((Math.random()* (99999 - 10000 + 1)) + 10000);
+	    System.out.println(email);
+	    String from = "gomdung79@naver.com";//보내는 이 메일주소
+	    String to = email;
+	    String title = "회원가입시 필요한 인증번호 입니다.";
+	    String content = "[인증번호] "+ serti +" 입니다. <br/> 인증번호 확인란에 기입해주십시오.";
+	    String num = "";
+	    try {
+	    	MimeMessage mail = mailSender.createMimeMessage();
+	        MimeMessageHelper mailHelper = new MimeMessageHelper(mail, true, "UTF-8");
+	        
+	        mailHelper.setFrom(from);
+	        mailHelper.setTo(to);
+	        mailHelper.setSubject(title);
+	        mailHelper.setText(content, true);       
+	        
+	        mailSender.send(mail);
+	        num = Integer.toString(serti);
+	        
+	    } catch(Exception e) {
+	        num = "error";
+	    }
+	    return num;
+	}
+	
+	
+	
+	
+	/*-------------------------------*/
 	@RequestMapping(value="signin.do", method=RequestMethod.POST)
 	public String signin(UserVO vo) {
 		System.out.println("회원 가입 처리");
+		vo.setEmail(vo.getId());
+		System.out.println(vo);
 		userService.insertUser(vo);
 		return "login";
 	}

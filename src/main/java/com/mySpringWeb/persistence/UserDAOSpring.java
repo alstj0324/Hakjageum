@@ -52,11 +52,22 @@ public class UserDAOSpring {
             return null;
         }
     }
+    public String logincheckUser (UserVO vo) {
+        System.out.println("===>Spring JDBC로 loginUserCheck() 기능처리");
+        try {
+            Object [] args  = {vo.getId()};
+            jdbctemplate.queryForObject(USER_GET, new UserRowMapper(), args);
+            System.out.println("아이디 존재함");          
+            return "False";
+        }catch(EmptyResultDataAccessException e){
+            return "True";
+        }
+    }
     public UserVO getUser(UserVO vo) {
         System.out.println("===>Spring JDBC로 getUser() 기능처리");
         try {
             Object [] args  = {vo.getId()};
-            return jdbctemplate.queryForObject(USER_GET, args, new UserRowMapper());
+            return jdbctemplate.queryForObject(USER_GET, new UserRowMapper(), args);
         }catch(EmptyResultDataAccessException e){
             return null;
         }
@@ -66,7 +77,7 @@ public class UserDAOSpring {
         System.out.println("===>Spring JDBC로 getUserLogin() 기능처리");
         try {
             Object [] args  = {vo.getId(), vo.getPwd()};
-            return jdbctemplate.queryForObject(USER_LOGIN, args, new UserRowMapper());
+            return jdbctemplate.queryForObject(USER_LOGIN, new UserRowMapper(), args);
         }catch(EmptyResultDataAccessException e){
             return null;
         }

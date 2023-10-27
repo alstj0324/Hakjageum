@@ -43,5 +43,9 @@ public class UserServiceImpl implements UserService{
 	public List<UserVO> getUserList() {
 		return userDAO.getUserList();
 	}
+	@Override
+	public String logincheckUser(UserVO vo) {
+		return userDAO.logincheckUser(vo);
+	}
 	
 }
