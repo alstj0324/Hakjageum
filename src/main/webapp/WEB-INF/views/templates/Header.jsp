@@ -93,16 +93,34 @@
             <ul class="list-unstyled content-light d-flex align-items-center m-0">
               <c:if test="${user != null}">
                 <li>
-                  <a style="color:gold;">[${user.nickname}]</a>
-                </li>
-                <c:if test="${user.role_id != 0}">
-                  <li>
-                    <a href="usermanage.do" class="text-uppercase item-anchor">MANAGE</a>
-                  </li>
-                </c:if>
+                  <a style="color:gold;" href="#" class="text-uppercase item-anchor dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">[${user.nickname}]</a>
+                   <ul class="dropdown-menu" id="name-dropdown">
+	                  <li class="sub-page pe-0">
+	                    <a class="text-black text-uppercase dropdown-item" href="getBoardBook.do">
+	                      내 정보 수정
+	                      <span class="badge bg-secondary">Go</span>
+	                    </a>
+	                  </li>
+	                  <li class="sub-page pe-0">
+	                    <div class="text-black text-uppercase dropdown-item" id="openbasket">
+	                      내 저장 도서
+	                      <span class="badge bg-secondary">Open</span>
+	                    </div>
+	                  </li>
+	                  <c:if test="${user.role_id != 0}">
+		                  <li class="sub-page pe-0">
+		                    <a class="text-black text-uppercase dropdown-item" href="usermanage.do">
+		                      회원 관리
+		                      <span class="badge bg-secondary">Go</span>
+		                    </a>
+		                  </li>
+		              </c:if>
+	               </ul>
+	              </li>
                 <li>
                   <a href="logout.do" class="text-uppercase item-anchor">LOGOUT</a>
                 </li>
+                
               </c:if>
               <c:if test="${user == null}">
                 <li>
