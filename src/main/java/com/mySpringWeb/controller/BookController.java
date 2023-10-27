@@ -12,7 +12,12 @@ import java.io.UnsupportedEncodingException;
 
 @Controller
 public class BookController {
-
+	
+	@RequestMapping(value="getBoardBook.do")
+	public String getBoardBook() {
+		return "getBoardBook";
+	}
+	
     @RequestMapping(value="bookRecommend.do", method = RequestMethod.GET)
     public String bookRecommend(
             @RequestParam(defaultValue="자기계발")
