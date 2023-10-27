@@ -6,7 +6,7 @@
       <div id="footer-bottom">
         <div class="container">
           <div>
-            <div align="center">
+            <div class="align-center">
               <p>Made by  <u>Kim Min Seo</u></p>
             </div>
           </div>

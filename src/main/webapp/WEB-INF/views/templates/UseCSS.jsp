@@ -1,8 +1,13 @@
 <%@ page pageEncoding="UTF-8" %>
 
+<!-- Favicon -->
+<link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon">
+
 <!-- Default Style -->
 <link rel="stylesheet" type="text/css" href="resources/css/default/normalize.css">
-<%--<link rel="stylesheet" type="text/css" href="resources/css/vendor.css">--%>
+
+<!-- Swiper -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
 <!-- Font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +17,7 @@
 <link rel="stylesheet" type="text/css" href="resources/fonts/icomoon.css">
 
 <!-- Bootstrap -->
-<link rel="stylesheet" type="text/css" href="resources/css/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
