@@ -117,8 +117,6 @@ public class UserController {
 	@RequestMapping(value="signin.do", method=RequestMethod.POST)
 	public String signin(UserVO vo) {
 		System.out.println("회원 가입 처리");
-		vo.setEmail(vo.getId());
-		System.out.println(vo);
 		userService.insertUser(vo);
 		return "login";
 	}

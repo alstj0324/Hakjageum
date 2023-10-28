@@ -108,7 +108,7 @@
 	                  </li>
 	                  <c:if test="${user.role_id != 0}">
 		                  <li class="sub-page pe-0">
-		                    <a class="text-black text-uppercase dropdown-item" href="insertBook.do">
+		                    <a class="text-black text-uppercase dropdown-item" href="usermanage.do">
 		                      회원 관리
 		                      <span class="badge bg-secondary">Go</span>
 		                    </a>
