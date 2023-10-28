@@ -20,17 +20,9 @@ public class BasketAPI {
         return ResponseEntity.ok(arr);
     }
 
-    @GetMapping("/add/{userId}/{bookId}")
-    public ResponseEntity<JSONObject> addBook(@PathVariable("userId") String userId, @PathVariable("bookId") String bookId) {
-        JSONObject res = new JSONObject();
-        res.put("result", "success");
-        return ResponseEntity.ok(res);
-    }
-
-    @GetMapping("/{userId}/{bookId}")
-    public ResponseEntity<JSONObject> deleteBook(@PathVariable("userId") String userId, @PathVariable("bookId") String bookId) {
-        JSONObject res = new JSONObject();
-        res.put("result", "success");
-        return ResponseEntity.ok(res);
+    @GetMapping("/getvo/{userId}")
+    public ResponseEntity<JSONArray> getBasketListToVo(@PathVariable("userId") String userId) {
+        JSONArray arr = basketService.gatBasketList(userId);
+        return ResponseEntity.ok(arr);
     }
 }
