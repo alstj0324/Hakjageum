@@ -10,28 +10,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceUtil {
 
-    public JSONArray getAllLibraryToJSON(String x, String y) {
-        return placeToObject(getAllLibrary(x, y));
+    public JSONArray getAllPlaceToJSON(String keyword, String code, String x, String y) {
+        return placeToObject(getAllPlace(keyword, code, x, y));
     }
 
-    public JSONArray getAllCafeToJSON(String x, String y) {
-        return placeToObject(getAllCafe(x, y));
-    }
-
-    public List<PlaceVO> getAllLibrary(String x, String y) {
-        String query = "도서관";
-        return getPlaceData(x, y, "", query, 1000);
-    }
-
-    public List<PlaceVO> getAllCafe(String x, String y) {
-        String query = "카페";
-        return getPlaceData(x, y, "CE7", query, 200);
+    public List<PlaceVO> getAllPlace(String keyword, String code, String x, String y) {
+        return getPlaceData(x, y, code, keyword, 1000);
     }
 
     public List<PlaceVO> getPlaceData(String x, String y, String category_group_code, String query, int radius) {
