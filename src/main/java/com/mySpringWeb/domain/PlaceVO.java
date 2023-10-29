@@ -14,17 +14,19 @@ public class PlaceVO {
 	private String y;
 
 	public String toString() {
-		return String.format(
-			"CafeVO[\n" +
-			"\tname=%s\n" +
-			"\taddress=%s\n" +
-			"\troad_address=%s\n" +
-			"\tphone=%s\n" +
-			"\turl=%s\n" +
-			"\tx=%s\n" +
-			"\ty=%s\n" +
-			"]",
-			name, address, road_address, phone, url, x, y
+		return (
+            String.format(
+				"CafeVO[\n" +
+				"\tname=%s\n" +
+				"\taddress=%s\n" +
+				"\troad_address=%s\n" +
+				"\tphone=%s\n" +
+				"\turl=%s\n" +
+				"\tx=%s\n" +
+				"\ty=%s\n" +
+				"]",
+				name, address, road_address, phone, url, x, y
+			)
 		);
 	}
 }

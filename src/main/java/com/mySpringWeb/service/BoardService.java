@@ -1,8 +1,8 @@
 package com.mySpringWeb.service;
 
-import java.util.List;
-
 import com.mySpringWeb.domain.BoardVO;
+
+import java.util.List;
 
 public interface BoardService {
 	public void insertBoard(BoardVO vo);

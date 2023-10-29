@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-
+	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- DataSource 설정(jdbc) -->
 	<bean id = "dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> <!-- close : 소멸자 -->
@@ -10,14 +10,14 @@
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
 		<property name="url" value="jdbc:mysql://minnowseo.iptime.org:3306/test"/>
 		<property name="username" value="root"/>
-		<property name="password" value="wjdqhqhdks@1" />
+		<property name="password" value="wjdqhqhdks@1"></property>
 	</bean>
 	
 	<!-- Spring JDBC설정(jdbc template) -->
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 	<!-- 내부에 반드시 jdbc가 필요함 -->
 		<property name="dataSource" ref="dataSource"/>
-	</bean>
+	</bean>	
 	
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com"/>

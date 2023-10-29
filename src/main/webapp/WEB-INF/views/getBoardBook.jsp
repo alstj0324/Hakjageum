@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ko">
   <head>
+  
     <title>학자금, 학생에게 자기계발은 금이다.</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +17,7 @@
   <body class="bg-accent-light">
     <%@ include file="templates/Header.jsp" %>
     <section id="billboard" class="position-relative">
-    	<div class="banner-content banner-content-board">
+    	<div class="banner-content banner-content-board banner-content-getBoardBook">
     		<div class="banner-content-board-insert">
     			<h2 class="board-title">Book Board</h2>
     			<div class="board-insert">

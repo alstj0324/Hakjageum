@@ -58,7 +58,7 @@ public class BoardController {
 	public String insertBoard() {
 		return "insertBoard";
 	}
-
+	
 	@RequestMapping(value="insertBoard.do", method=RequestMethod.POST)
 	public String insertBoard(BoardVO vo) {
 		System.out.println("글 작성 처리");

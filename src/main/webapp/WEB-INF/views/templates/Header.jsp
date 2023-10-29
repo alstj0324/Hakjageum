@@ -45,7 +45,7 @@
                    aria-expanded="false"> Notice </a>
                 <ul class="dropdown-menu">
                   <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="contact.html">
+                    <a class="text-black text-uppercase dropdown-item" href="Test.do">
                       contact&nbsp
                       <span class="badge bg-secondary">pro</span>
                     </a>
@@ -108,7 +108,7 @@
 	                  </li>
 	                  <c:if test="${user.role_id != 0}">
 		                  <li class="sub-page pe-0">
-		                    <a class="text-black text-uppercase dropdown-item" href="usermanage.do">
+		                    <a class="text-black text-uppercase dropdown-item" href="insertBook.do">
 		                      회원 관리
 		                      <span class="badge bg-secondary">Go</span>
 		                    </a>
@@ -132,117 +132,47 @@
       </div>
     </div>
   </div>
-  <input type="hidden" id="user_id" value="${user.id}">
-  <script type="text/javascript">    
-  	function deleteBasket(){
-		var user_id = $("#user_id").val();
-		var book_unique_id = $("#book_unique_id").val();
-		if (confirm("도서를 삭제하시겠습니까?") == true){
-			$.ajax({
-  	           type:"get",
-  	           url:"deleteBasket.do",
-  	           dataType:"text",
-  	           data : {                       // 매개변수로 전달할 데이터
-  	               "user_id" : user_id,
-  	               "book_unique_id" : book_unique_id// 아이디값
-  	           },
-  	           success: function(data){
-  	               console.log("통신성공");
-  	               
-  	               if(data === 'False'){
-  	                   alert("도서가 삭제되었습니다.");
-  	                   return show();
-  	               }else if(data === 'True'){
-  	            	   alert("이미 존재하지 않습니다.")
-  	            	   
-  	               }
-  	           },
-  	           error:function(request, status, error){
-  	        	   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-  	           }
-  	       })
-		}else{
-			return false;
-		}	
-	}
-  
+  <script type="text/javascript">
   	function hide(){
   		$("#basketList").css('visibility','hidden');
   	}
   	function show(){
-  		var user_id = $("#user_id").val();
-  		var data1="";
-  		var str = "";
-  		var str2 = '<div class="ListClose" id="ListClose" onClick="javascript:hide();">'+
-  			   '닫기' +
-  			   '</div>';
-  		$.ajax({
-	           type:"get",
-	           url:"getBasketList.do",
-	           dataType:"json",
-	           data : {                       
-	               "user_id" : user_id
-	           },
-	           success: function(data){
-	               console.log("통신성공");
-	               var bookId="";
-	               $.each(data, function(index, item) { // 데이터 =item/api/book/get/{bookId}
-	               	   bookId = item.book_id;
-	            	   $.ajax({
-	        	           type:"get",
-	        	           url:"/biz/api/book/get/" + bookId,
-	        	           dataType:"json",
-	        	           async: false,
-	        	   	       success: function(data){
-	        	               console.log("통신성공");
-	        	               var image = data[0].image;
-	        	               var link = data[0].link;
-	        	               var title = (data[0].title).split("(");
-	        	               var author = data[0].author;
-	        	               var publisher = data[0].publisher;
-	        	               var isbn = data[0].isbn
-	        	               var pubdate = data[0].pubdate;
-	        	               var discount = data[0].discount;
-	        	               str += '<div class="ListItem">'+
-	        		  			      '<div class="ItemImage">' +
-	       	  				           '<a href="' +  link  +  '">'  +  '<img src="'+ image + '">' + '</a>' +
-	       	  							'</div>' + '<input type="hidden" id="book_unique_id" value="'+isbn+'">' +
-	       	  							'<div class="ItemTitle" id="Item">' + title[0] + '</div>' +
-	       	 	       	  			    '<div class="ItemAuthor" id="Item">' + '저자명 :' + author + '</div>' + 	
-								        '<div class="ItemPublisher" id="Item">' + '출판사 :' + publisher + '</div>' + 
-	       	  					        '<div class="ItemPubdate" id="Item">' + '출간일 :'+ pubdate + '</div>' +
-	       	  						    '<div class="ItemDiscount" id="Item">' + '도서가격 :' + discount + '원</div>' +
-										'<button type="button" class="ItemDelete" onclick="deleteBasket()">' + '도서삭제' + '</div>'+ '</div>';
-	        	           },
-	        	           error:function(){     	
-	        	           }
-	        	       });
-	        	       console.log(str);
-	        	       
-					});
-	  			   $("#listContainer").html(str);
-	           },
-	           error:function(request, status, error){
-	        	   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	           }  
-	       });
-	     
-  		
-	    $("#basketList").css('visibility','visible');
+  		$("#basketList").css('visibility','visible');
   	}
-  	
-  
 </script>
   <div class="basketList" id="basketList">
   	<div class="basketHead">
   	내 도서 목록
   	</div>
-  	<div class="ListContainer" id="listContainer">
-  		
-	  		
-  	</div>	
+  	<div class="ListContainer">
+  		<c:forEach var="index" begin="1" end="10">
+	  		<div class="ListItem">
+	  			<div class="ItemImage">
+	  				<img src="http://bookthumb.phinf.naver.net/cover/108/346/10834650.jpg?type=m1&udate=20160902">
+	  			</div>
+	  			<div class="ItemTitle" id="Item">
+	  			불곰의 <b>주식</b>투자 불패공식
+	  			</div>
+	  			<div class="ItemAuthor" id="Item">
+	  			저자명 : 불곰 박선목	
+	  			</div>
+	  			<div class="ItemPublisher" id="Item">
+	  			출판사 : 부키
+	  			</div>
+	  			<div class="ItemPubdate" id="Item">
+	  			출간일 : 20160729
+	  			</div>
+	  			<div class="ItemDiscount" id="Item">
+	  			도서가격 : 16000원
+	  			</div>
+	  			<div class="ItemDelete">
+	  			도서삭제
+	  			</div>
+	  		</div>
+	  	</c:forEach>
+  	</div>	 
   	<div class="ListClose" id="ListClose" onClick="javascript:hide();">
-	 닫기
-	</div>'                     
+  		닫기
+  	</div>                     
   </div>
 </header>

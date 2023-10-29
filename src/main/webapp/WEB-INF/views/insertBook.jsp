@@ -16,7 +16,7 @@
   <body class="bg-accent-light">
     <%@ include file="templates/Header.jsp" %>
     <section id="billboard" class="position-relative">
-    	<div class="banner-content banner-content-board">
+    	<div class="banner-content banner-content-board banner-content-getBoardBook">
     		<div class="banner-content-board-insert">
     			<h2 class="board-title">Book Board</h2>
     			<div class="board-insert">
