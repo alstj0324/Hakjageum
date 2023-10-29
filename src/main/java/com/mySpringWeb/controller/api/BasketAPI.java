@@ -13,16 +13,17 @@ public class BasketAPI {
 	
     @Autowired
     private BasketService basketService;
-
+/*
     @GetMapping("/get/{userId}")
     public ResponseEntity<JSONArray> getBasketList(@PathVariable("userId") String userId) {
-        JSONArray arr = basketService.gatBasketList(userId);
+        JSONArray arr = basketService.getBasketList(userId);
         return ResponseEntity.ok(arr);
     }
 
     @GetMapping("/getvo/{userId}")
     public ResponseEntity<JSONArray> getBasketListToVo(@PathVariable("userId") String userId) {
-        JSONArray arr = basketService.gatBasketList(userId);
+        JSONArray arr = basketService.getBasketList(userId);
         return ResponseEntity.ok(arr);
     }
+    */
 }
