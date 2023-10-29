@@ -10,18 +10,25 @@
   <body class="bg-accent-light">
     <%@ include file="templates/Header.jsp" %>
     <section id="billboard" class="position-relative">
-      <div class="BookBoardForm-Container">
-      	<div class="BookBoardForm-description-container">
-      		<div class="BookBoardForm-description">
-      			BookBoard Form
-      		</div>
-      	</div>
-      	<div class=BookBoardFormMain-Container>
-      		<div class="BookBoard-Form">
-      			
-      		</div>
-      	</div>
-      </div>
+      <div class="banner-content banner-content-board">
+      	<h2>point</h2>
+      	<a href="kakaoPay.do">
+      		<h4>
+      			카카오페이 결제하기
+      		</h4>
+      	</a>
+      	<a href="searchKakaoPay.do">
+      		<h4>
+      			카카오페이 결제 확인하기(결제상세)
+      		</h4>
+      	</a>
+      	<a href="payCancel.do">
+      		<h4>
+      			카카오페이 결제 취소하기
+      		</h4>
+      	</a>   
+
+		</div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>
   </body>

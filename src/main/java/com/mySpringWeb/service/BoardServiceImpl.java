@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.mySpringWeb.domain.BoardVO;
-import com.mySpringWeb.persistence.BoardDAOSpring_old;
+import com.mySpringWeb.persistence.BoardDAOSpring;
 
 @Service("boardService")
-public class BoardServiceImpl_old implements BoardService_old {
+public class BoardServiceImpl implements BoardService{
 	@Autowired 
-	private BoardDAOSpring_old boardDAO;
-//	private BoardDAO boardDAO; 
+	private BoardDAOSpring boardDAO;
+	
 	@Override
 	public void insertBoard(BoardVO vo) {
 		boardDAO.insertBoard(vo);
