@@ -33,7 +33,7 @@ public class BoardDAOSpring {
     public BoardVO getBoard(BoardVO vo) {
         System.out.println("===> Spring JDBC로 getBoard() 기능처리");
         Object [] args  = {vo.getBoard_id()};
-        BoardVO board = jdbctemplate.queryForObject(BOARD_GET, args, new BoardRowMapper());
+        BoardVO board = jdbctemplate.queryForObject(BOARD_GET, new BoardRowMapper(), args);
         return board;
     }
     public List<BoardVO> getBoardList() {
