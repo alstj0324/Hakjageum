@@ -1,15 +1,11 @@
 package com.mySpringWeb.persistence;
 
-import com.mySpringWeb.service.BasketService;
-import com.mySpringWeb.service.BoardService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 

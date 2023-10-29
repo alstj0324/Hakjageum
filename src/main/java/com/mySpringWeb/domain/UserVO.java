@@ -16,19 +16,17 @@ public class UserVO {
 	private Date create_at;
 
 	public String toString() {
-        return (
-            String.format(
-                "UserVO[\n" +
-                "\tid=%s\n" +
-                "\temail=%s\n" +
-                "\tpwd=%s\n" +
-                "\tnickname=%s\n" +
-                "\tprovider=%s\n" +
-                "\trole_id=%s\n" +
-                "\tcreate_at=%s\n" +
-                "]",
-                id, email, pwd, nickname, provider, role_id, create_at
-            )
-        );
+        return String.format(
+			"UserVO[\n" +
+			"\tid=%s\n" +
+			"\temail=%s\n" +
+			"\tpwd=%s\n" +
+			"\tnickname=%s\n" +
+			"\tprovider=%s\n" +
+			"\trole_id=%s\n" +
+			"\tcreate_at=%s\n" +
+			"]",
+			id, email, pwd, nickname, provider, role_id, create_at
+		);
 	}
 }
