@@ -58,7 +58,7 @@
 	            	<div class="item">도서명 : <div class="item-in">${fn:split(books[0].title, '(')[0]}</div></div>
               		<div class="item">저자명 : <div class="item-in">${fn:replace(books[0].author, '^', ',')}</div></div>
               		<div class="item1">출간일 : ${books[0].pubdate }</div>
-              		<div class="item1">isbn : ${books[0].isbn }</div>
+              		<div class="item1">출판사 : ${books[0].publisher }</div>
               		<input type="hidden" id="user_id" value="${user.id}">
               		<input type="hidden" id="book_unique_id" value="${books[0].isbn }">
 	            </div>
