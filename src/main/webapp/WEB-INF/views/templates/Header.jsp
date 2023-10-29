@@ -45,7 +45,7 @@
                    aria-expanded="false"> Notice </a>
                 <ul class="dropdown-menu">
                   <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="contact.html">
+                    <a class="text-black text-uppercase dropdown-item" href="Test.do">
                       contact&nbsp
                       <span class="badge bg-secondary">pro</span>
                     </a>

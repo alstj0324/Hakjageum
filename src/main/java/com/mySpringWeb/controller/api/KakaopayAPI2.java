@@ -25,6 +25,11 @@ public class KakaopayAPI2 {
 	final String kakao_clientId = "c9e9586c57fe79bc3c0ee0c52ad1a6f2"; //kakao client 아이디(REST API 키)
 	final String kakao_adminKey = "3d847ad0fc68439f7949aa9254f80fc8"; //kakao adminkey
 	
+	@RequestMapping(value="Test.do")
+	public String Test() {
+		return "Test";
+	}
+	
 	@RequestMapping(value="kakaoPay.do",method=RequestMethod.GET)
 	public String kakaoPayment(HttpSession session ,HttpServletRequest request) throws IOException, ParseException {
 		
@@ -32,12 +37,12 @@ public class KakaopayAPI2 {
 		String partner_order_id = "Test" + new Date().getTime(); //가맹점 주문번호
 		String partner_user_id = "Test1"; //가맹점 회원 id
 		String item_name = "감자튀김"; //상품명
-		String quantity = "123"; //상품 수량
+		String quantity = "1"; //상품 수량
 		String total_amount = "270600"; //상품 총액
 		String tax_free_amount = "0"; // //상품 비과세 금액
-		String approval_url = "http://localhost:8080/kPayment.do"; //결제 성공 시 redirect url
-		String fail_url = "http://localhost:8080/kPaymentfail.do"; //결제 취소 시 redirect url
-		String cancel_url = "http://localhost:8080/kPaymentcancel.do"; //결제 실패 시 redirect url
+		String approval_url = "http://localhost:8080/biz/kPayment.do"; //결제 성공 시 redirect url
+		String fail_url = "http://localhost:8080/biz/kPaymentfail.do"; //결제 취소 시 redirect url
+		String cancel_url = "http://localhost:8080/biz/kPaymentcancel.do"; //결제 실패 시 redirect url
 		
 		String apiURL = "https://kapi.kakao.com/v1/payment/ready?"
 				+"cid="+cid
@@ -62,15 +67,13 @@ public class KakaopayAPI2 {
 		con.setRequestProperty("Authorization", "KakaoAK " + kakao_adminKey);
 		con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
-		System.out.println("conURL : "+con.toString());
-		
 		br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		
 		String inputLine;
 		StringBuilder res = new StringBuilder();
 		while ((inputLine = br.readLine()) != null) {
 			res.append(inputLine);
-			System.out.println(inputLine);
+			System.out.println("카카오페이 결제 api(1)"+inputLine);
 		}
 		
 		br.close();
@@ -83,7 +86,7 @@ public class KakaopayAPI2 {
 		
 		System.out.println("결제 정보 : "+jsonObj.toJSONString());
 		
-		return "redirect:" + jsonObj.get("next_redirect_pc_url");
+		return "redirect:" +(String) jsonObj.get("next_redirect_pc_url");
 	}
 	
 	@RequestMapping(value="kPayment.do",method=RequestMethod.GET)
@@ -116,7 +119,7 @@ public class KakaopayAPI2 {
 		StringBuilder res = new StringBuilder();
 		while ((inputLine = br.readLine()) != null) {
 			res.append(inputLine);
-			System.out.println(inputLine);
+			System.out.println("카카오 결제 api(2) :"+inputLine);
 		}
 		
 		br.close();
@@ -127,6 +130,7 @@ public class KakaopayAPI2 {
 		JSONObject resObj = (JSONObject) jsonObj.get("amount");
 		
 		try {
+			session.setAttribute("tid", jsonObj.get("tid"));
 			session.setAttribute("cid", jsonObj.get("cid")); //가맹점 코드
 			session.setAttribute("type", jsonObj.get("payment_method_type")); //결제 타입
 			session.setAttribute("item_name", jsonObj.get("item_name")); //결제 상품
@@ -171,6 +175,7 @@ public class KakaopayAPI2 {
 		String apiURL = "https://kapi.kakao.com/v1/payment/order?"
 				+"cid="+cid
 				+"&tid="+tid;
+		
 		URL url = new URL(apiURL);
 		
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();

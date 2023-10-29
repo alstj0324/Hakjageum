@@ -111,13 +111,13 @@ ul#name-dropdown {
 	margin-top: 15px;
 }
 .ItemImage {
-	border: 1px solid black;
 	display: inline-block;
 	position: absolute;
 	width: 82px;
 	height: 116px;
 	top: 7px;
 	left: 10px;
+	overflow:hidden;
 }
 #Item {
 	text-align: left;
@@ -161,6 +161,8 @@ ul#name-dropdown {
 	left: 240px;
 }
 .ItemDelete {
+	margin:0;
+	padding:0;
 	display: inline-block;
 	position: absolute;
 	width: 70px;
@@ -255,6 +257,9 @@ a{color:inherit;text-decoration:none}
 }
 .login-form .group{
   margin-bottom:0px;
+}
+.login-form .group input::placeholder {
+	color:rgba(255,255,255,0.7);
 }
 .login-form .group .label,
 .login-form .group .input,
@@ -357,6 +362,7 @@ input#nickname.input{
 	left: -20px;
 	display: inline-block;
 	position: absolute;
+	border: 2px solid black;
 	border-radius:15px;  
 	width: 400px;
 	height: 200px;
@@ -605,12 +611,12 @@ div.user-update-form h2{
 	padding-left:0;
 }
 /* ----------------[board]----------------------*/
-div.banner-content-board:not(p) {
+div.banner-content-board {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-
+	
 	margin-top:10px;
 	width: 90%;
 	height:650px;
@@ -899,7 +905,7 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	margin: 8px auto 0 auto;
 	width: 95px;
 	height: 30px;
-	line-height: 30px;
+	line-height: 28px;
 }
 .banner-content-board .book-content .book-content-result .item5 a{
 	color:white;
@@ -912,7 +918,23 @@ div.banner-content-board .detail-3 input[type="submit"]{
 }
 
 /* ----------------[book Review]----------------------*/
-
+.backbtnContainer {
+	position: absolute;
+	right: 30;
+	top:0;
+	margin: 0;
+	width: 150px;
+	height: 60px;
+	box-sizing: border-box;
+	text-align: center;
+}
+.backbtnContainer .backbtn {
+	border: 2px solid white;
+	padding: 5px;
+	margin-top: 13px;
+	border-radius: 10px; 
+	background-color: rgba(0,0,0,0.7);
+}
 .banner-content-board .book-content .book-content-item1 {
 	display: inline-block;
 	position:absolute;
@@ -920,88 +942,84 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	border-right: 1px solid rgba(0,0,0,0.3);
 	width: 50%;
 	height: 500px;
-	overflow: hidden;
+	overflow-y: hidden;
 }
 .banner-content-board .book-content .book-content-result0 {
-	height: auto;
+	border-bottom: 1px dashed black;
+	height: 250px;
 	width: 100%;
 }
-.book-content-result0 .basket-button {
-	position: absolute;
+.banner-content-board .book-content .book-review-img {
 	display: inline-block;
-	width:90px;
-	height: 50px;
-	top: 20px;
-	right: 50px; 
-}
-.book-content-result0 .basket-button .basket{
-	background-color: rgba(200,200,200,0.9);
-	padding: 0;
-	border: 2px solid black;
-	border-radius: 15px;
-	color: black;
-	width: 90px;
-	height: 50px;
+	position: absolute;
+	left: 20%;
 	margin: 0;
+	width: 164px;
+	height: 240px;
+	overflow: hidden;
+}
+.book-content-description {
+	display: inline-block;
+	position: absolute;
+	border-left: 1px solid gray;
+	top: 5px;
+	width: 340px;
+	height: 200px;
+	right: 5%;
 }
 .banner-content-board .book-content .book-content-result1 {
 	position:relative;
 	margin: 5px auto 0 auto;
 	display: block;
 	width: 100%;
-	height: 255px;
-	overflow: scroll;
+	height: 242px;
+	overflow-y: scroll;
 	text-align: center;
 }
-.banner-content-board .book-content .book-content-result1 .item1 {
-	margin: 2px auto 0 auto;
+.book-content-description .item {
+	position: relative;
+	border-bottom: 1px dashed black;
+	margin: 0px auto 5px auto;
 	width: 280px;
-	height: 38px;
+	height: 60px;
+	font-size: 16px;
+	color:black;
+	line-height: 30px;
+	text-align: left;
+}
+.book-content-description .item-in {
+	position: absolute;
+	top: 0;
+	right:0;
+	margin: 7px auto 5px auto;
+	width: 220px;
+	height: 50px;
 	font-size: 16px;
 	color:black;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: normal;
 	line-height: 1.2;
-	text-align: center;
+	text-align: left;
 	word-wrap: break-word;
 	display: -webkit-box;
 	-webkit-line-clamp: 2 ;
 	-webkit-box-orient: vertical;
 }
-.banner-content-board .book-content .book-content-result1 .item2 {
-	margin: 5px auto 0 auto;
+.book-content-description .item1 {
+	border-bottom: 1px dashed black;
+	margin: 0px auto 5px auto;
 	width: 280px;
-	height: 19px;
+	height: 30px;
 	font-size: 16px;
 	color:black;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: normal;
-	line-height: 1.2;
-	text-align: center;
-	word-wrap: break-word;
-	display: -webkit-box;
-	-webkit-line-clamp: 1 ;
-	-webkit-box-orient: vertical;
+	line-height: 30px;
+	text-align: left;
 }
-.banner-content-board .book-content .book-content-result1 .item3 {
-	margin: 5px auto 0 auto;
-	width: 280px;
-	height: 19px;
-	font-size: 16px;
-	color:black;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: normal;
-	line-height: 1.2;
-	text-align: center;
-	word-wrap: break-word;
-	display: -webkit-box;
-	-webkit-line-clamp: 1 ;
-	-webkit-box-orient: vertical;
-}
-.banner-content-board .book-content .book-content-result1 .item4 {
+.book-content-result1 .item2 {
 	margin: 7px auto 0 auto;
 	width: 80%;
 	height: auto;
@@ -1009,6 +1027,24 @@ div.banner-content-board .detail-3 input[type="submit"]{
     color:black;
     line-height: 1.4;
     text-align: center;
+}
+.book-content-result0 .basket-button {
+	position: absolute;
+	display: inline-block;
+	width:90px;
+	height: 35px;
+	top: 210px;
+	right: 170px; 
+}
+.book-content-result0 .basket-button .basket{
+	background-color: rgba(180,180,180,0.8);
+	font-weight: bold;
+	border: 2px solid black;
+	width:90px;
+	height: 35px;
+	color: white;
+	margin: 0;
+	padding: 0;
 }
 .banner-content-board .book-content .book-content-item2 {
 	display: inline-block;
@@ -1019,7 +1055,6 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	overflow: hidden;
 	text-align: center;
 }
-
 .banner-content-board .book-content .book-content-item2 .book-review-nav {
 	border: 2px dotted black;
 	border-radius:30px;
