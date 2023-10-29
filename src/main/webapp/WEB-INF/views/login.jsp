@@ -38,117 +38,39 @@
                   <a href="kakaologin.do"><img class="login-image" src="resources/images/loginimg/kakao_login.png"/></a>
                 </div>
               </div>
-              <script type="text/javascript">
-	              function idCheck() {
-	            	  var textdiv1 = document.getElementById('id-check-text');
-	            	  $.ajax({
-                          type:"get",
-                          url:"idCheck.do",
-                          dataType:"text",
-                          data : {                       // 매개변수로 전달할 데이터
-                              "id" : $('#id').val()  // 아이디값
-                          },
-                          success: function(data){
-                              console.log("통신성공");
-                              
-                              if(data === 'False'){
-                                  alert("사용 불가능한 아이디입니다!")
-                                  $("#id").val("");
-                                  $("#id").focus();
-                                  $("#id-check-text").text("아이디 중복체크가 필요합니다!");
-      	            			  $("#mail-check-text").css("color","rgb(255, 139, 133)");    
-                              }else if(data === 'True'){
-                                  alert("사용 가능한 아이디입니다!")
-                                  $("#id").attr("readonly",true);        
-                                  $("#idcheckValue").val("Y");
-                                  $("#email").focus();
-                                  $("#id-check-text").text("사용가능한 아이디입니다!");
-      	            			  $("#id-check-text").css("color","lightgreen");
-                              }
-                          },
-                          error:function(request, status, error){
-
-                      		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                          }
-                      })
-                  }
-	              var code = "";
-	              function emailCheck() {
-	            	  var email = $("#email").val();
-	            	  $.ajax({
-	            	        type:"GET",
-	            	        url:"emailCheck.do?email=" + email,
-	            	        cache : false,
-	            	        success:function(data){
-	            	        	if(data == "error"){
-	            	        		alert("이메일 주소가 올바르지 않습니다. 유효한 이메일 주소를 입력해주세요.");
-	            	        		$("#email").val("");
-	            					$("#email").attr("autofocus",true);
-	            					
-	            	        	}else{	        		
-	            	        		alert("이메일로 인증코드가 발송되었습니다!")
-	            					$("#emailCheck").css('visibility','visible');
-	            	        		code = data;
-	            	        	}
-	            	        }
-	            	    });  
-	              }
-	              
-	              function emailCheckbtn(){
-	            	  if($("#emailcode").val() == code){
-	            		    alert("인증번호가 일치합니다.");
-	            			$("#mail-check-text").text("인증번호가 일치합니다.");
-	            			$("#emailcheckValue").val("Y");
-	            			$("#mail-check-text").css("color","lightgreen");
-	            			$("#email").attr("readonly",true); 
-	            			$("#emailCheck").css('visibility','hidden'); 
-	            			$("#nickname").focus();
-	            		}else{
-	            			alert("인증번호가 일치하지 않습니다 다시 시도해주세요.");
-	            			$("#emailCheck").css('visibility','hidden'); 
-	            		}
-	              }
-	              
-	              function emailCheckClose(){
-	            	  $("#emailCheck").css('visibility','hidden');
-	            	  $("#email").val("");
-  					  $("#email").attr("autofocus",true);
-	              }
-	              
-	              
-	              
-              </script>
               <div class="sign-up-htm">
-                <form action=signin.do method=post>
+                <form action=signin.do method=post onSubmit="return check()">
                   <input type="hidden" name="provider" value="local">
                   <div class="group">
                     <label for="id" class="label">ID</label>
-                    <input id="id" name="id" type="text" class="input" required>
+                    <input id="id" name="id" type="text" class="input" placeholder="영문,숫자 4~12자로 입력." required>
                     <button type="button" class="id-check-button" id="check-button" onClick="idCheck()">중복검사</button>
                     <div class="id-check-text" id="id-check-text" >아이디 중복체크가 필요합니다!</div>
                     <input type="hidden" id="idcheckValue" value="N">
                   </div>
                   <div class="group" id="group1">
                     <label for="email" class="label">Email Address</label>
-                    <input id="email" name="email" type="text" class="input" required>
+                    <input id="email" name="email" type="text" class="input" placeholder="이메일 형식으로 입력."  required>
                     <div class="mail-check-button" id="check-button" onClick="emailCheck()">이메일<br>인증</div>
                     <div class="mail-check-text" id="mail-check-text">이메일 인증이 필요합니다!</div>
                     <input type="hidden" id="emailcheckValue" value="N">
                   </div>
                   <div class="group">
                     <label for="nickname" class="label">Nickname</label>
-                    <input id="nickname" name="nickname" type="text" class="input" required>
-                    <button type="button" class="nick-check-button" id="nick-check-button" onClick="idCheck()">중복검사</button>
+                    <input id="nickname" name="nickname" type="text" class="input" placeholder="한,영,숫자 2~15자로 입력" required>
+                    <button type="button" class="nick-check-button" id="nick-check-button" onClick="nickCheck()">중복검사</button>
                     <div class="nick-check-text" id="nick-check-text">닉네임 중복체크가 필요합니다!</div>
+                    <input type="hidden" id="nickcheckValue" value="N">
                   </div>
                   <div class="group">
                     <label for="pwd" class="label">Password</label>
-                    <input id="pwd" name="pwd" type="password" class="input" data-type="password" required>
+                    <input id="pwd" name="pwd" type="password" class="input" placeholder="4자 이상 영문,숫자,특수문자 입력"  data-type="password" required>
                   </div>
                   <div class="group">
                     <label for="pwd2" class="label">Password Check</label>
-                    <input id="pwd2" name="pwd2" type="password" class="input" data-type="password" required>
-                    <div class="pwd-check-text" id="pwd-check-text">비밀번호가 일치합니다</div>
+                    <input id="pwd2" name="pwd2" type="password" class="input" placeholder="4자 이상 영문,숫자,특수문자 입력" data-type="password" >
+                    <div class="pwd-check-text" id="pwd-check-text">비밀번호가 일치하지 않습니다!</div>
+                    <input type="hidden" id="pwdcheckValue" value="N">
                   </div>
                   <div class="group">
                     <input type="submit" class="button" id="loginbtn" value="Sign Up">
@@ -173,5 +95,6 @@
       </div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>
+    <script type="text/javascript" src="resources/js/signin.js"></script>
   </body>
 </html>

@@ -51,7 +51,7 @@
                 <div class="item2">${fn:replace(books.author, '^', ',')}</div>
                 <div class="item3">${books.pubdate }</div>
                 <div class="item4">${books.description }</div>
-                <div class="item5"><a href="bookReview.do?category=${books.isbn }&blog=${fn:split(books.title,'(')[0]}">도서 리뷰</a></div>
+                <div class="item5"><a href="bookReview.do?category=${books.isbn }&blog=${fn:split(books.title,'(')[0]}&id=${user.id}">도서 리뷰</a></div>
               </div>
             </div>
           </c:forEach>
