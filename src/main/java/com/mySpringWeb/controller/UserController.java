@@ -63,7 +63,7 @@ public class UserController {
 		}
 	}
 
-	/*------------[회원가입중]-----------*/
+	/*------------[회원가입 중 id 중복검사]-----------*/
 	@RequestMapping(value="idCheck.do", method=RequestMethod.GET)
 	@ResponseBody
 	public String idCheck(String id) throws UnsupportedEncodingException{
@@ -71,6 +71,17 @@ public class UserController {
 		UserVO vo = new UserVO();
 		vo.setId(id);
 		String data = userService.logincheckUser(vo);
+		System.out.println("결과 값"+data);
+		return data;
+	}
+	/*-------------------------[1028추가 회원가입시 사용될 닉네임검증]------------------------------*/
+	@RequestMapping(value="nickCheck.do", method=RequestMethod.GET)
+	@ResponseBody
+	public String nickCheck(String nickname) throws UnsupportedEncodingException{
+		System.out.println("넘어온 닉네임" + nickname);
+		UserVO vo = new UserVO();
+		vo.setNickname(nickname);
+		String data = userService.logincheckNickname(vo);
 		System.out.println("결과 값"+data);
 		return data;
 	}
@@ -101,17 +112,11 @@ public class UserController {
 	        num = "error";
 	    }
 	    return num;
-	}
-	
-	
-	
-	
-	/*-------------------------------*/
+	}	
+/*--------------------------------[회원가입 검증끝]--------------------------------------*/
 	@RequestMapping(value="signin.do", method=RequestMethod.POST)
 	public String signin(UserVO vo) {
 		System.out.println("회원 가입 처리");
-		vo.setEmail(vo.getId());
-		System.out.println(vo);
 		userService.insertUser(vo);
 		return "login";
 	}

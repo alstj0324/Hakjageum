@@ -111,13 +111,13 @@ ul#name-dropdown {
 	margin-top: 15px;
 }
 .ItemImage {
-	border: 1px solid black;
 	display: inline-block;
 	position: absolute;
 	width: 82px;
 	height: 116px;
 	top: 7px;
 	left: 10px;
+	overflow:hidden;
 }
 #Item {
 	text-align: left;
@@ -161,6 +161,8 @@ ul#name-dropdown {
 	left: 240px;
 }
 .ItemDelete {
+	margin:0;
+	padding:0;
 	display: inline-block;
 	position: absolute;
 	width: 70px;
@@ -255,6 +257,9 @@ a{color:inherit;text-decoration:none}
 }
 .login-form .group{
   margin-bottom:0px;
+}
+.login-form .group input::placeholder {
+	color:rgba(255,255,255,0.7);
 }
 .login-form .group .label,
 .login-form .group .input,
@@ -357,6 +362,7 @@ input#nickname.input{
 	left: -20px;
 	display: inline-block;
 	position: absolute;
+	border: 2px solid black;
 	border-radius:15px;  
 	width: 400px;
 	height: 200px;
@@ -605,12 +611,12 @@ div.user-update-form h2{
 	padding-left:0;
 }
 /* ----------------[board]----------------------*/
-div.banner-content-board:not(p) {
+div.banner-content-board {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-
+	
 	margin-top:10px;
 	width: 90%;
 	height:650px;
@@ -899,7 +905,7 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	margin: 8px auto 0 auto;
 	width: 95px;
 	height: 30px;
-	line-height: 30px;
+	line-height: 28px;
 }
 .banner-content-board .book-content .book-content-result .item5 a{
 	color:white;
@@ -912,7 +918,23 @@ div.banner-content-board .detail-3 input[type="submit"]{
 }
 
 /* ----------------[book Review]----------------------*/
-
+.backbtnContainer {
+	position: absolute;
+	right: 30;
+	top:0;
+	margin: 0;
+	width: 150px;
+	height: 60px;
+	box-sizing: border-box;
+	text-align: center;
+}
+.backbtnContainer .backbtn {
+	border: 2px solid white;
+	padding: 5px;
+	margin-top: 13px;
+	border-radius: 10px; 
+	background-color: rgba(0,0,0,0.7);
+}
 .banner-content-board .book-content .book-content-item1 {
 	display: inline-block;
 	position:absolute;
@@ -920,88 +942,84 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	border-right: 1px solid rgba(0,0,0,0.3);
 	width: 50%;
 	height: 500px;
-	overflow: hidden;
+	overflow-y: hidden;
 }
 .banner-content-board .book-content .book-content-result0 {
-	height: auto;
+	border-bottom: 1px dashed black;
+	height: 250px;
 	width: 100%;
 }
-.book-content-result0 .basket-button {
-	position: absolute;
+.banner-content-board .book-content .book-review-img {
 	display: inline-block;
-	width:90px;
-	height: 50px;
-	top: 20px;
-	right: 50px; 
-}
-.book-content-result0 .basket-button .basket{
-	background-color: rgba(200,200,200,0.9);
-	padding: 0;
-	border: 2px solid black;
-	border-radius: 15px;
-	color: black;
-	width: 90px;
-	height: 50px;
+	position: absolute;
+	left: 20%;
 	margin: 0;
+	width: 164px;
+	height: 240px;
+	overflow: hidden;
+}
+.book-content-description {
+	display: inline-block;
+	position: absolute;
+	border-left: 1px solid gray;
+	top: 5px;
+	width: 340px;
+	height: 200px;
+	right: 5%;
 }
 .banner-content-board .book-content .book-content-result1 {
 	position:relative;
 	margin: 5px auto 0 auto;
 	display: block;
 	width: 100%;
-	height: 255px;
-	overflow: scroll;
+	height: 242px;
+	overflow-y: scroll;
 	text-align: center;
 }
-.banner-content-board .book-content .book-content-result1 .item1 {
-	margin: 2px auto 0 auto;
+.book-content-description .item {
+	position: relative;
+	border-bottom: 1px dashed black;
+	margin: 0px auto 5px auto;
 	width: 280px;
-	height: 38px;
+	height: 60px;
+	font-size: 16px;
+	color:black;
+	line-height: 30px;
+	text-align: left;
+}
+.book-content-description .item-in {
+	position: absolute;
+	top: 0;
+	right:0;
+	margin: 7px auto 5px auto;
+	width: 220px;
+	height: 50px;
 	font-size: 16px;
 	color:black;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: normal;
 	line-height: 1.2;
-	text-align: center;
+	text-align: left;
 	word-wrap: break-word;
 	display: -webkit-box;
 	-webkit-line-clamp: 2 ;
 	-webkit-box-orient: vertical;
 }
-.banner-content-board .book-content .book-content-result1 .item2 {
-	margin: 5px auto 0 auto;
+.book-content-description .item1 {
+	border-bottom: 1px dashed black;
+	margin: 0px auto 5px auto;
 	width: 280px;
-	height: 19px;
+	height: 30px;
 	font-size: 16px;
 	color:black;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: normal;
-	line-height: 1.2;
-	text-align: center;
-	word-wrap: break-word;
-	display: -webkit-box;
-	-webkit-line-clamp: 1 ;
-	-webkit-box-orient: vertical;
+	line-height: 30px;
+	text-align: left;
 }
-.banner-content-board .book-content .book-content-result1 .item3 {
-	margin: 5px auto 0 auto;
-	width: 280px;
-	height: 19px;
-	font-size: 16px;
-	color:black;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: normal;
-	line-height: 1.2;
-	text-align: center;
-	word-wrap: break-word;
-	display: -webkit-box;
-	-webkit-line-clamp: 1 ;
-	-webkit-box-orient: vertical;
-}
-.banner-content-board .book-content .book-content-result1 .item4 {
+.book-content-result1 .item2 {
 	margin: 7px auto 0 auto;
 	width: 80%;
 	height: auto;
@@ -1009,6 +1027,24 @@ div.banner-content-board .detail-3 input[type="submit"]{
     color:black;
     line-height: 1.4;
     text-align: center;
+}
+.book-content-result0 .basket-button {
+	position: absolute;
+	display: inline-block;
+	width:90px;
+	height: 35px;
+	top: 210px;
+	right: 170px; 
+}
+.book-content-result0 .basket-button .basket{
+	background-color: rgba(180,180,180,0.8);
+	font-weight: bold;
+	border: 2px solid black;
+	width:90px;
+	height: 35px;
+	color: white;
+	margin: 0;
+	padding: 0;
 }
 .banner-content-board .book-content .book-content-item2 {
 	display: inline-block;
@@ -1019,7 +1055,6 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	overflow: hidden;
 	text-align: center;
 }
-
 .banner-content-board .book-content .book-content-item2 .book-review-nav {
 	border: 2px dotted black;
 	border-radius:30px;
@@ -1218,297 +1253,10 @@ form.book-category-form {
 	margin-bottom: 0.4rem;
 }
 
-/* ==================================================================================== Kyu */
-/*================================================================== getBoardList*/
-.banner-content-board {
-  /* border: 1px solid red; */
-  width: 100%;
-  position: relative;
-}
-.banner-content-board .board_table {
-  /* border: 1px solid black; */
-  width: 100%;
-  height: 35px;
-  border-collapse: collapse;
-  text-align: center;
-}
-.banner-content-board .board_table a,
-.banner-content-board a {
-  text-decoration: none;
-  color: black;
-}
-.banner-content-board a {
-  color: white;
-}
-.banner-content-board .board_table span {
-  /* border: 1px solid blue; */
-}
-.banner-content-board .board_table span.comment {
-  /* border: 1px solid blue; */
-  color: #0d6efd;
-}
-.banner-content-board > .board_table .board-1th-tr,
-div.banner-content-board > .board_table .board_items{
-  border-bottom: 1px solid #cccccc;
-}
-.banner-content-board .board_table td {
-  padding: 7px 5px;
-}
-.banner-content-board .board_table td.num {
-  width: 10%;
-}
-.banner-content-board .board_table td.title {
-  width: 57%;
-  padding-left: 30px;
-  text-align: left;
-}
-.banner-content-board .board_table td.user {
-  width: 16%;
-}
-.banner-content-board .board_table td.date {
-  width: 8%;
-}
-.banner-content-board .board_table td.count {
-  width: 8%;
-}
-div.banner-content-board .board-insert {
-  position: absolute;
-  display: inline-block;
-  margin-top: 30px;
-  margin-bottom: 10px;
-  right: 30px;
-  bottom: 0;
-  width: 91px;
-  height: 31px;
-  text-align: center;
-  line-height: 31px;
-  border-radius: 2px;
-  background-color: #444444;
-}
+
 /*================================================================== Hedaer.jsp*/
 
 ul#name-dropdown {
 	margin-left: 270px;
 }
 
-/*================================================================== getBoardBook*/
-.banner-content-board {
-	max-width: 1220px;
-}
-.banner-content-board-insert {
-  position: relative;
-  border: 1px solid black;
-  width: 1220px;
-  height: 650px;
-}
-.banner-content-board-insert a {
-  text-decoration: none;
-  color: white;
-  transition: linear .2s;
-}
-.banner-content-board-insert a:hover {
-  color: lime;
-}
-.banner-content-board-insert h2 {
-  display: inline-block;
-}
-div.banner-content-board-insert .board-insert {
-	background-color: transparent;
-  position: absolute;
-  display: inline-block;
-  right: 30px;
-  top: -14px;
-}
-
-h2.board-title {
-	display: block;
-  margin-block-start: 0px;
-  margin-block-end: 0px;
-}
-
-.banner-content-board-insert .insert-board-book-form {
-  padding: 30px;
-  max-height: 590px;
-  overflow-y: scroll;
-}
-.banner-content-board-insert .insert-book-form {
-	
-}
-.banner-content-board-insert .insert-board-book-form .board-header {
-  position: relative;
-  /* border: 1px solid chartreuse; */
-}
-.banner-content-board-insert .insert-board-book-form .board-header .title {
-  width: 800px;
-  height: 36px;
-  margin-bottom: 20px;
-}
-.banner-content-board-insert .insert-board-book-form .board-header .writer-time {
-  position: absolute;
-  display: inline-block;
-  height: 40px;
-  margin-left: 20px;
-  /* border: 1px solid blue; */
-}
-.banner-content-board-insert .insert-board-book-form .board-header .writer-time span {
-  /* border: 1px solid red; */
-  /* display: block; */
-}
-.banner-content-board-insert .insert-board-book-form .board-header .writer-time .writer,
-.banner-content-board-insert .insert-board-book-form .board-header .writer-time .writer-2 {
-  position: absolute;
-  color: black;
-  width: 200px;
-  top: -6px;
-}
-.banner-content-board-insert .insert-board-book-form .board-header .writer-time .writer-2 {
-	top: 6px;
-}
-.banner-content-board-insert .insert-board-book-form .board-header .writer-time .time {
-  position: absolute;
-  color: black;
-  width: 200px;
-  bottom: -2px;
-}
-
-.banner-content-board-insert .insert-board-book-form .board-center {
-  position: relative;
-  width: 1098px;
-  height: 400px;
-  border: 1px solid black;
-}
-.banner-content-board-insert .insert-board-book-form .board-center .text-pos {
-  position: absolute;
-  transform: translateY(-50%);
-  top: 50%;
-  right: 0;
-}
-.banner-content-board-insert .insert-board-book-form .board-center .text-pos .textarea {
-  width: 740px;
-  height: 300px;
-  margin-right: 20px;
-  margin-bottom: 0px;
-  border-top: 1px solid grey;
-  font-size: 1.2rem;
-  resize: none;
-  overflow-y: scroll;
-}
-.banner-content-board-insert .insert-board-book-form .board-center .board-center-book {
-  position: relative;
-  /* border: 1px solid red; */
-  width: 160px;
-  height: 180px;
-  top: 48px;
-  left: 96px;
-}
-.banner-content-board-insert .insert-board-book-form .board-center .board-center-book img {
-  position: absolute;
-  /* border: 1px solid red; */
-  width: 130px;
-  height: 180px;
-}
-.banner-content-board-insert .insert-board-book-form .board-center .board-center-book .text {
-  
-  position: absolute;
-  bottom: -66px;
-  text-align: center;
-}
-.banner-content-board-insert .insert-board-book-form .board-center .board-center-book .text .book-name {
-  display: inline-block;
-  max-width: 130px;
-  width: 130px;
-  color: black;
-  /* border: 1px solid blue; */
-}
-.banner-content-board-insert .insert-board-book-form .board-center .board-center-book .text .writer {
-  max-width: 130px;
-  display: block;
-  color: black;
-}
-
-.banner-content-board-insert .insert-board-book-form .book-coment {
-  /* border: 1px solid red; */
-  display: inline-block;
-  width: 990px;
-  margin-top: 20px;
-  height: 54px;
-}
-.banner-content-board-insert .insert-board-book-form .book-coment input[type=text] {
-  display: inline-block;
-  width: 990px;
-  height: 54px;
-  box-sizing: border-box;
-  outline: none;
-}
-.banner-content-board-insert .insert-board-book-form .submit {
-  display: inline-block;
-}
-.banner-content-board-insert .insert-board-book-form .submit input[type=submit] {
-  width: 100px;
-  height: 50px;
-  margin-top: 22px;
-  margin-left: 4px;
-  background-color: whitesmoke;
-  color: #17191D;
-  outline: none;
-  border: 1px solid black;
-}
-.banner-content-board-insert .insert-board-book-form .submit input[type=submit]:hover {
-  cursor: pointer;
-}
-
-.banner-content-board-insert .insert-board-book-form .comment {
-  position: relative;
-  border: 1px solid black;
-  margin-top: 18px;
-  height: 54px;
-  padding: 12px;
-  line-height: 0px;
-}
-.banner-content-board-insert .insert-board-book-form .comment i {
-  font-size: 1.2rem;
-  color: black;
-}
-.banner-content-board-insert .insert-board-book-form .comment h1 {
-  /* border: 1px solid red; */
-  font-size: 1rem !important;
-  font-weight: 500;
-  margin: 16 0px;
-}
-/* 작성자 이름의 크기에 따라서 width 수정 */
-.banner-content-board-insert .insert-board-book-form .comment span {
-  display: inline-block;
-  color: black;
-  /* border: 1px solid red; */
-  width: 100px;
-}
-.banner-content-board-insert .insert-board-book-form .comment button {
-  position: absolute;
-  border: 0px solid red;
-  background-color: transparent;
-  transform: translateY(-50%);
-  right: 20px;
-}
-.banner-content-board-insert .insert-board-book-form .comment button:hover {
-  cursor: pointer;
-}
-.banner-content-board-insert .insert-board-book-form .insert-form-book {
-	padding-left: 30px;
-}
-.banner-content-board-insert .insert-form-overflow {
-	overflow-y : hidden;
-}
-.banner-content-board-insert .insert-board-book-form form {
-  border: 1px solid black;
-  padding: 20px;
-  margin-bottom: 0px;
-  box-sizing: border-box;
-}
-.banner-content-board-insert .insert-board-book-form .insertBook-submit {
-	position: absolute;
-	background-color: #858383;
-	margin-bottom: 0px;
-	right: 32px;
-	bottom: 6px;
-	border-radius: 2px;
-}
