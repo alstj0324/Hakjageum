@@ -22,7 +22,7 @@ public class BasketAPI {
     private BasketService basketService;
     @GetMapping("/get/{userId}")
     public ResponseEntity<JSONArray> getBasketList(@PathVariable("userId") String userId) {
-        JSONArray arr = basketService.gatBasketList(userId);
+        JSONArray arr = basketService.getBasketList(userId);
 
         DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
         List<EmbedVO> embedList = new ArrayList<>();
@@ -37,7 +37,7 @@ public class BasketAPI {
 
     @GetMapping("/getvo/{userId}")
     public ResponseEntity<JSONArray> getBasketListToVo(@PathVariable("userId") String userId) {
-        JSONArray arr = basketService.gatBasketList(userId);
+        JSONArray arr = basketService.getBasketList(userId);
 
         DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
         List<EmbedVO> embedList = new ArrayList<>();
