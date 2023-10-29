@@ -508,6 +508,7 @@ div.banner-content-manage:not(p) {
 	border-radius:50px;
 	background-color: rgba(0, 0, 0, 0.7);
 	overflow-y:scroll;
+	text-align: center;
 }
 .manage-container {
 	display: inline-block;
@@ -616,9 +617,8 @@ div.banner-content-board {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	
 	margin-top:10px;
-	width: 90%;
+	width: 75%;
 	height:650px;
 	background-color: rgba(255, 255, 255, 0.9);
 	color: white;
@@ -722,6 +722,169 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	border-radius:15px;
 	background-color: rgba(0, 0, 0, 0.4);
 }
+
+/*------------------------[getBoard(free)]------------------------------------*/
+
+.getBoardList-Container {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-45%);
+	width: 70%;
+	height: 825px;
+	background-color: rgba(255, 255, 255, 0.9);
+	text-align: center;
+	overflow: hidden;
+}
+.getBoardList-description-Container {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	height: 60px;
+	background-color: rgba(0,0,0,0.6);
+	
+}
+.getBoardList-description-Container .board-description{
+	display: inline-block;
+	position: absolute;
+	left:0;
+	width: 250px;
+	height: 60px;
+	color: white;
+	text-align: center;
+	line-height: 60px;
+	font-size: 2.0em;
+	font-family: var(--heading-font);
+}
+.getBoardList-Container .getboardMain-Container{
+	position: relative;
+	display: inline-block;
+	width: 75%;
+	height: 93%;
+}
+.getBoardList-Container .getboardMain-Container .main-description {
+	position: absolute;
+	display: inline-block;
+	height: 45px;
+	width: 100%;
+	left: 0;
+	margin-top:15px;
+	background-color: rgba(50,50,50,0.4);
+}
+.main-description #main-items{
+	display: inline-block;
+	position: absolute;
+	font-size: 18px;
+	font-weight: bold;
+	color: white;
+	line-height: 45px;
+	border: 1px solid white;
+}
+.main-description .item-category{left:0;width: 15%;}
+.main-description .item-title{left: 15%;width: 45%;}
+.main-description .item-writer{left: 60%;width: 15%;}
+.main-description .item-createtime{left: 75%;width: 15%;}
+.main-description .item-viewcount{left: 90%;width: 10%;}
+
+.getBoardMain-Container .content-container {
+	display: inline-block;
+	position: absolute;
+	top:60px;
+	left:0;
+	width: 100%;
+	height:685px; 
+	background-color: rgba(255,255,255,0.7);
+}
+.content-container .content-box{
+	display: inline-block;
+	position: absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height:645px; 
+}
+.content-box .contents {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	height: 40px;
+	border-bottom: 1px solid lightgray;
+	line-height: 35px;
+	box-sizing: border-box;	
+}
+.contents #content-items{
+	display: inline-block;
+	position: absolute;
+	font-size: 15px;
+	color: black;
+	line-height: 40px;
+}
+.contents .content-category{left:0;width: 15%;}
+.contents .content-title{left: 15%;width: 45%;text-align: left; margin-left:10px;}
+.contents .content-writer{left: 60%;width: 15%;}
+.contents .content-createtime{left: 75%;width: 15%;}
+.contents .content-viewcount{left: 90%;width: 10%;}
+.content-container .paging-box{
+	display: inline-block;
+	position: absolute;
+	top:640px;
+	left:0;
+	width: 100%;
+	height:45px; 
+	line-height: 45px;
+}
+/*----------------------------------------------------------------------------*/
+/*----------------------------[new getBoard]----------------------------------------*/
+.BookBoardForm-Container {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-45%);
+	width: 70%;
+	height: 825px;
+	background-color: rgba(255, 255, 255, 0.9);
+	text-align: center;
+	overflow: hidden;
+}
+.BookBoardForm-description-Container {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	height: 60px;
+	background-color: rgba(0,0,0,0.6);
+}
+.BookBoardForm-description-Container .BookBoardForm-description{
+	display: inline-block;
+	position: absolute;
+	left:0;
+	width: 300px;
+	height: 60px;
+	color: white;
+	text-align: center;
+	line-height: 60px;
+	font-size: 2.0em;
+	font-family: var(--heading-font);
+}
+.BookBoardForm-Container .BookBoardFormMain-Container{
+	position: relative;
+	display: inline-block;
+	width: 75%;
+	height: 93%;
+	border: 1px solid black;
+}
+.BookBoardFormMain-Container .BookBoard-Form {
+	border: 1px solid black;
+	display: inline-block;
+	position: absolute;
+	top:40px;
+	left:0;
+	width: 100%;
+	height:700px; 
+	background-color: rgba(255,255,255,0.7);
+}
+/*-----------------------------------------------------------------------------------*/
 /* - -----------------[book Recommend]--------------------------*/
 .banner-content-board .banner-content-banner h2{
 	display:inline-block;
@@ -764,6 +927,19 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	width: 350px;
 	height: 60px;
 	text-align: center;
+}
+.banner-content-board .book-select .book-description-container{
+	position: absolute;
+	margin-top:30px;
+	left: 26%;
+	width: 320px;
+	height: 60px;
+	text-align: center;
+	border-bottom: 2px solid rgba(0,0,0,0.8);
+	color: black;
+	line-height: 70px;
+    font-size: 30px;
+    font-weight: bold;
 }
 .banner-content-board .book-select .book-category select {
 	width: 200px;

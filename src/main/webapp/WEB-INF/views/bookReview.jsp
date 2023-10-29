@@ -45,6 +45,9 @@
               <input type="submit" value="Go">
             </form>
           </div>
+          <div class="book-description-container">
+          도서 정보
+          </div>
         </div>
         <div class="book-content" style='overflow:hidden'>
           <div class="book-content-item1">

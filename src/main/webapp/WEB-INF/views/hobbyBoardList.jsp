@@ -18,7 +18,7 @@
     <section id="billboard" class="position-relative">
       <div class="getBoardList-Container">
       	<div class="getBoardList-description-container">
-      		<div class="board-description">Free Board</div>
+      		<div class="board-description">Hobby Board</div>
       	</div>
       	<div class="getboardMain-Container">
       		<div class="main-description">

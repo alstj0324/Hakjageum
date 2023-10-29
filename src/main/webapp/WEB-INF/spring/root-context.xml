@@ -20,20 +20,20 @@
 	</bean>
 	
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	<property name="host" value="smtp.naver.com" />
-	<property name="port" value="587" />
-	<property name="username" value="gomdung79" />
-	<property name="password" value="dotory12" />
-	<property name="defaultEncoding" value="utf-8" />
-	<property name="javaMailProperties">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<property name="username" value="gomdung79@gmail.com"/>
+		<property name="password" value="pwaqrajpdpshlmtu"/>
+		<property name="javaMailProperties">
 		<props>
-			<prop key="mail.debug">true</prop>
-			<prop key="mail.smtp.starttls.enable">true</prop>
-			<prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+			<prop key="mail.transport.protocol">smtp</prop>
 			<prop key="mail.smtp.auth">true</prop>
-			<prop key="mail.smtps.ssl.trust">*</prop>
-			<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+			<prop key="mail.smtp.starttls.enable">true</prop>
+			<prop key="mail.debug">true</prop>
+			<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+			<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
 		</props>
-	</property>
-</bean>		
+		</property>
+	</bean>
+
 </beans>

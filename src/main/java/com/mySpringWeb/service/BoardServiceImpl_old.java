@@ -8,10 +8,10 @@ import com.mySpringWeb.domain.BoardVO;
 import com.mySpringWeb.persistence.BoardDAOSpring_old;
 
 @Service("boardService")
-public class BoardServiceImpl_old implements BoardService_old {
+public class BoardServiceImpl_old implements BoardService {
 	@Autowired 
 	private BoardDAOSpring_old boardDAO;
-//	private BoardDAO boardDAO; 
+   //private BoardDAO boardDAO; 
 	@Override
 	public void insertBoard(BoardVO vo) {
 		boardDAO.insertBoard(vo);

@@ -33,7 +33,7 @@
       			 	<c:forEach var="i" begin="0" end="15">
       			 		<div class="contents">
       						<div class="content-category" id="content-items">[자유 게시판]</div>
-      						<div class="content-title" id="content-items"><a href="#">잘가요 내사랑 이젠 보내줄게요 기억 추억 모두잊을게요 지우고 지워도</a></div>
+      						<div class="content-title" id="content-items"><a href="getBoardtest.do">잘가요 내사랑 이젠 보내줄게요 기억 추억 모두잊을게요 지우고 지워도</a></div>
       						<div class="content-writer" id="content-items">윈도우 10 좋습니다</div>
       						<div class="content-createtime" id="content-items">23-10-29</div>
       						<div class="content-viewcount" id="content-items">12369</div>
