@@ -47,9 +47,5 @@ public class UserServiceImpl implements UserService{
 	public String logincheckUser(UserVO vo) {
 		return userDAO.logincheckUser(vo);
 	}
-	@Override
-	public String logincheckNickname(UserVO vo) {
-		return userDAO.logincheckNickname(vo);
-	}
 	
 }

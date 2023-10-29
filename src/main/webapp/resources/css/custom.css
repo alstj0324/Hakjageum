@@ -1253,10 +1253,297 @@ form.book-category-form {
 	margin-bottom: 0.4rem;
 }
 
-
+/* ==================================================================================== Kyu */
+/*================================================================== getBoardList*/
+.banner-content-getBoardList {
+  /* border: 1px solid red; */
+  width: 100%;
+  position: relative;
+}
+.banner-content-getBoardList .board_table {
+  /* border: 1px solid black; */
+  width: 100%;
+  height: 35px;
+  border-collapse: collapse;
+  text-align: center;
+}
+.banner-content-getBoardList .board_table a,
+.banner-content-getBoardList a {
+  text-decoration: none;
+  color: black;
+}
+.banner-content-getBoardList a {
+  color: white;
+}
+.banner-content-getBoardList .board_table span {
+  /* border: 1px solid blue; */
+}
+.banner-content-getBoardList .board_table span.comment {
+  /* border: 1px solid blue; */
+  color: #0d6efd;
+}
+.banner-content-getBoardList > .board_table .board-1th-tr,
+div.banner-content-getBoardList > .board_table .board_items{
+  border-bottom: 1px solid #cccccc;
+}
+.banner-content-getBoardList .board_table td {
+  padding: 7px 5px;
+}
+.banner-content-getBoardList .board_table td.num {
+  width: 10%;
+}
+.banner-content-getBoardList .board_table td.title {
+  width: 57%;
+  padding-left: 30px;
+  text-align: left;
+}
+.banner-content-getBoardList .board_table td.user {
+  width: 16%;
+}
+.banner-content-getBoardList .board_table td.date {
+  width: 8%;
+}
+.banner-content-getBoardList .board_table td.count {
+  width: 8%;
+}
+div.banner-content-getBoardList .board-insert {
+  position: absolute;
+  display: inline-block;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  right: 30px;
+  bottom: 0;
+  width: 91px;
+  height: 31px;
+  text-align: center;
+  line-height: 31px;
+  border-radius: 2px;
+  background-color: #444444;
+}
 /*================================================================== Hedaer.jsp*/
 
 ul#name-dropdown {
 	margin-left: 270px;
 }
 
+/*================================================================== getBoardBook*/
+.banner-content-getBoardBook {
+	max-width: 1220px;
+}
+.banner-content-board-insert {
+  position: relative;
+  border: 1px solid black;
+  width: 1220px;
+  height: 650px;
+}
+.banner-content-board-insert a {
+  text-decoration: none;
+  color: white;
+  transition: linear .2s;
+}
+.banner-content-board-insert a:hover {
+  color: lime;
+}
+.banner-content-board-insert h2 {
+  display: inline-block;
+}
+div.banner-content-board-insert .board-insert {
+  background-color: transparent;
+  position: absolute;
+  display: inline-block;
+  right: 30px;
+  top: -14px;
+}
+
+h2.board-title {
+  display: block;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
+
+.banner-content-board-insert .insert-board-book-form {
+  padding: 30px;
+  max-height: 590px;
+  overflow-y: scroll;
+}
+.banner-content-board-insert .insert-book-form {
+	
+}
+.banner-content-board-insert .insert-board-book-form .board-header {
+  position: relative;
+  /* border: 1px solid chartreuse; */
+}
+.banner-content-board-insert .insert-board-book-form .board-header .title {
+  width: 800px;
+  height: 36px;
+  margin-bottom: 20px;
+}
+.banner-content-board-insert .insert-board-book-form .board-header .writer-time {
+  position: absolute;
+  display: inline-block;
+  height: 40px;
+  margin-left: 20px;
+  /* border: 1px solid blue; */
+}
+.banner-content-board-insert .insert-board-book-form .board-header .writer-time span {
+  /* border: 1px solid red; */
+  /* display: block; */
+}
+.banner-content-board-insert .insert-board-book-form .board-header .writer-time .writer,
+.banner-content-board-insert .insert-board-book-form .board-header .writer-time .writer-2 {
+  position: absolute;
+  color: black;
+  width: 200px;
+  top: -6px;
+}
+.banner-content-board-insert .insert-board-book-form .board-header .writer-time .writer-2 {
+	top: 6px;
+}
+.banner-content-board-insert .insert-board-book-form .board-header .writer-time .time {
+  position: absolute;
+  color: black;
+  width: 200px;
+  bottom: -2px;
+}
+
+.banner-content-board-insert .insert-board-book-form .board-center {
+  position: relative;
+  width: 1098px;
+  height: 400px;
+  border: 1px solid black;
+}
+.banner-content-board-insert .insert-board-book-form .board-center .text-pos {
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+  right: 0;
+}
+.banner-content-board-insert .insert-board-book-form .board-center .text-pos .textarea {
+  width: 740px;
+  height: 300px;
+  margin-right: 20px;
+  margin-bottom: 0px;
+  border-top: 1px solid grey;
+  font-size: 1.2rem;
+  resize: none;
+  overflow-y: scroll;
+}
+.banner-content-board-insert .insert-board-book-form .board-center .board-center-book {
+  position: relative;
+  /* border: 1px solid red; */
+  width: 160px;
+  height: 180px;
+  top: 48px;
+  left: 96px;
+}
+.banner-content-board-insert .insert-board-book-form .board-center .board-center-book img {
+  position: absolute;
+  /* border: 1px solid red; */
+  width: 130px;
+  height: 180px;
+}
+.banner-content-board-insert .insert-board-book-form .board-center .board-center-book .text {
+  
+  position: absolute;
+  bottom: -66px;
+  text-align: center;
+}
+.banner-content-board-insert .insert-board-book-form .board-center .board-center-book .text .book-name {
+  display: inline-block;
+  max-width: 130px;
+  width: 130px;
+  color: black;
+  /* border: 1px solid blue; */
+}
+.banner-content-board-insert .insert-board-book-form .board-center .board-center-book .text .writer {
+  max-width: 130px;
+  display: block;
+  color: black;
+}
+
+.banner-content-board-insert .insert-board-book-form .book-coment {
+  /* border: 1px solid red; */
+  display: inline-block;
+  width: 990px;
+  margin-top: 20px;
+  height: 54px;
+}
+.banner-content-board-insert .insert-board-book-form .book-coment input[type=text] {
+  display: inline-block;
+  width: 990px;
+  height: 54px;
+  box-sizing: border-box;
+  outline: none;
+}
+.banner-content-board-insert .insert-board-book-form .submit {
+  display: inline-block;
+}
+.banner-content-board-insert .insert-board-book-form .submit input[type=submit] {
+  width: 100px;
+  height: 50px;
+  margin-top: 22px;
+  margin-left: 4px;
+  background-color: whitesmoke;
+  color: #17191D;
+  outline: none;
+  border: 1px solid black;
+}
+.banner-content-board-insert .insert-board-book-form .submit input[type=submit]:hover {
+  cursor: pointer;
+}
+
+.banner-content-board-insert .insert-board-book-form .comment {
+  position: relative;
+  border: 1px solid black;
+  margin-top: 18px;
+  height: 54px;
+  padding: 12px;
+  line-height: 0px;
+}
+.banner-content-board-insert .insert-board-book-form .comment i {
+  font-size: 1.2rem;
+  color: black;
+}
+.banner-content-board-insert .insert-board-book-form .comment h1 {
+  /* border: 1px solid red; */
+  font-size: 1rem !important;
+  font-weight: 500;
+  margin: 16 0px;
+}
+/* 작성자 이름의 크기에 따라서 width 수정 */
+.banner-content-board-insert .insert-board-book-form .comment span {
+  display: inline-block;
+  color: black;
+  /* border: 1px solid red; */
+  width: 100px;
+}
+.banner-content-board-insert .insert-board-book-form .comment button {
+  position: absolute;
+  border: 0px solid red;
+  background-color: transparent;
+  transform: translateY(-50%);
+  right: 20px;
+}
+.banner-content-board-insert .insert-board-book-form .comment button:hover {
+  cursor: pointer;
+}
+.banner-content-board-insert .insert-board-book-form .insert-form-book {
+	padding-left: 30px;
+}
+.banner-content-board-insert .insert-form-overflow {
+	overflow-y : hidden;
+}
+.banner-content-board-insert .insert-board-book-form form {
+  border: 1px solid black;
+  padding: 20px;
+  margin-bottom: 0px;
+  box-sizing: border-box;
+}
+.banner-content-board-insert .insert-board-book-form .insertBook-submit {
+	position: absolute;
+	background-color: #858383;
+	margin-bottom: 0px;
+	right: 32px;
+	bottom: 6px;
+	border-radius: 2px;
+}

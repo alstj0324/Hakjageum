@@ -1,6 +1,5 @@
 package com.mySpringWeb.service;
 
-import com.mySpringWeb.domain.BasketVO;
 import com.mySpringWeb.persistence.BasketDAOSpring;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +11,7 @@ public class BasketServiceImpl implements BasketService {
 	private BasketDAOSpring basketDAO;
 
 	@Override
-	public String checkBasket(BasketVO vo) {
-		return basketDAO.checkBasket(vo);
+	public JSONArray gatBasketList(String userId) {
+		return basketDAO.getBasketList(userId);
 	}
-	@Override
-	public void addBasket(BasketVO vo) {
-		basketDAO.addBasket(vo); 
-	}
-	@Override
-	public void deleteBasket(BasketVO vo) {
-		basketDAO.deleteBasket(vo);
-	}
-	@Override
-	public JSONArray getBasketList(BasketVO vo) {
-		return basketDAO.getBasketList(vo);
-	}
-	
-	
-
-	
 }

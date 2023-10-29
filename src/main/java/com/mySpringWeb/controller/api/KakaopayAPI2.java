@@ -18,13 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class KakaopayAPI {
+public class KakaopayAPI2 {
 	
 	BufferedReader br,br2;
 	
 	final String kakao_clientId = "c9e9586c57fe79bc3c0ee0c52ad1a6f2"; //kakao client 아이디(REST API 키)
 	final String kakao_adminKey = "3d847ad0fc68439f7949aa9254f80fc8"; //kakao adminkey
-
+	
+	@RequestMapping(value="Test.do")
+	public String Test() {
+		return "Test";
+	}
+	
 	@RequestMapping(value="kakaoPay.do",method=RequestMethod.GET)
 	public String kakaoPayment(HttpSession session ,HttpServletRequest request) throws IOException, ParseException {
 		
@@ -32,12 +37,12 @@ public class KakaopayAPI {
 		String partner_order_id = "Test" + new Date().getTime(); //가맹점 주문번호
 		String partner_user_id = "Test1"; //가맹점 회원 id
 		String item_name = "감자튀김"; //상품명
-		String quantity = "123"; //상품 수량
+		String quantity = "1"; //상품 수량
 		String total_amount = "270600"; //상품 총액
 		String tax_free_amount = "0"; // //상품 비과세 금액
-		String approval_url = "http://localhost:8080/kPayment.do"; //결제 성공 시 redirect url
-		String fail_url = "http://localhost:8080/kPaymentfail.do"; //결제 취소 시 redirect url
-		String cancel_url = "http://localhost:8080/kPaymentcancel.do"; //결제 실패 시 redirect url
+		String approval_url = "http://localhost:8080/biz/kPayment.do"; //결제 성공 시 redirect url
+		String fail_url = "http://localhost:8080/biz/kPaymentfail.do"; //결제 취소 시 redirect url
+		String cancel_url = "http://localhost:8080/biz/kPaymentcancel.do"; //결제 실패 시 redirect url
 		
 		String apiURL = "https://kapi.kakao.com/v1/payment/ready?"
 				+"cid="+cid
@@ -62,15 +67,13 @@ public class KakaopayAPI {
 		con.setRequestProperty("Authorization", "KakaoAK " + kakao_adminKey);
 		con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
-		System.out.println("conURL : "+con.toString());
-		
 		br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		
 		String inputLine;
 		StringBuilder res = new StringBuilder();
 		while ((inputLine = br.readLine()) != null) {
-		  res.append(inputLine);
-		  System.out.println(inputLine);
+			res.append(inputLine);
+			System.out.println("카카오페이 결제 api(1)"+inputLine);
 		}
 		
 		br.close();
@@ -83,7 +86,7 @@ public class KakaopayAPI {
 		
 		System.out.println("결제 정보 : "+jsonObj.toJSONString());
 		
-		return "redirect:" + jsonObj.get("next_redirect_pc_url");
+		return "redirect:" +(String) jsonObj.get("next_redirect_pc_url");
 	}
 	
 	@RequestMapping(value="kPayment.do",method=RequestMethod.GET)
@@ -115,8 +118,8 @@ public class KakaopayAPI {
 		String inputLine;
 		StringBuilder res = new StringBuilder();
 		while ((inputLine = br.readLine()) != null) {
-		  res.append(inputLine);
-		  System.out.println(inputLine);
+			res.append(inputLine);
+			System.out.println("카카오 결제 api(2) :"+inputLine);
 		}
 		
 		br.close();
@@ -127,7 +130,7 @@ public class KakaopayAPI {
 		JSONObject resObj = (JSONObject) jsonObj.get("amount");
 		
 		try {
-			
+			session.setAttribute("tid", jsonObj.get("tid"));
 			session.setAttribute("cid", jsonObj.get("cid")); //가맹점 코드
 			session.setAttribute("type", jsonObj.get("payment_method_type")); //결제 타입
 			session.setAttribute("item_name", jsonObj.get("item_name")); //결제 상품
@@ -146,12 +149,12 @@ public class KakaopayAPI {
 			}
 			
 			System.out.println("res : "+res);
-		} catch (Exception e) {
+		}catch (Exception e) {
 			return "kPayment";
 		}
-	
 		return "kPayment";
 	}
+	
 	@RequestMapping(value="kPaymentfail.do",method=RequestMethod.GET)
 	public String payment_Fail() {
 		//결제 실패시 이동
@@ -159,8 +162,87 @@ public class KakaopayAPI {
 	}
 	@RequestMapping(value="kPaymentcancel.do",method=RequestMethod.GET)
 	public String payment_Cancel() {
-		//결제 취소시 이동
+		//결제중 취소시 이동
 		return "kPaymentcancel";
+	}
+	
+	@RequestMapping(value="searchKakaoPay.do",method=RequestMethod.GET)
+	public void searchKakaoPay(HttpSession session) throws Exception {
+	
+		String cid = (String) session.getAttribute("cid"); //가맹점 코드
+		String tid = (String) session.getAttribute("tid"); //결제 고유 번호,
+		
+		String apiURL = "https://kapi.kakao.com/v1/payment/order?"
+				+"cid="+cid
+				+"&tid="+tid;
+		
+		URL url = new URL(apiURL);
+		
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Authorization", "KakaoAK " + kakao_adminKey);
+		con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		
+		String inputLine;
+		StringBuilder res = new StringBuilder();
+		while ((inputLine = br.readLine()) != null) {
+			res.append(inputLine);
+			System.out.println(inputLine);
+		}
+		
+		br.close();
+		
+		// return 받는 json 형식
+		//{"tid":"T53d1b2051b66fd43573","cid":"TC0ONETIME","status":"SUCCESS_PAYMENT","partner_order_id":"Test1698503455778","partner_user_id":"Test1","payment_method_type":"MONEY","item_name":"감자튀김","quantity":123,"amount":{"total":270600,"tax_free":0,"vat":24600,"point":0,"discount":0,"green_deposit":0},"cancel_available_amount":{"total":270600,"tax_free":0,"vat":24600,"point":0,"discount":0,"green_deposit":0},"canceled_amount":{"total":0,"tax_free":0,"vat":0,"point":0,"discount":0,"green_deposit":0},"created_at":"2023-10-28T23:30:57","approved_at":"2023-10-28T23:31:21","payment_action_details":[{"aid":"A53d1b3534b976a88b68","approved_at":"2023-10-28T23:31:21","point_amount":0,"discount_amount":0,"payment_action_type":"PAYMENT"}]}
+		
+		JSONParser parsing = new JSONParser();
+		Object obj = parsing.parse(res.toString());
+		JSONObject jsonObj = (JSONObject)obj;
+		JSONObject resObj = (JSONObject) jsonObj.get("amount");
+		
+		System.out.println(resObj);
+	}
+	
+	@RequestMapping(value="payCancel.do", method=RequestMethod.GET)
+ 	public void payCancel(HttpSession session) throws Exception {
+	
+		String cid = (String) session.getAttribute("cid"); //가맹점 코드
+		String tid = (String) session.getAttribute("tid"); //결제 고유 번호,
+		int cancel_amount = 100000; // 취소 금액
+		int cancel_tax_free_amount = 0; //취소 비과세 금액
+		
+		String cancelApiURL = "https://kapi.kakao.com/v1/payment/cancel?"
+				+"cid="+cid
+				+"&tid="+tid
+				+"&cancel_amount="+cancel_amount
+				+"&cancel_tax_free_amount="+cancel_tax_free_amount;
+		
+		URL url = new URL(cancelApiURL);
+		
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Authorization", "KakaoAK " + kakao_adminKey);
+		con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		
+		String inputLine;
+		StringBuilder res = new StringBuilder();
+		while ((inputLine = br.readLine()) != null) {
+			res.append(inputLine);
+			System.out.println(inputLine);
+		}
+		
+		br.close();	
+		
+		JSONParser parsing = new JSONParser();
+		Object obj = parsing.parse(res.toString());
+		JSONObject jsonObj = (JSONObject)obj;
+		JSONObject resObj = (JSONObject) jsonObj.get("amount");
+		
+		System.out.println("결제 취소 amount : " + resObj);
 	}
 	
 }
