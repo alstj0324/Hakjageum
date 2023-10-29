@@ -10,7 +10,7 @@
   <body class="bg-accent-light">
     <%@ include file="templates/Header.jsp" %>
     <section id="billboard" class="position-relative">
-      <div class="banner-content banner-content-board">
+      <div class="banner-content banner-content-board banner-content-getBoardList">
     <h2>Free Board</h2>
     <table class="board_table">
       <tr class="board-1th-tr">

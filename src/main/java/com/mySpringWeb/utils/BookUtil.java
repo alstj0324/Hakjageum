@@ -5,6 +5,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.ui.Model;
+
+import java.awt.print.Book;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -59,7 +61,7 @@ public class BookUtil {
                 Object obj = parsing.parse(res.toString());
                 JSONObject jsonObj = (JSONObject)obj;
                 JSONArray items = (JSONArray) jsonObj.get("items");
-                
+
                 for (Object item : items) {
                     BookVO book = createBook((JSONObject) item);
                     books.add(book);
@@ -68,6 +70,7 @@ public class BookUtil {
         } catch (Exception e) {
             System.out.println(e);
         }
+
         return books;
     }
 
@@ -115,6 +118,7 @@ public class BookUtil {
                 for (Object item : items) {
                     books.add(createBook((JSONObject) item));
                 }
+
                 model.addAttribute("books", books);
             }
         } catch(Exception e){
@@ -134,8 +138,6 @@ public class BookUtil {
         String description = (String)jsonObject.get("description");
         description = description.replaceAll("\"", "'");
         book.setDescription(description);
-        book.setDiscount((String) jsonObject.get("discount"));
-        book.setPublisher((String) jsonObject.get("publisher"));
 
         return book;
     }

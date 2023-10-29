@@ -245,7 +245,7 @@
           content.push("  <p>주소: " + place.address + "</p>");
           content.push("  <p>도로명주소: " + place.road_address + "</p>");
           if (place.phone !== "") content.push("  <p>번호: " + place.phone + "</p>");
-          if (place.url !== "") content.push("  <a href='" + place.url + "' target=_blank'>위치 정보 보기</a>");
+          if (place.url !== "") content.push("  <a href='" + place.url + "'>위치 정보 보기</a>");
           content.push("</div>");
 
           return content.join("");
