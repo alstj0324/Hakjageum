@@ -17,21 +17,19 @@ public class BookVO {
 
     @Override
     public String toString() {
-        return (
-            String.format(
-                "BookVO[\n" +
-                "\ttitle=%s\n" +
-                "\tlink=%s\n" +
-                "\timage=%s\n" +
-                "\tauthor=%s\n" +
-                "\tpubdate=%s\n" +
-                "\tdescription=%s\n" +
-                "\tisbn=%s\n" +
-                "\tdiscount=%s\n" +
-                "\tpublisher=%s\n" +
-                "]",
-                title, link, image, author, pubdate, description, isbn, discount, publisher
-            )
+        return String.format(
+            "BookVO[\n" +
+            "\ttitle=%s\n" +
+            "\tlink=%s\n" +
+            "\timage=%s\n" +
+            "\tauthor=%s\n" +
+            "\tpubdate=%s\n" +
+            "\tdescription=%s\n" +
+            "\tisbn=%s\n" +
+            "\tdiscount=%s\n" +
+            "\tpublisher=%s\n" +
+            "]",
+            title, link, image, author, pubdate, description, isbn, discount, publisher
         );
     }
 }
