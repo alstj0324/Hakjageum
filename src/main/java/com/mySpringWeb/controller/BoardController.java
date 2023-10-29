@@ -25,6 +25,7 @@ public class BoardController {
     	return "getBoard";
 	}
 	
+	
 	@RequestMapping(value="getBoardList.do")
 	public String getBoardList(Model model) {     
 		System.out.println("글 목록 검색 처리");
@@ -34,10 +35,30 @@ public class BoardController {
     	return "getBoardList";
 	}
 	
+	/*---------[임시이동매핑 추가]----------*/
+	@RequestMapping(value="freeBoardList.do")
+	public String freeBoardList() {    
+    	return "freeBoardList";
+	}
+	@RequestMapping(value="bookBoardList.do")
+	public String bookBoardList() {    
+    	return "bookBoardList";
+	}
+	@RequestMapping(value="hobbyBoardList.do")
+	public String hobbyBoardList() {    
+    	return "hobbyBoardList";
+	}
+	@RequestMapping(value="getBoardtest.do")
+	public String getBoardtest() {
+		return "getBoard";
+	}
+	/*------------------------------------*/
+	
 	@RequestMapping(value="insertBoard.do", method=RequestMethod.GET)
 	public String insertBoard() {
 		return "insertBoard";
 	}
+	
 	@RequestMapping(value="insertBoard.do", method=RequestMethod.POST)
 	public String insertBoard(BoardVO vo) {
 		System.out.println("글 작성 처리");
@@ -61,3 +82,4 @@ public class BoardController {
     	return "redirect:getBoardList.do";
 	}
 }
+

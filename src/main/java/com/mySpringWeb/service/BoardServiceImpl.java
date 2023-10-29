@@ -11,7 +11,7 @@ import com.mySpringWeb.persistence.BoardDAOSpring;
 public class BoardServiceImpl implements BoardService{
 	@Autowired 
 	private BoardDAOSpring boardDAO;
-//	private BoardDAO boardDAO; 
+	
 	@Override
 	public void insertBoard(BoardVO vo) {
 		boardDAO.insertBoard(vo);
