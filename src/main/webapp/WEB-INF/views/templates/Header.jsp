@@ -133,46 +133,46 @@
     </div>
   </div>
   <script type="text/javascript">
-  	function hide(){
-  		$("#basketList").css('visibility','hidden');
-  	}
-  	function show(){
-  		$("#basketList").css('visibility','visible');
-  	}
-</script>
+    function hide(){
+      $("#basketList").css('visibility','hidden');
+    }
+    function show(){
+      $("#basketList").css('visibility','visible');
+    }
+  </script>
   <div class="basketList" id="basketList">
-  	<div class="basketHead">
-  	내 도서 목록
-  	</div>
-  	<div class="ListContainer">
-  		<c:forEach var="index" begin="1" end="10">
-	  		<div class="ListItem">
-	  			<div class="ItemImage">
-	  				<img src="http://bookthumb.phinf.naver.net/cover/108/346/10834650.jpg?type=m1&udate=20160902">
-	  			</div>
-	  			<div class="ItemTitle" id="Item">
-	  			불곰의 <b>주식</b>투자 불패공식
-	  			</div>
-	  			<div class="ItemAuthor" id="Item">
-	  			저자명 : 불곰 박선목	
-	  			</div>
-	  			<div class="ItemPublisher" id="Item">
-	  			출판사 : 부키
-	  			</div>
-	  			<div class="ItemPubdate" id="Item">
-	  			출간일 : 20160729
-	  			</div>
-	  			<div class="ItemDiscount" id="Item">
-	  			도서가격 : 16000원
-	  			</div>
-	  			<div class="ItemDelete">
-	  			도서삭제
-	  			</div>
-	  		</div>
-	  	</c:forEach>
-  	</div>	 
-  	<div class="ListClose" id="ListClose" onClick="javascript:hide();">
-  		닫기
-  	</div>                     
+    <div class="basketHead">
+      내 도서 목록
+    </div>
+    <div class="ListContainer">
+      <c:forEach var="index" begin="1" end="10">
+        <div class="ListItem">
+          <div class="ItemImage">
+            <img src="http://bookthumb.phinf.naver.net/cover/108/346/10834650.jpg?type=m1&udate=20160902">
+          </div>
+          <div class="ItemTitle" id="Item">
+            불곰의 <b>주식</b>투자 불패공식
+          </div>
+          <div class="ItemAuthor" id="Item">
+            저자명 : 불곰 박선목
+          </div>
+          <div class="ItemPublisher" id="Item">
+            출판사 : 부키
+          </div>
+          <div class="ItemPubdate" id="Item">
+            출간일 : 20160729
+          </div>
+          <div class="ItemDiscount" id="Item">
+            도서가격 : 16000원
+          </div>
+          <div class="ItemDelete">
+            도서삭제
+          </div>
+        </div>
+      </c:forEach>
+    </div>
+    <div class="ListClose" id="ListClose" onClick="javascript:hide();">
+      닫기
+    </div>
   </div>
 </header>

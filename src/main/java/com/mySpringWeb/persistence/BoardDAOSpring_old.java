@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.mySpringWeb.domain.BoardVO;
 
 @Repository
-public class BoardDAOSpring {
+public class BoardDAOSpring_old {
     @Autowired
     private JdbcTemplate jdbctemplate;
 
