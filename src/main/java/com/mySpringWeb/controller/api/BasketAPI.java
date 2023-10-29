@@ -20,7 +20,6 @@ public class BasketAPI {
 	
     @Autowired
     private BasketService basketService;
-
     @GetMapping("/get/{userId}")
     public ResponseEntity<JSONArray> getBasketList(@PathVariable("userId") String userId) {
         JSONArray arr = basketService.getBasketList(userId);
@@ -47,7 +46,7 @@ public class BasketAPI {
         embedList.add(embedVO);
         HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
         discordWebhookService.sendWebhook(hookVO);
-
+        
         return ResponseEntity.ok(arr);
     }
 }

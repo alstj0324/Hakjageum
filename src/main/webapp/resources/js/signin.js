@@ -86,9 +86,9 @@ function emailCheck() {
                   $("#email").val("");
                   $("#email").attr("autofocus",true);
                   
-              }else{	        		
-                  alert("이메일로 인증코드가 발송되었습니다!")
-                  $("#emailCheck").css('visibility','visible');
+              }else{	        	
+              	  alert("이메일로 인증코드가 발송되었습니다!");
+              	  $("#emailCheck").css('visibility','visible');	
                   code = data;
               }
           }
