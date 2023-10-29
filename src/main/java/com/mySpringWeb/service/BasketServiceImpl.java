@@ -11,7 +11,7 @@ public class BasketServiceImpl implements BasketService {
 	private BasketDAOSpring basketDAO;
 
 	@Override
-	public JSONArray gatBasketList(String userId) {
+	public JSONArray getBasketList(String userId) {
 		return basketDAO.getBasketList(userId);
 	}
 }
