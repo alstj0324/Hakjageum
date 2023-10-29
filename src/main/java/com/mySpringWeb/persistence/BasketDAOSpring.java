@@ -48,10 +48,26 @@ public class BasketDAOSpring {
 		System.out.println("===>Spring JDBC로 deleteBasket() 기능처리");
 		jdbctemplate.update(DELETE_BASKET, vo.getUser_id(), vo.getBook_unique_id());
 	}
-	
+
 	public JSONArray getBasketList(BasketVO vo) {
 		System.out.println("===> Spring JDBC로 getBasketList() 기능처리");
 		Object [] args  = {vo.getUser_id()};
+		List<Map<String, Object>> basketList = jdbctemplate.queryForList(BASKET_GETLIST, args);
+		JSONArray resArr = new JSONArray();
+
+		for (int i = 0; i < basketList.size(); i++) {
+			JSONObject res = new JSONObject();
+			Map<String, Object> basket = basketList.get(i);
+			res.put("basket_num", i);
+			res.put("book_id", basket.get("book_unique_id"));
+			resArr.add(res);
+		}
+		return resArr;
+	}
+
+	public JSONArray getBasketList(String userId) {
+		System.out.println("===> Spring JDBC로 getBasketList() 기능처리");
+		Object [] args  = {userId};
 		List<Map<String, Object>> basketList = jdbctemplate.queryForList(BASKET_GETLIST, args);
 		JSONArray resArr = new JSONArray();
 

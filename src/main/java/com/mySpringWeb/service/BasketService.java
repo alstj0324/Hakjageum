@@ -8,4 +8,5 @@ public interface BasketService {
 	void addBasket(BasketVO vo);
 	void deleteBasket(BasketVO vo);
     JSONArray getBasketList(BasketVO vo);
+	JSONArray getBasketList(String userId);
 }
