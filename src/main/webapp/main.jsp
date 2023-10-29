@@ -5,10 +5,10 @@
     <title>학자금, 학생에게 자기계발은 금이다.</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%@ include file="WEB-INF/views/templates/UseCSS.jsp" %>
+    <%@ include file="/WEB-INF/views/templates/UseCSS.jsp" %>
   </head>
   <body class="hompage bg-accent-light">
-    <%@ include file="WEB-INF/views/templates/Header.jsp" %>
+    <%@ include file="/WEB-INF/views/templates/Header.jsp" %>
     <section id="billboard" class="position-relative">
       <div class="banner-content content-light style1 text-center col-md-6">
         <h2 class="banner-title">Self-development</h2>
@@ -158,7 +158,7 @@
       </div>
       <div class="swiper-pagination"></div>
     </section>
-    <%@ include file="WEB-INF/views/templates/Footer.jsp"%>
-    <%@ include file="WEB-INF/views/templates/UseJS.jsp" %>
+    <%@ include file="/WEB-INF/views/templates/Footer.jsp"%>
+    <%@ include file="/WEB-INF/views/templates/UseJS.jsp" %>
   </body>
 </html>
