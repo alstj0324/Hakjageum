@@ -4,8 +4,12 @@ import lombok.Builder;
 import lombok.Data;
 import org.json.simple.JSONObject;
 
+import java.awt.Color;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Data
 @Builder
@@ -41,10 +45,22 @@ public class HookVO {
 
                 embed.put("title", embedVO.getTitle());
                 embed.put("description", embedVO.getDescription());
-                embed.put("url", embedVO.getUrl());
+
+                if (embedVO.getUrl() != null) {
+                    embed.put("url", embedVO.getUrl());
+                }
+
+                if (embedVO.getTimestamp() != null) {
+                    embed.put("timestamp", embedVO.getTimestamp());
+                }
 
                 if (embedVO.getColor() != null) {
-                    embed.put("color", embedVO.getColor().getRGB());
+                    Color color = embedVO.getColor();
+                    int rgb = color.getRed();
+                    rgb = (rgb << 8) + color.getGreen();
+                    rgb = (rgb << 8) + color.getBlue();
+
+                    embed.put("color", rgb);
                 }
 
                 if (embedVO.getAuthor() != null) {
@@ -85,6 +101,35 @@ public class HookVO {
 
     @Override
     public String toString() {
-        return toJSON().toString();
+        StringBuilder builder = new StringBuilder();
+        Set<Map.Entry<String, Object>> entrySet = toJSON().entrySet();
+        builder.append("{");
+
+        int i = 0;
+        for (Map.Entry<String, Object> entry : entrySet) {
+            Object val = entry.getValue();
+
+            if (val == null) continue;
+            if (val instanceof String) {
+                builder.append(quote(String.valueOf(val)));
+            } else if (val instanceof Integer) {
+                builder.append(Integer.valueOf(String.valueOf(val)));
+            } else if (val instanceof Boolean) {
+                builder.append(val);
+            } else if (val instanceof JSONObject) {
+                builder.append(val);
+            } else if (val.getClass().isArray()) {
+                builder.append("[");
+                int len = Array.getLength(val);
+                for (int j = 0; j < len; j++) builder.append(Array.get(val, j).toString()).append(j != len - 1 ? "," : "");
+                builder.append("]");
+            }
+            builder.append(++i == entrySet.size() ? "}" : ",");
+        }
+        return builder.toString();
+    }
+
+    private String quote(String str) {
+        return "\"" + str + "\"";
     }
 }

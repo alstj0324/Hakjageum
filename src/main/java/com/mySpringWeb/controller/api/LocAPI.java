@@ -22,11 +22,6 @@ import java.util.List;
 @RequestMapping("/api/loc")
 public class LocAPI {
 
-    @GetMapping("/get1")
-    public ResponseEntity<Boolean> get1() {
-        return ResponseEntity.ok(true);
-    }
-
     @GetMapping("/get/{ip}")
     public ResponseEntity<JSONObject> getIp(
         @PathVariable("ip")
@@ -36,9 +31,21 @@ public class LocAPI {
         JSONObject loc = placeUtil.getMyloc(ip);
 
         DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
+        List<EmbedVO> embedList = new ArrayList<>();
         HookUtil hookUtil = new HookUtil();
         EmbedVO embedVO = hookUtil.Info_Embed("Location 정보 조회", "IP: " + ip + "\nLOC: " + loc.toJSONString());
-        HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, (List<EmbedVO>) embedVO);
+        embedList.add(0, embedVO);
+        HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
+        discordWebhookService.sendWebhook(hookVO);
+
+        embedVO = hookUtil.Warn_Embed("Location 정보 조회", "IP: " + ip + "\nLOC: " + loc.toJSONString());
+        embedList.set(0, embedVO);
+        hookVO = hookUtil.create_Hook (HookLevel.WARN, embedList);
+        discordWebhookService.sendWebhook(hookVO);
+
+        embedVO = hookUtil.Danger_Embed("Location 정보 조회", "IP: " + ip + "\nLOC: " + loc.toJSONString());
+        embedList.set(0, embedVO);
+        hookVO = hookUtil.create_Hook (HookLevel.DANGER, embedList);
         discordWebhookService.sendWebhook(hookVO);
 
         return ResponseEntity.ok(loc);

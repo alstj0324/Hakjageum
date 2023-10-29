@@ -3,7 +3,6 @@ package com.mySpringWeb.utils;
 import com.mySpringWeb.domain.webhook.EmbedVO;
 import com.mySpringWeb.domain.webhook.HookLevel;
 import com.mySpringWeb.domain.webhook.HookVO;
-import com.mySpringWeb.domain.webhook.embed.Footer;
 
 import java.awt.Color;
 import java.text.SimpleDateFormat;
@@ -36,48 +35,54 @@ public class HookUtil {
     }
 
     public EmbedVO Info_Embed(String title, String content) {
+        String datestr = dateToString(new Date());
+        long time = splitSecond(new Date());
         return EmbedVO.builder()
         .title("[Info] " + title)
-        .description("```" + content + "```")
-        .color(Color.BLUE)
-        .footer(new Footer(String.format("`발생시간: %s(<t:%d:R>)`", NowDateFormated(), new Date().getTime()), ""))
+        .description(String.format("`발생시간: %s`(<t:%d:R>)\n```%s```", datestr, time, (content.length() > 1800 ? content.substring(0, 1800) + "..." : content)))
+        .color(Color.decode("#99FFCC"))
         .build();
     }
 
     public EmbedVO Warn_Embed(String title, String content) {
+        String datestr = dateToString(new Date());
+        long time = splitSecond(new Date());
         return EmbedVO.builder()
         .title("[Warn] " + title)
-        .description("```" + content + "```")
-        .color(Color.ORANGE)
-        .footer(new Footer(String.format("`발생시간: %s(<t:%d:R>)`", NowDateFormated(), new Date().getTime()), ""))
+        .description(String.format("`발생시간: %s`(<t:%d:R>)\n```%s```", datestr, time, (content.length() > 1800 ? content.substring(0, 1800) + "..." : content)))
+        .color(Color.decode("#FF9900"))
         .build();
     }
 
     public EmbedVO Danger_Embed(String title, String content) {
+        String datestr = dateToString(new Date());
+        long time = splitSecond(new Date());
         return EmbedVO.builder()
         .title("[Danger] " + title)
-        .description("```" + content + "```")
-        .color(Color.RED)
-        .footer(new Footer(String.format("`발생시간: %s(<t:%d:R>)`", NowDateFormated(), new Date().getTime()), ""))
+        .description(String.format("`발생시간: %s`(<t:%d:R>)\n```%s```", datestr, time, (content.length() > 1800 ? content.substring(0, 1800) + "..." : content)))
+        .color(Color.decode("#FF0000"))
         .build();
     }
 
-    private String NowDateFormated() {
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private String dateToString(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         return dateFormat.format(date);
+    }
+
+    private long splitSecond(Date date) {
+        return (long) (date.getTime() / 1000);
     }
 
     private void setProfile(HookVO hookVO, HookLevel level) {
         if (level == HookLevel.INFO) {
             hookVO.setUsername("학자금 로그봇");
-            hookVO.setAvatarUrl("https://cdn-icons-png.flaticon.com/512/665/665049.png");
+            hookVO.setAvatarUrl("https://cdn-icons-png.flaticon.com/512/8577/8577916.png");
         } else if (level == HookLevel.WARN) {
             hookVO.setUsername("학자금 경고봇");
             hookVO.setAvatarUrl("https://cdn-icons-png.flaticon.com/512/6897/6897039.png");
         } else if (level == HookLevel.DANGER) {
             hookVO.setUsername("학자금 위험봇");
-            hookVO.setAvatarUrl("https://cdn-icons-png.flaticon.com/512/6897/6897039.png");
+            hookVO.setAvatarUrl("https://cdn-icons-png.flaticon.com/512/6785/6785368.png");
         }
     }
 }

@@ -19,7 +19,7 @@ public class DiscordWebhookServiceImpl implements DiscordWebhookService {
             connection.setRequestMethod("POST");
 
             OutputStream stream = connection.getOutputStream();
-            stream.write(hookVO.toString().getBytes());
+            stream.write(hookVO.toJSON().toString().getBytes());
             stream.flush();
             stream.close();
 

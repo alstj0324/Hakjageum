@@ -20,6 +20,7 @@ public class EmbedVO {
     private Author author;
     private Image image;
     private List<Field> fieldList;
+    private String timestamp;
 
     public static class EmbedVOBuilder {
         public EmbedVOBuilder addField(Field field) {
