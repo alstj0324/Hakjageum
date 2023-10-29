@@ -1025,7 +1025,7 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	width: 500px;
 	height: 700px;
 	top: 20px;
-	border: 1px solid black;
+	border: 2px solid gray;
 	background-color: rgba(230,230,230);
 }
 .book-select-page .select-page-description{
@@ -1043,20 +1043,22 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	display: inline-block;
 	width:450px;
 	height:550px;
+	border: 1px solid gray;
 	background-color: rgba(255,255,255,0.9);
+    overflow-y: scroll;
 }
 .book-select-page .select-page-close {
 	position: relative;
 	display: inline-block;
 	width: 450;
 	height: 75px;
-	border: 1px solid black;
 }
 .book-select-page .select-page-close #closebtn{
 	padding: 0;
 	width: 80px;
 	height: 45px;
-	
+	border-radius: 5px;
+	border: 2px solid white;
 }
 /*-----------------------------------------------------------------------------------*/
 /* - -----------------[book Recommend]--------------------------*/
