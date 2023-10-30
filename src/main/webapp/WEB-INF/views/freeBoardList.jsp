@@ -45,6 +45,9 @@
       			</div>
       		</div>
       	</div>
+      	<div class="write-board">
+      		<a href="getBoardtest.do">글 작성</a> 
+      	</div>
       </div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>

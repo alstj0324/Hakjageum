@@ -134,10 +134,10 @@
   </div>
   <input type="hidden" id="user_id" value="${user.id}">
   <script type="text/javascript">    
-  	function deleteBasket(){
+  	function deleteBasket(isbn){
 		var user_id = $("#user_id").val();
-		var book_unique_id = $("#book_unique_id").val();
-		if (confirm("도서를 삭제하시겠습니까?") == true) {
+		var book_unique_id = isbn
+		if (confirm("도서를 삭제하시겠습니까?") == true){
 			$.ajax({
   	           type:"get",
   	           url:"deleteBasket.do",
@@ -213,7 +213,7 @@
 								        '<div class="ItemPublisher" id="Item">' + '출판사 :' + publisher + '</div>' + 
 	       	  					        '<div class="ItemPubdate" id="Item">' + '출간일 :'+ pubdate + '</div>' +
 	       	  						    '<div class="ItemDiscount" id="Item">' + '도서가격 :' + discount + '원</div>' +
-										'<button type="button" class="ItemDelete" onclick="deleteBasket()">' + '도서삭제' + '</div>'+ '</div>';
+										'<button type="button" class="ItemDelete" onclick="deleteBasket('+isbn+')">' + '도서삭제' + '</div>'+ '</div>';
 	        	           },
 	        	           error:function(){     	
 	        	           }
