@@ -55,8 +55,12 @@ public class UserController {
 	public String login(UserVO vo, HttpSession session, Model model) {
 		System.out.println("로그인 처리");
 	    UserVO user = userService.getUserLogin(vo);
+	    String id = user.getId();
+	    int point = user.getPoint(); 
 		if (user != null) {
 			session.setAttribute("user", user);
+			session.setAttribute("user_id", id);
+			session.setAttribute("point", point);
 	     	return "redirect:/";
 	    } else {
 	    	return "login";
@@ -153,7 +157,11 @@ public class UserController {
 		if (userService.checkUser(vo) == null) userService.insertUser(vo);
 
 		UserVO user = userService.getUser(vo);
+		String id = user.getId();
+		int point = user.getPoint(); 
 		session.setAttribute("user", user);
+		session.setAttribute("user_id", id);
+		session.setAttribute("point", point);
 		return "redirect:/";
 	}
 	
@@ -183,7 +191,11 @@ public class UserController {
 		if (userService.checkUser(vo) == null) userService.insertUser(vo);
 
 		UserVO user = userService.getUser(vo);
+		String id = user.getId();
+		int point = user.getPoint(); 
 		session.setAttribute("user", user);
+		session.setAttribute("user_id", id);
+		session.setAttribute("point", point);
 		return "redirect:/";
 	}
 	

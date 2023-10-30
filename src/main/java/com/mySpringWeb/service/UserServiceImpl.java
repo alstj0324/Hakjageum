@@ -20,6 +20,10 @@ public class UserServiceImpl implements UserService{
 		userDAO.updateUser(vo);
 	}
 	@Override
+	public void updatePointUser(UserVO vo) {
+		userDAO.updatePointUser(vo);
+	}
+	@Override
 	public void roleupdateUser(UserVO vo) {
 		userDAO.roleupdateUser(vo);	
 	}
