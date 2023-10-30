@@ -15,7 +15,6 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 import com.mySpringWeb.utils.LoginUtil;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -67,7 +66,7 @@ public class UserController {
 		}
 	}
 
-	/*------------[회원가입중]-----------*/
+	/*------------[회원가입 중 id 중복검사]-----------*/
 	@RequestMapping(value="idCheck.do", method=RequestMethod.GET)
 	@ResponseBody
 	public String idCheck(String id) throws UnsupportedEncodingException{
@@ -78,14 +77,24 @@ public class UserController {
 		System.out.println("결과 값"+data);
 		return data;
 	}
+	/*-------------------------[1028추가 회원가입시 사용될 닉네임검증]------------------------------*/
+	@RequestMapping(value="nickCheck.do", method=RequestMethod.GET)
+	@ResponseBody
+	public String nickCheck(String nickname) throws UnsupportedEncodingException{
+		System.out.println("넘어온 닉네임" + nickname);
+		UserVO vo = new UserVO();
+		vo.setNickname(nickname);
+		String data = userService.logincheckNickname(vo);
+		System.out.println("결과 값"+data);
+		return data;
+	}
 	
 	@RequestMapping(value = "emailCheck.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String mailCheck(@RequestParam("email") String email) throws Exception{
-		System.out.println(email);
 	    int serti = (int)((Math.random()* (99999 - 10000 + 1)) + 10000);
 	    System.out.println(email);
-	    String from = "HakJaGeum@gmail.com";//보내는 이 메일주소
+	    String from = "gomdung79@naver.com";//보내는 이 메일주소
 	    String to = email;
 	    String title = "회원가입시 필요한 인증번호 입니다.";
 	    String content = "[인증번호] "+ serti +" 입니다. <br/> 인증번호 확인란에 기입해주십시오.";
@@ -106,17 +115,11 @@ public class UserController {
 	        num = "error";
 	    }
 	    return num;
-	}
-	
-	
-	
-	
-	/*-------------------------------*/
+	}	
+/*--------------------------------[회원가입 검증끝]--------------------------------------*/
 	@RequestMapping(value="signin.do", method=RequestMethod.POST)
 	public String signin(UserVO vo) {
 		System.out.println("회원 가입 처리");
-		vo.setEmail(vo.getId());
-		System.out.println(vo);
 		userService.insertUser(vo);
 		return "login";
 	}

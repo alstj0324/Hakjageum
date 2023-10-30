@@ -6,15 +6,16 @@ import lombok.Setter;
 @Getter @Setter
 public class PostVO {
     private int post_id;
-    private String board_id;
+    private String board_code;
     private String title;
     private String content;
     private String writer_id;
+    private int view_count;
     private String hobby_id;
     private String book_id;
-    private int view_count;
     private String create_at;
     private String update_at;
+    private String delete_at;
 
     @Override
     public String toString() {
@@ -30,8 +31,9 @@ public class PostVO {
             "\tview_count=%s\n" +
             "\tcreate_at=%s\n" +
             "\tupdate_at=%s\n" +
+            "\tdelete_at=%s\n" +
             "]",
-            post_id, board_id, title, content, writer_id, hobby_id, book_id, view_count, create_at, update_at
+            post_id, board_code, title, content, writer_id, hobby_id, book_id, view_count, create_at, update_at, delete_at
         );
     }
 }

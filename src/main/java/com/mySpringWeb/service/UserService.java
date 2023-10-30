@@ -9,8 +9,9 @@ public interface UserService {
 	void updatePointUser(UserVO vo);
 	void roleupdateUser(UserVO vo);
 	void deleteUser(UserVO vo);
-	String logincheckUser(UserVO vo);
 	String checkUser(UserVO vo);
+	String logincheckUser(UserVO vo);
+	String logincheckNickname(UserVO vo);
 	UserVO getUser(UserVO vo);
 	UserVO getUserLogin(UserVO vo);
 	List<UserVO> getUserList();

@@ -32,7 +32,7 @@ public class KakaopayAPI2 {
 	private PaymentService paymentservice;
 	@Autowired
 	private UserService userservice;
-	
+  
 	BufferedReader br,br2;
 	
 	final String kakao_clientId = "c9e9586c57fe79bc3c0ee0c52ad1a6f2"; //kakao client 아이디(REST API 키)
