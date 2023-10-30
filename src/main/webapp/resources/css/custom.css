@@ -834,6 +834,24 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	height:45px; 
 	line-height: 45px;
 }
+.getBoardList-Container .write-board {
+	display: inline-block;
+	position: absolute;
+	right: 55px;
+	bottom: 20px;
+	width: 70px;
+	height: 40px;
+}
+.getBoardList-Container .write-board a{
+	display: inline-block;
+	width: 70px;
+	height: 40px;
+	background-color: lightgray;
+	line-height: 40px;
+	color: black;
+	border: 1px solid white;
+	border-radius: 10px;
+}
 /*----------------------------------------------------------------------------*/
 /*----------------------------[new insertBookBoard]----------------------------------------*/
 .BookBoardForm-Container {
@@ -895,6 +913,7 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	margin-top: 15px;
 	line-height: 60px;
 	font-size: 25px;
+	font-weight: bold;
 }
 .BookBoard-Form .book-title-wrap {
 	display: inline-block;
@@ -944,6 +963,17 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	width: 35%;
 	height: 100%;
 	text-align: center;
+}
+.book-image-wrap .img-notice {
+	position: relative;
+	display: inline-block;
+	width: 80%;
+	height: 80%;
+	margin-top: 40px;
+	margin-left:15px;
+	border: 1px solid black;
+	line-height: 370px;
+	border: 1px solid lightgray;
 }
 .book-image-wrap .image-box {
 	position: relative;
@@ -1019,6 +1049,7 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	background-color: white;
 }
 .book-select-page {
+	visibility:hidden;
 	z-index:10;
 	position: absolute;
 	display: inline-block;
@@ -1060,6 +1091,88 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	border-radius: 5px;
 	border: 2px solid white;
 }
+
+
+.selectListItem {
+	border: 1px solid black;
+	display: inline-block;
+	position: relative;
+	background-color: rgba(0,0,0,0.07);
+	width: 420px;
+	height: 130px;
+	color: black;
+	margin-top: 15px;
+	border: 1px solid black;
+}
+.selectItemImage {
+	display: inline-block;
+	position: absolute;
+	width: 82px;
+	height: 116px;
+	top: 7px;
+	left: 10px;
+	overflow:hidden;
+	border: 1px solid gray;
+}
+#selectItem {
+	text-align: left;
+	padding-left: 15px;
+	display: inline-block;
+	position: absolute;
+	overflow: hidden;
+}
+.selectItemTitle {
+	border-bottom: 2px solid gray;
+	width: 315px;
+	height: 35px;
+	top: 7px;
+	left: 100px;
+	line-height: 35px;
+	font-size: 17px;
+	font-weight: bold;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.selectItemAuthor {
+	width: 315px;
+	height: 25px;
+	top: 43px;
+	left: 100px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.selectItemPublisher {
+	width: 315px;
+	height: 25px;
+	top: 70px;
+	left: 100px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.selectItemPubdate {
+	width: 140px;
+	height: 25px;
+	top: 100px;
+	left: 100px;
+}
+.selectItemSelect {
+	margin:0;
+	padding:0;
+	display: inline-block;
+	position: absolute;
+	width: 70px;
+	height: 30px;
+	top: 94px;
+	left: 330px;
+	border: 1px solid black;
+	border-radius: 10px;
+	background-color: black;
+	color: white;
+}
+
 /*-----------------------------------------------------------------------------------*/
 /* - -----------------[book Recommend]--------------------------*/
 .banner-content-board .banner-content-banner h2{
