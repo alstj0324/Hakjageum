@@ -17,6 +17,7 @@ public class UserRowMapper implements RowMapper<UserVO>{
 		user.setProvider(rs.getString("provider"));
 		user.setRole_id(rs.getInt("role_id"));
 		user.setCreate_at(rs.getDate("create_at"));
+		user.setPoint(rs.getInt("point"));
 		return user;
 
 	}

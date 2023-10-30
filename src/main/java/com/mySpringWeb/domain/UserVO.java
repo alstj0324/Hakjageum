@@ -27,7 +27,7 @@ public class UserVO {
                 "\tprovider=%s\n" +
                 "\trole_id=%s\n" +
                 "\tcreate_at=%s\n" +
-				"\tpoint=%s\n" +
+                "\tpoint=%s\n" +
                 "]",
                 id, email, pwd, nickname, provider, role_id, create_at, point
             )
