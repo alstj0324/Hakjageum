@@ -27,8 +27,8 @@ public class BasketServiceImpl implements BasketService {
 	public JSONArray getBasketList(BasketVO vo) {
 		return basketDAO.getBasketList(vo);
 	}
-	
-	
-
-	
+	@Override
+	public JSONArray getBasketList(String userId) {
+		return basketDAO.getBasketList(userId);
+  }	
 }

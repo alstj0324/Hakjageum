@@ -176,6 +176,7 @@
   		var str2 = '<div class="ListClose" id="ListClose" onClick="javascript:hide();">'+
   			   '닫기' +
   			   '</div>';
+
   		$.ajax({
 	           type:"get",
 	           url:"getBasketList.do",
