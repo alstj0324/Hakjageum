@@ -15,7 +15,6 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 import com.mySpringWeb.utils.LoginUtil;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

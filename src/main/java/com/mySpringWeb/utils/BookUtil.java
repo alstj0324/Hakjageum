@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookUtil {
+
+    @Deprecated
     public void getBookList(String category, Model model) throws UnsupportedEncodingException {
         getBookList(category, model, 1, 100);
     }

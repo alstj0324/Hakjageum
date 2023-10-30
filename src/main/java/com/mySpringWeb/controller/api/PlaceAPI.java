@@ -54,6 +54,7 @@ public class PlaceAPI {
         embedList.add(embedVO);
         HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
         discordWebhookService.sendWebhook(hookVO);
+
         return ResponseEntity.ok(arr);
     }
 
