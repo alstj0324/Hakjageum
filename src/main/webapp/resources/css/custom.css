@@ -100,6 +100,13 @@ ul#name-dropdown {
 	background-color: white;
 	overflow-y: scroll; 
 }
+.ListNone {
+	text-align: center;
+	line-height: 578px;
+	font-size: 30px;
+	font-weight: bold;
+
+}
 .ListItem {
 	border: 1px solid black;
 	display: inline-block;

@@ -12,8 +12,8 @@
 <!-- Font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="resources/fonts/icomoon.css">
 
 <!-- Bootstrap -->
@@ -24,3 +24,4 @@
 
 <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 <link rel="stylesheet" type="text/css" href="resources/css/custom.css">
+<link rel="stylesheet" type="text/css" href="resources/css/animation.css">
