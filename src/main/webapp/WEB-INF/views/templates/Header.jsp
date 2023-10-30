@@ -137,7 +137,7 @@
   	function deleteBasket(){
 		var user_id = $("#user_id").val();
 		var book_unique_id = $("#book_unique_id").val();
-		if (confirm("도서를 삭제하시겠습니까?") == true){
+		if (confirm("도서를 삭제하시겠습니까?") == true) {
 			$.ajax({
   	           type:"get",
   	           url:"deleteBasket.do",
@@ -176,6 +176,7 @@
   		var str2 = '<div class="ListClose" id="ListClose" onClick="javascript:hide();">'+
   			   '닫기' +
   			   '</div>';
+
   		$.ajax({
 	           type:"get",
 	           url:"getBasketList.do",

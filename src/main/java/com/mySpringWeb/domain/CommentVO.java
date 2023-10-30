@@ -9,7 +9,7 @@ public class CommentVO {
     private String writer_id;
     private String content;
     private String create_at;
-    private String update_at;
+    private String delete_at;
 
     @Override
     public String toString() {
@@ -19,9 +19,9 @@ public class CommentVO {
             "\twriter_id=%s\n" +
             "\tcontent=%s\n" +
             "\tcreate_at=%s\n" +
-            "\tupdate_at=%s\n" +
+            "\tdelete_at=%s\n" +
             "]",
-            post_id, writer_id, content, create_at, update_at
+            post_id, writer_id, content, create_at, delete_at
         );
     }
 }
