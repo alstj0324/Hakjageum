@@ -14,6 +14,7 @@ public class UserVO {
 	private String provider;
 	private int role_id;
 	private Date create_at;
+	private int point;
 
 	public String toString() {
         return (
@@ -26,8 +27,9 @@ public class UserVO {
                 "\tprovider=%s\n" +
                 "\trole_id=%s\n" +
                 "\tcreate_at=%s\n" +
+                "\tpoint=%s\n" +
                 "]",
-                id, email, pwd, nickname, provider, role_id, create_at
+                id, email, pwd, nickname, provider, role_id, create_at, point
             )
         );
 	}

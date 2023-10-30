@@ -20,6 +20,45 @@ public class BasketAPI {
 	
     @Autowired
     private BasketService basketService;
+
+    /*
+        GET /api/user/basket/get?userId={UserId}
+     */
+    @GetMapping("/get")
+    public ResponseEntity<JSONArray> new_getBasketList(@RequestParam String userId) {
+        JSONArray arr = basketService.getBasketList(userId);
+
+        DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
+        List<EmbedVO> embedList = new ArrayList<>();
+        HookUtil hookUtil = new HookUtil();
+        EmbedVO embedVO = hookUtil.Info_Embed("Basket 정보 조회", "UserId: " + userId + "\nData:\n" + arr.toJSONString());
+        embedList.add(embedVO);
+        HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
+        discordWebhookService.sendWebhook(hookVO);
+
+        return ResponseEntity.ok(arr);
+    }
+
+    /*
+        GET /api/user/basket/getbookinfo?userId={UserId}
+     */
+    @GetMapping("/getbookinfo")
+    public ResponseEntity<JSONArray> new_getBasketListToBookInfo(@RequestParam String userId) {
+        JSONArray arr = basketService.getBasketList(userId);
+
+        DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
+        List<EmbedVO> embedList = new ArrayList<>();
+        HookUtil hookUtil = new HookUtil();
+        EmbedVO embedVO = hookUtil.Info_Embed("Basket To Book 정보 조회", "UserId: " + userId + "\nData:\n" + arr.toJSONString());
+        embedList.add(embedVO);
+        HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
+        discordWebhookService.sendWebhook(hookVO);
+
+        return ResponseEntity.ok(arr);
+    }
+
+
+    @Deprecated
     @GetMapping("/get/{userId}")
     public ResponseEntity<JSONArray> getBasketList(@PathVariable("userId") String userId) {
         JSONArray arr = basketService.getBasketList(userId);
@@ -35,6 +74,7 @@ public class BasketAPI {
         return ResponseEntity.ok(arr);
     }
 
+    @Deprecated
     @GetMapping("/getvo/{userId}")
     public ResponseEntity<JSONArray> getBasketListToVo(@PathVariable("userId") String userId) {
         JSONArray arr = basketService.getBasketList(userId);
