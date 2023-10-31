@@ -12,23 +12,27 @@
     <section id="billboard" class="position-relative">
       <div class="banner-content banner-content-board">
       	<h2>point</h2>
-      	<a href="kakaoPay.do">
-      		<h4>
-      			카카오페이 결제하기
-      		</h4>
-      	</a>
-      	<a href="searchKakaoPay.do">
-      		<h4>
-      			카카오페이 결제 확인하기(결제상세)
-      		</h4>
-      	</a>
-      	<a href="payCancel.do">
-      		<h4>
-      			카카오페이 결제 취소하기
-      		</h4>
-      	</a>   
-
+      	<div class="banner-content-pay">
+      		<h2><a href="kakaoPay.do">pay</a></h2>
+      		<h2><a href="searchKakaoPay.do">search</a></h2>
+      		<h2><a href="payCancel.do">cancel</a></h2>
+      		<div class="banner-content-paylist">
+				<c:forEach items="${paymentList }" var="pay">
+				<table class="paylist-table">
+					<tr>
+						<td bgColor=orange>결제금액</td>
+						<td bgColor=orange>결제일</td>
+					</tr>
+					<tr>
+						<%-- <td bgColor=cyan><a href="getBoard.do?tid=${pay.tid }">${pay.tid }</a></td>  --%>
+						<td bgColor=cyan>${pay.amount }</td>
+						<td bgColor=cyan>${pay.paytime }</td>
+					</tr>
+				</table>
+				</c:forEach>
+			</div>
 		</div>
+	  </div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>
   </body>
