@@ -7,5 +7,5 @@ import com.mySpringWeb.domain.PaymentVO;
 public interface PaymentService {
 	void insertPayment(PaymentVO vo);
 	void deletePayment(PaymentVO vo);
-	List<PaymentVO> getPaymentList();
+	List<PaymentVO> getPaymentList(String userid);
 }

@@ -30,7 +30,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mySpringWeb.domain.PaymentVO;
 import com.mySpringWeb.domain.UserVO;
+import com.mySpringWeb.service.PaymentService;
 import com.mySpringWeb.service.UserService;
 
 @Controller
@@ -54,9 +56,10 @@ public class UserController {
 	public String login(UserVO vo, HttpSession session, Model model) {
 		System.out.println("로그인 처리");
 	    UserVO user = userService.getUserLogin(vo);
+	    
 	    String id = user.getId();
 	    int point = user.getPoint(); 
-		if (user != null) {
+		if (user != null) {			
 			session.setAttribute("user", user);
 			session.setAttribute("user_id", id);
 			session.setAttribute("point", point);
