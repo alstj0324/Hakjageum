@@ -58,7 +58,7 @@
 
     // document ready
     $(document).ready(function () {
-      // initHamburgerMenu();
+      initHamburgerMenu();
     });
   });
 })(jQuery);
