@@ -5,11 +5,8 @@ import com.mySpringWeb.domain.webhook.HookLevel;
 import com.mySpringWeb.domain.webhook.HookVO;
 import com.mySpringWeb.service.DiscordWebhookServiceImpl;
 import com.mySpringWeb.utils.HookUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
