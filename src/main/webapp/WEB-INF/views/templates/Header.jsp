@@ -21,19 +21,19 @@
                    aria-expanded="false">게시판</a>
                 <ul class="dropdown-menu">
                   <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="freeBoardList.do">
+                    <a class="text-black text-uppercase dropdown-item" href="listFreeBoard.do">
                       자유 게시판&nbsp
                       <span class="badge bg-secondary">Go</span>
                     </a>
                   </li>
                   <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="bookBoardList.do">
+                    <a class="text-black text-uppercase dropdown-item" href="listBookBoard.do">
                       도서 게시판&nbsp
                       <span class="badge bg-secondary">Go</span>
                     </a>
                   </li>
                   <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="hobbyBoardList.do">
+                    <a class="text-black text-uppercase dropdown-item" href="listHobbyBoard.do">
                       취미 게시판&nbsp
                       <span class="badge bg-secondary">Go</span>
                     </a>
@@ -123,7 +123,7 @@
               </c:if>
               <c:if test="${user == null}">
                 <li>
-                  <a href="http://localhost:8080/biz/login.do" class="text-uppercase item-anchor">Sign In/Sign Up</a>
+                  <a href="/biz/login.do" class="text-uppercase item-anchor">Sign In/Sign Up</a>
                 </li>
               </c:if>
             </ul>
@@ -133,115 +133,105 @@
     </div>
   </div>
   <input type="hidden" id="user_id" value="${user.id}">
-  <script type="text/javascript">    
-  	function deleteBasket(isbn){
-		var user_id = $("#user_id").val();
-		var book_unique_id = isbn
-		if (confirm("도서를 삭제하시겠습니까?") == true){
-			$.ajax({
-  	           type:"get",
-  	           url:"deleteBasket.do",
-  	           dataType:"text",
-  	           data : {                       // 매개변수로 전달할 데이터
-  	               "user_id" : user_id,
-  	               "book_unique_id" : book_unique_id// 아이디값
-  	           },
-  	           success: function(data){
-  	               console.log("통신성공");
-  	               
-  	               if(data === 'False'){
-  	                   alert("도서가 삭제되었습니다.");
-  	                   return show();
-  	               }else if(data === 'True'){
-  	            	   alert("이미 존재하지 않습니다.")
-  	            	   
-  	               }
-  	           },
-  	           error:function(request, status, error){
-  	        	   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-  	           }
-  	       })
-		}else{
-			return false;
-		}	
-	}
-  
-  	function hide(){
-  		$("#basketList").css('visibility','hidden');
-  	}
-  	function show(){
-  		var user_id = $("#user_id").val();
-  		var data1="";
-  		var str = "";
-  		var str2 = '<div class="ListClose" id="ListClose" onClick="javascript:hide();">'+
-  			   '닫기' +
-  			   '</div>';
 
-  		$.ajax({
-	           type:"get",
-	           url:"getBasketList.do",
-	           dataType:"json",
-	           data : {                       
-	               "user_id" : user_id
-	           },
-	           success: function(data){
-	               console.log("통신성공");
-	               var bookId="";
-	               $.each(data, function(index, item) { // 데이터 =item/api/book/get/{bookId}
-	               	   bookId = item.book_id;
-	            	   $.ajax({
-	        	           type:"get",
-	        	           url:"/biz/api/book/get/" + bookId,
-	        	           dataType:"json",
-	        	           async: false,
-	        	   	       success: function(data){
-	        	               console.log("통신성공");
-	        	               var image = data[0].image;
-	        	               var link = data[0].link;
-	        	               var title = (data[0].title).split("(");
-	        	               var author = data[0].author;
-	        	               var publisher = data[0].publisher;
-	        	               var isbn = data[0].isbn
-	        	               var pubdate = data[0].pubdate;
-	        	               var discount = data[0].discount;
-	        	               str += '<div class="ListItem">'+
-	        		  			      '<div class="ItemImage">' +
-	       	  				           '<a href="' +  link  +  '">'  +  '<img src="'+ image + '">' + '</a>' +
-	       	  							'</div>' + '<input type="hidden" id="book_unique_id" value="'+isbn+'">' +
-	       	  							'<div class="ItemTitle" id="Item">' + title[0] + '</div>' +
-	       	 	       	  			    '<div class="ItemAuthor" id="Item">' + '저자명 :' + author + '</div>' + 	
-								        '<div class="ItemPublisher" id="Item">' + '출판사 :' + publisher + '</div>' + 
-	       	  					        '<div class="ItemPubdate" id="Item">' + '출간일 :'+ pubdate + '</div>' +
-	       	  						    '<div class="ItemDiscount" id="Item">' + '도서가격 :' + discount + '원</div>' +
-										'<button type="button" class="ItemDelete" onclick="deleteBasket('+isbn+')">' + '도서삭제' + '</div>'+ '</div>';
-	        	           },
-	        	           error:function(){     	
-	        	           }
-	        	       });
-	        	       console.log(str);
-	        	       
-					});
-	  			   $("#listContainer").html(str);
-	           },
-	           error:function(request, status, error){
-	        	   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	           }  
-	       });
-	     
-  		
-	    $("#basketList").css('visibility','visible');
-  	}
-  	
-  
-</script>
   <div class="basketList" id="basketList">
-  	<div class="basketHead">
-  	내 도서 목록
-  	</div>
-  	<div class="ListContainer" id="listContainer">		
-  	</div>	
-  	<div class="ListClose" id="ListClose" onClick="javascript:hide();">
-	 닫기
-	</div>'                     
+    <div class="basketHead">내 도서 목록</div>
+    <div class="ListContainer" id="listContainer">
+      <p class="ListNone">저장 도서가 없습니다.</p>
+    </div>
+    <div class="ListClose" id="ListClose" onClick="javascript:hide();">닫기</div>
   </div>
+  <script type="text/javascript">
+    function createResultItem(seq, book) {
+        let content = []
+        content.push("<div class='ListItem' id='basket_" + seq + "'>");
+        content.push("  <div class='ItemImage'>");
+        content.push("    <a href='" + book.link + "'>");
+        content.push("      <img src='" + book.image + "' />");
+        content.push("    </a>");
+        content.push("  </div>");
+        content.push("  <div class='ItemTitle' id='Item'>" + book.title + "</div>");
+        content.push("  <div class='ItemAuthor' id='Item'>" + book.author + "</div>");
+        content.push("  <div class='ItemPublisher' id='Item'>" + book.publisher + "</div>");
+        content.push("  <div class='ItemPubdate' id='Item'>" + book.pubdate + "</div>");
+        content.push("  <div class='ItemDiscount' id='Item'>" + book.discount + "</div>");
+        content.push("  <button type='button' class='ItemDelete' onclick='deleteBasket(" + book.isbn + ")'>삭제</button>");
+        content.push("</div>");
+
+        return content.join("");
+    }
+
+    function show() {
+        let form = $('#basketList');
+        let basketResult = $('#listContainer');
+        var user_id = $("#user_id").val();
+        let basketList = getBasketList();
+
+        if (basketList.length !== 0) {
+            basketResult.empty();
+
+            for (let i = 0; i < basketList.length; i++) {
+                let book = basketList[i];
+
+                let element = createResultItem(i, book);
+                basketResult.append(element);
+            }
+        }
+
+        form.css('visibility','visible');
+    }
+
+    function hide(){
+        $("#basketList").css('visibility','hidden');
+    }
+      // show func
+    function getBasketList() {
+        let user_id = $("#user_id").val();
+        let res;
+        $.ajax({
+            type: 'get',
+            url: '/biz/api/user/basket/getbookinfo',
+            dataType: 'json',
+            async: false,
+            data: {
+                "userId": user_id
+            },
+            success: function(data) {
+                console.log("Get Basket Data 성공")
+                res = data;
+            },
+            error: function() {
+                console.log("Get Basket Data 실패")
+            }
+        })
+
+        return res;
+    }
+
+    function deleteBasket(isbn) {
+        let user_id = $("#user_id").val();
+
+        $.ajax({
+            type: 'post',
+            url: '/biz/api/user/basket/delete',
+            dataType: 'json',
+            data: {
+                "userId": user_id,
+                "bookId": isbn
+            },
+            success: function (data) {
+                console.log("Delete Basket Data 성공")
+                if (data === 'False') {
+                    alert("도서가 삭제되었습니다.");
+                    return show();
+                } else if (data === 'True') {
+                    alert("이미 존재하지 않습니다.")
+                }
+            },
+            error: function () {
+                console.log("Delete Basket Data 실패")
+            }
+        })
+    }
+  </script>
 </header>

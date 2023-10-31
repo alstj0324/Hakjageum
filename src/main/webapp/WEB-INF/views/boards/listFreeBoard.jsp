@@ -11,14 +11,14 @@
     <meta name="author" content="">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <%@ include file="templates/UseCSS.jsp" %>
+    <%@ include file="../templates/UseCSS.jsp" %>
   </head>
   <body class="bg-accent-light">
-    <%@ include file="templates/Header.jsp" %>
+    <%@ include file="../templates/Header.jsp" %>
     <section id="billboard" class="position-relative">
       <div class="getBoardList-Container">
       	<div class="getBoardList-description-container">
-      		<div class="board-description">Book Board</div>
+      		<div class="board-description">Free Board</div>
       	</div>
       	<div class="getboardMain-Container">
       		<div class="main-description">
@@ -33,7 +33,7 @@
       			 	<c:forEach var="i" begin="0" end="15">
       			 		<div class="contents">
       						<div class="content-category" id="content-items">[자유 게시판]</div>
-      						<div class="content-title" id="content-items"><a href="#">잘가요 내사랑 이젠 보내줄게요 기억 추억 모두잊을게요 지우고 지워도</a></div>
+      						<div class="content-title" id="content-items"><a href="getBoardtest.do">잘가요 내사랑 이젠 보내줄게요 기억 추억 모두잊을게요 지우고 지워도</a></div>
       						<div class="content-writer" id="content-items">윈도우 10 좋습니다</div>
       						<div class="content-createtime" id="content-items">23-10-29</div>
       						<div class="content-viewcount" id="content-items">12369</div>
@@ -45,8 +45,13 @@
       			</div>
       		</div>
       	</div>
+      	<div class="write-board">
+      		<c:if test="${user != null}">
+      			<a href="getBoardtest.do">글 작성</a>
+      		</c:if> 
+      	</div>
       </div>
     </section>
-    <%@ include file="templates/UseJS.jsp" %>
+    <%@ include file="../templates/UseJS.jsp" %>
   </body>
 </html>

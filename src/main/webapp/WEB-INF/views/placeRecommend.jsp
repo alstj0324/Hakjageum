@@ -48,14 +48,14 @@
       </div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=pjn5n9vyj7"></script>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=wrf3efe7wg"></script>
     <script>
       let map;
       let geo = {};
       let dataList = [], markerList = [], infoWindowList = [];
 
       // 페이지 로딩
-      $(async function () {
+      $(function () {
           $.ajax({
               type: "get",
               url: "/biz/resources/MapGeo.json",
@@ -74,7 +74,7 @@
               $('select[name=si]').append(option);
           }
 
-          let ip = await getMyIp();
+          let ip =  getMyIp();
           let loc = getMyLoc(ip);
           initMap(loc);
       });
@@ -164,11 +164,21 @@
       }
 
       function getMyIp() {
-          return new Promise((resolve) => {
-              $.getJSON("https://api64.ipify.org?format=json", function (json) {
-                  resolve(json.ip);
-              });
+          let ip = "";
+          $.ajax({
+              type: "get",
+              url: "https://api64.ipify.org?format=json",
+              dataType: "json",
+              async: false,
+              success: function (data) {
+                  console.log("IP API > Get IP 성공");
+                  ip = data.ip;
+              },
+              error: function () {
+                  console.log("IP API > Get IP 실패");
+              }
           })
+          return ip;
       }
 
       function getMyLoc(ip) {

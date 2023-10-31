@@ -141,4 +141,26 @@ public class BookUtil {
 
         return book;
     }
+
+    public JSONArray bookToObject(List<BookVO> placelist) {
+        JSONArray jArray = new JSONArray();
+
+        for (BookVO item : placelist) {
+            JSONObject jObject = new JSONObject();
+
+            jObject.put("title", item.getTitle());
+            jObject.put("author", item.getAuthor());
+            jObject.put("link", item.getLink());
+            jObject.put("image", item.getImage());
+            jObject.put("pubdate", item.getPubdate());
+            jObject.put("isbn", item.getIsbn());
+            jObject.put("description", item.getDescription());
+            jObject.put("discount", item.getDiscount());
+            jObject.put("publisher", item.getPublisher());
+
+            jArray.add(jObject);
+        }
+
+        return jArray;
+    }
 }
