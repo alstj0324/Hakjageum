@@ -56,6 +56,10 @@ public class KakaopayAPI2 {
 		
 		return "Test";
 	}
+	@RequestMapping(value="payment.do")
+	public String payment() {
+		return "payment";
+	}
 	
 	@RequestMapping(value="kakaoPay.do",method=RequestMethod.GET)
 	public String kakaoPayment(HttpSession session ,HttpServletRequest request) throws IOException, ParseException { 
