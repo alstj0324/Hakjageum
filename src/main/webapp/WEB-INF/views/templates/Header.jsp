@@ -151,10 +151,10 @@
         content.push("    </a>");
         content.push("  </div>");
         content.push("  <div class='ItemTitle' id='Item'>" + book.title + "</div>");
-        content.push("  <div class='ItemAuthor' id='Item'>" + book.author + "</div>");
-        content.push("  <div class='ItemPublisher' id='Item'>" + book.publisher + "</div>");
-        content.push("  <div class='ItemPubdate' id='Item'>" + book.pubdate + "</div>");
-        content.push("  <div class='ItemDiscount' id='Item'>" + book.discount + "</div>");
+        content.push("  <div class='ItemAuthor' id='Item'>저자명 : " + book.author + "</div>");
+        content.push("  <div class='ItemPublisher' id='Item'>출판사 : " + book.publisher + "</div>");
+        content.push("  <div class='ItemPubdate' id='Item'>출간일 : " + book.pubdate + "</div>");
+        content.push("  <div class='ItemDiscount' id='Item'>도서가격 : " + book.discount + "</div>");
         content.push("  <button type='button' class='ItemDelete' onclick='deleteBasket(" + book.isbn + ")'>삭제</button>");
         content.push("</div>");
 

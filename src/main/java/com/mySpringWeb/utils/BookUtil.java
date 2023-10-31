@@ -148,8 +148,8 @@ public class BookUtil {
         for (BookVO item : placelist) {
             JSONObject jObject = new JSONObject();
 
-            jObject.put("title", item.getTitle());
-            jObject.put("author", item.getAuthor());
+            jObject.put("title", item.getTitle().split("\\(")[0]);
+            jObject.put("author", item.getAuthor().replaceAll("\\^", ", "));
             jObject.put("link", item.getLink());
             jObject.put("image", item.getImage());
             jObject.put("pubdate", item.getPubdate());
