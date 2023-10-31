@@ -5,10 +5,10 @@
     <title>학자금, 학생에게 자기계발은 금이다.</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%@ include file="templates/UseCSS.jsp" %>
+    <%@ include file="../templates/UseCSS.jsp" %>
   </head>
   <body class="bg-accent-light">
-    <%@ include file="templates/Header.jsp" %>
+    <%@ include file="../templates/Header.jsp" %>
     <section id="billboard" class="position-relative">
       <div class="BookBoardForm-Container">
       	<div class="BookBoardForm-description-container">
@@ -18,10 +18,10 @@
       	</div>
       	<div class=BookBoardFormMain-Container>
       		<div class="BookBoard-Form">
-      			<input type="hidden" id="user_id" value="${user.id}">
-      			<form action="#" method="post">
+      			<input type="hidden" id="user_id" value="${user.id}"><!-- ajax에 사용 -->
+      			<form action="insertBookBoard.do" method="post">
       				<input type="hidden" name="writer_id" id="writer_id" value=${user.id } required>
-      				<input type="hidden" name="board_type" id="board_type" value="">
+      				<input type="hidden" name="board_code" id="board_code" value="BA2">
       				<input type="hidden" name="book_id" id="book_id" value="">
 	      			<div class="BookBoard-Form-description">
 	      				[도서 후기 및 의견을 작성해주세요]
@@ -31,7 +31,6 @@
 	      			</div>
 	      			<div class="book-select-wrap">
 	      				<button type="button" id="book-select" onClick="selectOpen()">도서 목록<br>불러오기</button>
-	      				<input type="hidden" id="book_id" name="book_id" value="">
 	      			</div>
 	      			<div class="book-main-wrap">
 	      				<div class="book-image-wrap">
@@ -53,7 +52,19 @@
 	      			</div>
       			</form>
       		</div>
-      		<script type="text/javascript">
+      		<div class="book-select-page" id="book-select-page">
+      			<div class="select-page-description">
+      				내 도서 목록
+      			</div>
+      			<div class="select-page-content-container" id="select-page-content-container">
+      			</div>
+      			<div class="select-page-close">
+      				<button type="button" id="closebtn" onclick="selectClose()">닫기</button>
+      			</div>
+      		</div>
+      	</div>
+      </div>
+      <script type="text/javascript">
       			function selectClose(){
       				$("#book-select-page").css('visibility','hidden');
       			}
@@ -71,12 +82,13 @@
  	        	               var image = data[0].image;  
  	        	               var title = (data[0].title).split("(");
  	        	               var author = (data[0].author).replace('^',',');
- 	        	               var isbn = data[0].isbn
+ 	        	               console.log("isbn이요"+isbn)
  	        	               $("#book-image").attr("src", image);
  	        	               $(".title-box").html(title[0]);
  	        	               $(".author-box").html(author);
  	        	               $("#book_id").val(isbn);
  	        	               alert("도서가 추가되었습니다!");
+ 	        	               selectClose()
  	        	           },
  	        	           error:function(){     	
  	        	           }
@@ -139,19 +151,7 @@
       		  	}
 
       		</script>
-      		<div class="book-select-page" id="book-select-page">
-      			<div class="select-page-description">
-      				내 도서 목록
-      			</div>
-      			<div class="select-page-content-container" id="select-page-content-container">
-      			</div>
-      			<div class="select-page-close">
-      				<button type="button" id="closebtn" onclick="selectClose()">닫기</button>
-      			</div>
-      		</div>
-      	</div>
-      </div>
     </section>
-    <%@ include file="templates/UseJS.jsp" %>
+    <%@ include file="../templates/UseJS.jsp" %>
   </body>
 </html>

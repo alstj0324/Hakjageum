@@ -802,7 +802,7 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	top:0;
 	left:0;
 	width: 100%;
-	height:645px; 
+	height:605px; 
 }
 .content-box .contents {
 	display: inline-block;
@@ -828,11 +828,18 @@ div.banner-content-board .detail-3 input[type="submit"]{
 .content-container .paging-box{
 	display: inline-block;
 	position: absolute;
-	top:640px;
+	top:625px;
 	left:0;
 	width: 100%;
 	height:45px; 
 	line-height: 45px;
+}
+.paging-box .paging-item {
+	display: inline-block;
+	position: relative;
+	width: 290px;
+	height: 40px;
+	margin-bottom: 20px;
 }
 .getBoardList-Container .write-board {
 	display: inline-block;
@@ -851,6 +858,42 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	color: black;
 	border: 1px solid white;
 	border-radius: 10px;
+}
+#pagination-wrap {
+	font-size: 0;
+	text-align: center;
+	width: 290px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	flex-direction: row;
+}
+.paging-li {
+	margin:0;
+	padding:0;
+	display: flex;
+	border: 1px solid gray;
+	width: 40px;
+	height: 40px;
+	margin: 0px 1px 0px 1px;
+	border-radius: 5px;
+	color: black;
+}
+.paging-li a{
+	margin:0;
+	padding:0;
+	width: 40px;
+	height: 40px;
+	color: black;
+	font-size: 15px;
+	line-height: 40px;
+}
+.paging-li:hover{
+	background-color: lightgray;
+}
+.paging-li a:hover{
+	color:white;
 }
 /*----------------------------------------------------------------------------*/
 /*----------------------------[new insertBookBoard]----------------------------------------*/

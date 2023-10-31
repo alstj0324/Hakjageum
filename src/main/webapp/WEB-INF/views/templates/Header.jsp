@@ -21,19 +21,19 @@
                    aria-expanded="false">게시판</a>
                 <ul class="dropdown-menu">
                   <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="freeBoardList.do">
+                    <a class="text-black text-uppercase dropdown-item" href="listFreeBoard.do">
                       자유 게시판&nbsp
                       <span class="badge bg-secondary">Go</span>
                     </a>
                   </li>
                   <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="bookBoardList.do">
+                    <a class="text-black text-uppercase dropdown-item" href="listBookBoard.do">
                       도서 게시판&nbsp
                       <span class="badge bg-secondary">Go</span>
                     </a>
                   </li>
                   <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="hobbyBoardList.do">
+                    <a class="text-black text-uppercase dropdown-item" href="listHobbyBoard.do">
                       취미 게시판&nbsp
                       <span class="badge bg-secondary">Go</span>
                     </a>
