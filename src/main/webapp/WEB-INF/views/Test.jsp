@@ -24,7 +24,7 @@
 							<c:forEach items="${paymentList }" var="pay">
 							<tr>
 								<%-- <td bgColor=cyan><a href="getBoard.do?tid=${pay.tid }">${pay.tid }</a></td>  --%>
-								<td><a href="">카카오페이(머니)</a></td>
+								<td><a href="searchKakaoPay.do?tid=${pay.tid }">카카오페이(머니)</a></td>
 								<td>${pay.amount }</td>
 								<td>${pay.paytime }</td>
 							</tr>
@@ -36,7 +36,7 @@
 				<div class="relative">
 					<i class="fa-solid fa-receipt"></i>
 					<span>총 결제금액 :</span>
-					<span>100,000 </span>원
+					<span>${totalamount } </span>원
 				</div>
 			</div>
 			
@@ -46,7 +46,7 @@
 				</div>
 				<div class="paybar-content paybar-content-2">
 					<h5>Point</h5>
-					<i class="fa-solid fa-book-open"></i>학자금 포인트 : <span>40000</span>
+					<i class="fa-solid fa-book-open"></i>학자금 포인트 : <span>${totalamount }</span>
 				</div>
 				<div class="paybar-content paybar-content-3">
 					<a href="payment.do" class="white-color">

@@ -88,13 +88,16 @@
       		</button>
          </div>	
        	 <div class="payment-box-right-top">
-       	 	<form action="">
+       	 	<form action="kakaoPay.do">
 	       	 	<span>상품명 : </span>
-	       	 	<input type="text" id="item-name" required disabled>
+	       	 	<input type="text" id="item-name" name="item_name" disabled required>
+	       	 	
 	       	 	<span>금액 : </span>
-	       	 	<input type="text" id="amount" disabled>
+	       	 	<input type="text" id="amount" name="amount" disabled >
 	       	 	<span> 원</span>
 	       	 	<input type="submit" value="결제하기">
+	       	 	<input type="hidden" id="submit-item-name" name="item_name" value="">
+	       	 	<input type="hidden" id="submit-amount" name="amount" value="">
        	 	</form>
        	 </div>   	 
        </div>
@@ -111,30 +114,56 @@
         var button100 = document.getElementById('changeAmountButton100');
         var amount = document.getElementById('amount');
         var item_name = document.getElementById('item-name');
+        var submit_amount = document.getElementById('submit-amount');
+        var submit_item_name = document.getElementById('submit-item-name');
+        var item3 = '3,000 학자금 포인트';
+        var item5 = '5,000 학자금 포인트';
+        var item10 = '10,000 학자금 포인트';
+        var item30 = '30,000 학자금 포인트';
+        var item50 = '50,000 학자금 포인트';
+        var item100 = '100,000 학자금 포인트';
+        var encodeditem3 = encodeURIComponent(item3);
+        var encodeditem5 = encodeURIComponent(item5);
+        var encodeditem10 = encodeURIComponent(item10);
+        var encodeditem30 = encodeURIComponent(item30);
+        var encodeditem50 = encodeURIComponent(item50);
+        var encodeditem100 = encodeURIComponent(item100);
         // 버튼 클릭 시 텍스트를 변경하는 이벤트 리스너를 추가합니다.
         button3.addEventListener('click', function () {
-            item_name.value = '3,000 학자금 포인트';
-            amount.value = 3000;
+        	item_name.value = item3;
+        	amount.value = 3000;
+            submit_item_name.value = encodeditem3;
+            submit_amount.value = 3000;
         });
         button5.addEventListener('click', function () {
-        	item_name.value = '5,000 학자금 포인트';
+        	item_name.value = item5;
         	amount.value = 5000;
+        	submit_item_name.value = encodeditem5;
+        	submit_amount.value = 5000;
         });
         button10.addEventListener('click', function () {
-        	item_name.value = '10,000 학자금 포인트';
+        	item_name.value = item10;
         	amount.value = 10000;
+        	submit_item_name.value = encodeditem10;
+        	submit_amount.value = 10000;
         });
         button30.addEventListener('click', function () {
-        	item_name.value = '30,000 학자금 포인트';
+        	item_name.value = item30;
         	amount.value = 30000;
+        	submit_item_name.value = encodeditem30;
+        	submit_amount.value = 30000;
         });
         button50.addEventListener('click', function () {
-        	item_name.value = '50,000 학자금 포인트';
+        	item_name.value = item50;
         	amount.value = 50000;
+        	submit_item_name.value = encodeditem50;
+        	submit_amount.value = 50000;
         });
         button100.addEventListener('click', function () {
-        	item_name.value = '100,000 학자금 포인트';
+        	item_name.value = item100;
         	amount.value = 100000;
+        	submit_item_name.value = encodeditem100;
+        	submit_amount.value = 100000;
         });
     </script>
     <%@ include file="templates/UseJS.jsp" %>

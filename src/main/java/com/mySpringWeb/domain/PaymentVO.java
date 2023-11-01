@@ -21,7 +21,7 @@ public class PaymentVO {
 			"\tamount=%s\n" +
 			"\tpayment=%s\n" +
 			"]",
-			tid, user_id, paytime
+			tid, user_id, amount, paytime
 		);
 	}
 }
