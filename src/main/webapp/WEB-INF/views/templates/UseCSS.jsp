@@ -24,4 +24,4 @@
 
 <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 <link rel="stylesheet" type="text/css" href="resources/css/custom.css">
-<link rel="stylesheet" type="text/css" href="resources/css/animation.css">
+

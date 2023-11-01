@@ -21,6 +21,7 @@ public class BasketDAOSpring {
 	private String CHECK_BASKET = "select * from basket where user_id=? and book_unique_id=?";
 	private String ADD_BASKET = "insert into basket(user_id,book_unique_id) values(?,?)";
 	private String DELETE_BASKET = "delete from basket where user_id=? and book_unique_id=?";
+	private final String CHECK_BASKET_LIST = "select * from basket where user_id=? limit 1;";
 	private final String BASKET_GETLIST = "select * from basket where user_id=? order by book_unique_id desc";
 	
 	
@@ -45,6 +46,19 @@ public class BasketDAOSpring {
 	public void deleteBasket(BasketVO vo) {
 		System.out.println("===>Spring JDBC로 deleteBasket() 기능처리");
 		jdbctemplate.update(DELETE_BASKET, vo.getUser_id(), vo.getBook_unique_id());
+	}
+
+	public String checkBasketList(String userId) {
+		System.out.println("===>Spring JDBC로 checkBasketList() 기능처리");
+		Object [] args  = {userId};
+		try {
+			jdbctemplate.queryForObject(CHECK_BASKET_LIST, new BasketRowMapper() ,args);
+            System.out.println("리스트가 존재합니다.");          
+            return "True";
+        }catch(EmptyResultDataAccessException e){
+        	System.out.println("리스트가 존재하지 않습니다."); 
+            return "False";
+        }
 	}
 
 	public JSONArray getBasketList(BasketVO vo) {

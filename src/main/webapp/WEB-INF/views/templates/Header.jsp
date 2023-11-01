@@ -166,7 +166,6 @@
         let basketResult = $('#listContainer');
         var user_id = $("#user_id").val();
         let basketList = getBasketList();
-
         if (basketList.length !== 0) {
             basketResult.empty();
 
@@ -176,9 +175,13 @@
                 let element = createResultItem(i, book);
                 basketResult.append(element);
             }
+            form.css('visibility','visible');
+        }else {
+    		if(confirm("저장된 도서가 없습니다\n도서를 찾아보시겠습니까?")) location.href="bookRecommend.do";
         }
+        
 
-        form.css('visibility','visible');
+        
     }
 
     function hide(){

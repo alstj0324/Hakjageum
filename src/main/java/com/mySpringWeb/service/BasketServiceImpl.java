@@ -23,6 +23,9 @@ public class BasketServiceImpl implements BasketService {
 	public void deleteBasket(BasketVO vo) {
 		basketDAO.deleteBasket(vo);
 	}
+	public String checkBasketList(String userId) {
+		return basketDAO.checkBasketList(userId);
+	}
 	@Override
 	public JSONArray getBasketList(BasketVO vo) {
 		return basketDAO.getBasketList(vo);

@@ -7,6 +7,7 @@ public interface BasketService {
   String checkBasket(BasketVO vo);
   void addBasket(BasketVO vo);
   void deleteBasket(BasketVO vo);
+  String checkBasketList(String userId);
   JSONArray getBasketList(BasketVO vo);
   JSONArray getBasketList(String userId);
 }

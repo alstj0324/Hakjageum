@@ -15,6 +15,9 @@
       		<div class="BookBoardForm-description">
       			BookBoard Form
       		</div>
+      		<div class="backbtnContainer">
+          		<button type="button" class="backbtn" onclick="back()">이전 페이지로 이동</button>
+            </div>	
       	</div>
       	<div class=BookBoardFormMain-Container>
       		<div class="BookBoard-Form">
@@ -63,7 +66,8 @@
       		</div>
       	</div>
       </div>
-      <script type="text/javascript">
+      <script type="text/javascript">      
+      			
 				let basketList = [];
 
 				function selectOpen(){
@@ -79,18 +83,28 @@
 						success: function(data) {
 							console.log("Get Basket Data 성공")
 							basketList = data;
-							let select_container = $("#select-page-content-container");
-							select_container.empty();
-							for (let i = data.length - 1; i >= 0; i--) {
-								select_container.append(createResultItem(i, data[i]));
+							if(basketList.length != 0){
+								let select_container = $("#select-page-content-container");
+								select_container.empty();
+								for (let i = data.length - 1; i >= 0; i--) {
+									select_container.append(createResultItem(i, data[i]));
+								}
+								$("#book-select-page").css('visibility','visible');
+							}else {
+								if(confirm("저장된 도서가 없습니다\n도서를 찾아보시겠습니까?") === true){
+									location.href="bookRecommend.do";	
+								}else {
+									alert("자유게시판으로 이동합니다.")
+									location.href="listFreeBoard.do";
+								} 
+								
 							}
 						},
 						error: function() {
 							console.log("Get Basket Data 실패")
 						}
 					});
-
-					$("#book-select-page").css('visibility','visible');
+					
 				}
 
 				function selectBook(seq){
@@ -129,6 +143,9 @@
 
 					return content.join("");
 				}
+				function back(){
+            		history.back();
+            	}
 
 			</script>
     </section>
