@@ -32,19 +32,19 @@ function idCheck() {
                    $("#id").val("");
                    $("#id").focus();
                    $("#id-check-text").text("아이디 중복체크가 필요합니다!");
-                  $("#id-check-text").css("color","rgb(255, 139, 133)");    
+                   $("#id-check-text").css("color","rgb(255, 139, 133)");    
                }else if(data === 'True'){
                    if (confirm("사용 가능한 아이디입니다! \n 사용하시겠습니까?") == true){    //확인
                        $("#id").attr("readonly",true);        
                        $("#idcheckValue").val("Y");
                        $("#email").focus();
                        $("#id-check-text").text("사용가능한 아이디입니다!");
-                         $("#id-check-text").css("color","lightgreen");
+                       $("#id-check-text").css("color","lightgreen");
                    }else{
                        $("#id").attr("readonly",false);  
                        $("#id").focus();
                        $("#id-check-text").text("아이디 중복체크가 필요합니다!");
-                         $("#id-check-text").css("color","rgb(255, 139, 133)");   
+                       $("#id-check-text").css("color","rgb(255, 139, 133)");   
                    }     
                }
            },
@@ -154,7 +154,7 @@ function nickCheck() {
                        $("#nickcheckValue").val("Y");
                        $("#pwd").focus();
                        $("#nick-check-text").text("사용가능한 닉네임입니다!");
-                        $("#nick-check-text").css("color","lightgreen");
+                       $("#nick-check-text").css("color","lightgreen");
                    }else{   
                        $("#nickname").attr("readonly",false);
                        $("#nickname").focus();
@@ -198,6 +198,9 @@ $(function(){
            $("#pwd-check-text").text("비밀번호가 일치합니다!");
            $("#pwd-check-text").css("color","lightgreen");
            $("#pwdcheckValue").val("Y");
+           $("#pwd").attr("readonly",true);
+           $("#pwd2").attr("readonly",true);
+           
        }else{
            $("#pwd-check-text").text("비밀번호가 일치하지 않습니다!");
             $("#pwd-check-text").css("color","rgb(255, 139, 133)"); 
