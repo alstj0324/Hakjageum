@@ -187,7 +187,7 @@ public class KakaopayAPI2 {
 		vo.setTid(tid);
 		vo.setUser_id(partner_user_id);
 		vo.setAmount(amount);
-		vo.setPaytime(paytime);
+		vo.setCreated_at(paytime);
 		paymentservice.insertPayment(vo); //결제 기록을 남기는 부분
 		
 		//int basepoint = user_vo.getPoint(); //기존 금액

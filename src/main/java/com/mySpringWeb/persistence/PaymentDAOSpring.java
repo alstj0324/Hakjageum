@@ -13,15 +13,15 @@ public class PaymentDAOSpring {
 	@Autowired
 	private JdbcTemplate jdbctemplate;
 	
-	private final String PAYMENT_INSERT = "insert into payhistory(tid,user_id,amount,paytime) values(?,?,?,?)";
+	private final String PAYMENT_INSERT = "insert into payhistory(tid,user_id,amount,created_at) values(?,?,?,?)";
 	private final String PAYMENT_DELETE = "delete from payhistory where tid=?";
-	private final String PAYMENT_GETLIST = "select * from payhistory where user_id=? order by paytime desc";
-	private final String PAYMENT_GETPAYTME = "select paytime from payhistory where tid=?";
+	private final String PAYMENT_GETLIST = "select * from payhistory where user_id=? order by create_at desc";
+	private final String PAYMENT_GETPAYTME = "select created_at from payhistory where tid=?";
 	private final String PAYMENT_GETTOTALAMOUNT = "select sum(amount) as total_amount from payhistory where user_id=?";
 	
 	public void insertPayment(PaymentVO vo) {
 		System.out.println("===>Spring JDBC로 insertPayment() 기능 처리");
-		jdbctemplate.update(PAYMENT_INSERT, vo.getTid(), vo.getUser_id(), vo.getAmount(), vo.getPaytime());
+		jdbctemplate.update(PAYMENT_INSERT, vo.getTid(), vo.getUser_id(), vo.getAmount(), vo.getCreated_at());
 	}
 	public void deletePayment(PaymentVO vo) {
 		System.out.println("===>Spring JDBC로 deletePayment() 기능 처리");
