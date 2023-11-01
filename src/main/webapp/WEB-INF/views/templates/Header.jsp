@@ -90,6 +90,11 @@
         <nav class="navbar justify-content-end">
           <div class="user-items">
             <ul class="list-unstyled content-light d-flex align-items-center m-0">
+              <c:if test="${user == null}">
+              <li>
+                <a href="/biz/login.do" class="text-uppercase item-anchor">로그인</a>
+              </li>
+              </c:if>
               <c:if test="${user != null}">
                 <li>
                   <a style="color:gold;" href="#" class="text-uppercase item-anchor dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">[${user.nickname}]</a>
@@ -125,11 +130,12 @@
                 </li>
                 
               </c:if>
-              <c:if test="${user == null}">
-                <li>
-                  <a href="/biz/login.do" class="text-uppercase item-anchor">Sign In/Sign Up</a>
-                </li>
+                </ul>
+              </li>
               </c:if>
+              <li>
+                <a href="logout.do" class="item-anchor">로그아웃</a>
+              </li>
             </ul>
           </div>
           

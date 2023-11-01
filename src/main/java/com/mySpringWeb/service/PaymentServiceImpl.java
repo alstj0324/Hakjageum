@@ -20,16 +20,13 @@ public class PaymentServiceImpl implements PaymentService {
 	public void deletePayment(PaymentVO vo) {
 		paymentDAO.deletePayment(vo);
 	}
-//	public List<PaymentVO> getPaymentList() {
-//		return paymentDAO.getPaymentList();
-//	}
 	public List<PaymentVO> getPaymentList(String userid) {
 		return paymentDAO.getPaymentList(userid);
 	}
-	public String getPaytime(String tid) {
-		return paymentDAO.getPaytime(tid);
-	}
 	public int getTotalAmount(String user_id) {
 		return paymentDAO.getTotalAmount(user_id);
+	}
+	public PaymentVO getPayment(String tid) {
+		return paymentDAO.getPayment(tid);
 	}
 }

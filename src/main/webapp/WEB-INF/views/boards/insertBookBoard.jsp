@@ -66,9 +66,93 @@
       		</div>
       	</div>
       </div>
-      <script type="text/javascript">      
-      			
-				let basketList = [];
+
+      <script type="text/javascript">
+      			function selectClose(){
+      				$("#book-select-page").css('visibility','hidden');
+      			}
+      			function selectBook(isbn){
+      				var bookId = isbn
+      				console.log(bookId)
+      				if(confirm("도서를 선택하시겠습니까?")== true){
+      					$.ajax({
+ 	        	           type:"get",
+ 	        	           url:"/biz/api/book/get/" + bookId,
+ 	        	           dataType:"json",
+ 	        	           async: false,
+ 	        	   	       success: function(data){
+ 	        	               console.log("통신성공");
+ 	        	               var image = data[0].image;  
+ 	        	               var title = (data[0].title).split("(");
+ 	        	               var author = (data[0].author).replace('^',',');
+ 	        	               console.log("isbn이요"+isbn)
+ 	        	               $("#book-image").attr("src", image);
+ 	        	               $(".title-box").html(title[0]);
+ 	        	               $(".author-box").html(author);
+ 	        	               $("#book_id").val(isbn);
+ 	        	               alert("도서가 추가되었습니다!");
+ 	        	               selectClose()
+ 	        	           },
+ 	        	           error:function(){     	
+ 	        	           }
+ 	        	       });
+      		  		}else{
+      		  			return false;
+      		  		}
+      			}
+      			function selectOpen(){
+      				var user_id = $("#user_id").val();
+      		  		var str = "";
+      		  		$.ajax({
+      			           type:"get",
+      			           url:"getBasketList.do",
+      			           dataType:"json",
+      			           data : {                       
+      			               "user_id" : user_id
+      			           },
+      			           success: function(data){
+      			               console.log("통신성공");
+      			               var bookId="";
+      			               $.each(data, function(index, item) {
+      			               	   bookId = item.book_id;
+      			            	   $.ajax({
+      			        	           type:"get",
+      			        	           url:"/biz/api/book/get/" + bookId,
+      			        	           dataType:"json",
+      			        	           async: false,
+      			        	   	       success: function(data){
+      			        	               console.log("통신성공");
+      			        	               var image = data[0].image;  
+      			        	               var title = (data[0].title).split("(");
+      			        	               var author = (data[0].author).replace('^',',');
+      			        	               var publisher = data[0].publisher;
+      			        	               var pubdate = data[0].pubdate;
+      			        	               var isbn = data[0].isbn;
+      			        	        
+      			        	               str += '<div class="selectListItem">' +
+      			 			  			          '<div class="selectItemImage">' + '<img src="' + image + '">' + '</div>' + 
+      					  				          '<input type="hidden" id="book_unique_id" value="' + isbn + '">' +
+      					  			              '<div class="selectItemTitle" id="selectItem">' + title[0] + '</div>' +
+      					  			              '<div class="selectItemAuthor" id="selectItem">' + '저자명 : ' + author +'</div>' + 
+      					  			              '<div class="selectItemPublisher" id="selectItem">' + '출판사 : '+ publisher + '</div>' + 
+      					  			              '<div class="selectItemPubdate" id="selectItem">' + '출간일 : ' + pubdate + '</div>' + 
+      					  			              '<button type="button" class="selectItemSelect" onclick="selectBook('+isbn+')">' + '도서선택' + '</button>'
+      					  			              + '</div>';     
+      			        	           },
+      			        	           error:function(){     	
+      			        	           }
+      			        	       });
+      			        	       console.log(str);
+      							});
+      			  			   $("#select-page-content-container").html(str);
+      			           },
+      			           error:function(request, status, error){
+      			        	   //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      			           }  
+      			       });	
+      		  			$("#book-select-page").css('visibility','visible');
+      		  	}
+
 
 				function selectOpen(){
 					var user_id = $("#user_id").val();

@@ -1,6 +1,8 @@
 package com.mySpringWeb.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mySpringWeb.domain.bookrecommend.BookVO;
+import com.mySpringWeb.domain.board.CommentVO;
+import com.mySpringWeb.domain.board.Pagination;
 import com.mySpringWeb.domain.board.PostVO;
+import com.mySpringWeb.service.CommentService;
 import com.mySpringWeb.service.PostService;
 import com.mySpringWeb.utils.BookUtil;
 
@@ -19,6 +24,8 @@ import com.mySpringWeb.utils.BookUtil;
 public class BoardController {
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private CommentService commentService;
 	
 	/*-----------------[게시판 이동]-------------------*/
 	@RequestMapping(value="listFreeBoard.do")
@@ -27,12 +34,37 @@ public class BoardController {
     	return "boards/listFreeBoard";
 	}
 	@RequestMapping(value="listBookBoard.do")
-	public String bookBoardList(Model model) {
-		System.out.println("글 목록 검색 처리");
+	public String bookBoardList(@ModelAttribute("searchVO") PostVO searchVO, Model model) throws UnsupportedEncodingException {
 		String board_code = "BA2";
-		System.out.println("글 목록 검색 처리");
-		List<PostVO> boardList = postService.getBoardList(board_code);
-    	model.addAttribute("boardList", boardList);
+		Pagination pagination = new Pagination();
+		pagination.setCurrentPageNo(searchVO.getPageIndex());
+		pagination.setRecordCountPerPage(searchVO.getPageUnit());
+		pagination.setPageSize(searchVO.getPageSize());
+		
+		searchVO.setFirstIndex(pagination.getFirstRecordIndex());
+	    searchVO.setRecordCountPerPage(pagination.getRecordCountPerPage());
+	    System.out.println("1번 라인"+ searchVO);
+	    List<PostVO> boardList = postService.getList(searchVO, board_code);
+	    System.out.println("2번 라인"+boardList);
+	    int totalCount = postService.getPageCount(board_code);
+	    System.out.println("3번 라인"+totalCount);
+		
+	    pagination.setTotalRecordCount(totalCount);
+	    
+	    searchVO.setEndDate(pagination.getLastPageNoOnPageList());
+	    searchVO.setStartDate(pagination.getFirstPageNoOnPageList());
+	    searchVO.setPrev(pagination.getXprev());
+	    searchVO.setNext(pagination.getXnext());
+	    System.out.println("boardList"+boardList);
+	    System.out.println("totalCount"+totalCount);
+	    System.out.println("totalPageCnt"+(int)Math.ceil(totalCount / (double)searchVO.getPageUnit()));
+	    System.out.println("pagination" + pagination);
+	    
+	    model.addAttribute("boardList",boardList);
+	    model.addAttribute("totalCount",totalCount);
+	    model.addAttribute("totalPageCnt",(int)Math.ceil(totalCount / (double)searchVO.getPageUnit()));
+	    model.addAttribute("pagination",pagination);
+	    searchVO.setQustr();
 	    
     	return "boards/listBookBoard";
 	}
@@ -101,13 +133,31 @@ public class BoardController {
         String image = book.getImage(); 
         String title = book.getTitle().split("\\(")[0];
         String author = book.getAuthor().replaceAll("\\^",", ");
+        
+        List<CommentVO> comment = commentService.getCommentList(id);
+        System.out.println(comment);
     	model.addAttribute("post", vo);
     	model.addAttribute("image",image);
     	model.addAttribute("title",title);
     	model.addAttribute("author",author);
-
+    	model.addAttribute("comment",comment);
+    	
     	return "boards/getBookBoard";
 	}
-	/*--------------------------------------------------------*/
+	/*----------------------[댓글기능]----------------------------------*/
+	@RequestMapping(value="insertComment.do", method=RequestMethod.POST)
+	public String insertComment(CommentVO vo) {
+		System.out.println("댓글 작성 처리");
+		System.out.println(vo);
+		commentService.insertComment(vo);
+		
+    	return "redirect:getBookBoard.do?id="+vo.getPost_id();
+	}
+	
+	
+	
+	
+	/*-----------------------------[추가]--------------------------------------*/
+	
 }
 

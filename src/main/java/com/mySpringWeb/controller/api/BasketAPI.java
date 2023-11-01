@@ -1,7 +1,6 @@
 package com.mySpringWeb.controller.api;
 
 import com.mySpringWeb.domain.bookrecommend.BasketVO;
-import com.mySpringWeb.domain.bookrecommend.BookVO;
 import com.mySpringWeb.domain.webhook.HookLevel;
 import com.mySpringWeb.service.BasketService;
 import com.mySpringWeb.utils.BookUtil;

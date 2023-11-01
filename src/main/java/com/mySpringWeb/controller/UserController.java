@@ -11,6 +11,8 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.mySpringWeb.domain.RequestType;
+import com.mySpringWeb.utils.EnvUtil;
 import com.mySpringWeb.utils.LoginUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -127,15 +129,16 @@ public class UserController {
 	
 	//네이버 로그인
 	@RequestMapping(value="naverlogin.do", method=RequestMethod.GET)
-	public String request_naver_login(HttpSession session) throws UnsupportedEncodingException {
-		String clientId = "XSL_8Ps7NFtNXXxfpzVY";
-		String redirectURI = URLEncoder.encode("http://localhost:8080/biz/navercallback.do", "UTF-8");
+	public String request_naver_login(HttpSession session) {
+		EnvUtil envUtil = new EnvUtil();
+		String clientId = envUtil.getValueByKey("NAVER_CLIENTID");
+		String redirectUrl = URLEncoder.encode(envUtil.getValueByKey("NAVER_LOGIN_REDIRECT"));
 		String state = new BigInteger(130, new SecureRandom()).toString();
 
-		String apiHost = "https://nid.naver.com/oauth2.0/authorize";
+		String apiHost = RequestType.NAVER_LOGINAUTH.getUrl();
 		String apiURL = String.format(
 				"%s?response_type=code&client_id=%s&redirect_uri=%s&state=%s",
-				apiHost, clientId, redirectURI, state
+				apiHost, clientId, redirectUrl, state
 		);
 
 	    session.setAttribute("state", state);
@@ -144,19 +147,19 @@ public class UserController {
 	}
 
 	@RequestMapping(value="navercallback.do", method=RequestMethod.GET)
-	public String request_naver_callback(UserVO vo, HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException {
+	public String request_naver_callback(HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException {
 		String code = request.getParameter("code");
 		String state = request.getParameter("state");
 		LoginUtil loginUtil = new LoginUtil();
 		String access_token = loginUtil.getNaverToken(code, state);
 
-		loginUtil.getNaverUserInfo(access_token);
+		UserVO vo = loginUtil.getNaverUserInfo(access_token);
 
 		if (userService.checkUser(vo) == null) userService.insertUser(vo);
 
 		UserVO user = userService.getUser(vo);
 		String id = user.getId();
-		int point = user.getPoint(); 
+		int point = user.getPoint();
 		session.setAttribute("user", user);
 		session.setAttribute("user_id", id);
 		session.setAttribute("point", point);
@@ -165,27 +168,27 @@ public class UserController {
 	
 	//카카오 로그인
 	@RequestMapping(value="kakaologin.do", method=RequestMethod.GET)
-	public String request_kakao_login(HttpSession session) throws UnsupportedEncodingException {
-		String clientId = "bbbc3bb1c878a2317fd7f89dec646ea9";
-		String redirectURI = URLEncoder.encode("http://localhost:8080/biz/kakaocallback.do", "UTF-8");
+	public String request_kakao_login(HttpSession session) {
+		EnvUtil envUtil = new EnvUtil();
+		String clientId = envUtil.getValueByKey("KAKAO_RESTKEY");
+		String redirectUrl = URLEncoder.encode(envUtil.getValueByKey("KAKAO_LOGIN_REDIRECT"));
 
-		String apiHost = "https://kauth.kakao.com/oauth/authorize";
+		String apiHost = RequestType.KAKAO_LOGINAUTH.getUrl();
 		String apiURL = String.format(
 				"%s?response_type=code&client_id=%s&redirect_uri=%s",
-				apiHost, clientId, redirectURI
+				apiHost, clientId, redirectUrl
 		);
 
 		return "redirect:" + apiURL;
 	}
 
 	@RequestMapping(value="kakaocallback.do",method=RequestMethod.GET)
-	public String request_kakao_callback(UserVO vo, HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException {
+	public String request_kakao_callback(HttpSession session, HttpServletRequest request) {
 		String code = request.getParameter("code");
 		LoginUtil loginUtil = new LoginUtil();
 		String access_token = loginUtil.getKakaoToken(code);
 
-		loginUtil.getKakaoUserInfo(access_token);
-
+		UserVO vo = loginUtil.getKakaoUserInfo(access_token);
 		if (userService.checkUser(vo) == null) userService.insertUser(vo);
 
 		UserVO user = userService.getUser(vo);
