@@ -3,7 +3,7 @@ package com.mySpringWeb.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.mySpringWeb.domain.UserVO;
+import com.mySpringWeb.domain.user.UserVO;
 import com.mySpringWeb.persistence.UserDAOSpring;
 
 @Service("userService")

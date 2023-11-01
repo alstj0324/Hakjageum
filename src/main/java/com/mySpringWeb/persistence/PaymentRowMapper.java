@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.mySpringWeb.domain.PaymentVO;
+import com.mySpringWeb.domain.pay.PaymentVO;
 
 public class PaymentRowMapper implements RowMapper<PaymentVO> {
 	

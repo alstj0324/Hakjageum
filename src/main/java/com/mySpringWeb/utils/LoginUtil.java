@@ -1,183 +1,176 @@
 package com.mySpringWeb.utils;
 
-import com.mySpringWeb.domain.UserVO;
+import com.mySpringWeb.domain.RequestType;
+import com.mySpringWeb.domain.user.UserVO;
+import com.mySpringWeb.domain.webhook.HookLevel;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class LoginUtil {
-    public String getNaverToken(String code, String state) throws UnsupportedEncodingException {
+    private final HookUtil hookUtil = new HookUtil();
+
+    public String getNaverToken(String code, String state) {
         String token = "";
-        String clientId = "XSL_8Ps7NFtNXXxfpzVY";
-        String clientSecret = "eLE8nAIerK";
+        EnvUtil envUtil = new EnvUtil();
+        RequestUtil requestUtil = new RequestUtil();
+        Map<String, Object> params = new HashMap<>();
 
-        String redirectURI = URLEncoder.encode("/biz/navercallback.do", "UTF-8");
+        String clientId = envUtil.getValueByKey("NAVER_CLIENTID");
+        String secretId = envUtil.getValueByKey("NAVER_SECRETID");
+        String redirectUrl = envUtil.getValueByKey("NAVER_LOGIN_REDIRECT");
 
-        String apiHost = "https://nid.naver.com/oauth2.0/token";
-        String apiURL = String.format(
-                "%s?grant_type=authorization_code&client_id=%s&client_secret=%s&redirect_uri=%s&code=%s&state=%s",
-                apiHost, clientId, clientSecret, redirectURI, code, state
+        params.put("grant_type", "authorization_code");
+        params.put("client_id", clientId);
+        params.put("client_secret", secretId);
+        params.put("redirect_uri", redirectUrl);
+        params.put("code", code);
+        params.put("state", state);
+
+        JSONObject result = requestUtil.requestData(RequestType.NAVER_LOGINTOKEN, "GET", null, params);
+
+        String status = (String) result.get("result_status");
+
+        if (Objects.equals(status, "success")) {
+            JSONObject data = (JSONObject) result.get("result_data");
+            token = (String) data.get("access_token");
+        } else hookUtil.send_Embed_Hook(
+            HookLevel.WARN,
+            "네이버 로그인 토큰 조회 실패",
+            String.format(
+                "Function: %s > %s\n%s",
+                getClass().getName(),
+                "getNaverToken",
+                String.format(
+                    "code: %s\nstate: %s",
+                    code,
+                    state
+                )
+            )
         );
 
-        try {
-            URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("GET");
-
-            int responseCode = con.getResponseCode();
-            if (responseCode == 200) System.out.println("네이버 로그인 토큰 API 정상");
-            else System.out.println("네이버 로그인 토큰 API 에러");
-
-            StringBuilder res = get_responce(con);
-            if (responseCode == 200) token = get_token(res);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
         return token;
     }
 
-    public void getNaverUserInfo(UserVO vo, String access_token) {
-        String apiURL = "https://openapi.naver.com/v1/nid/me";
+    public UserVO getNaverUserInfo(String access_token) {
+        UserVO user = new UserVO();
+        EnvUtil envUtil = new EnvUtil();
+        RequestUtil requestUtil = new RequestUtil();
+        Map<String, Object> headers = new HashMap<>();
 
-        try{
-            URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        headers.put("Authorization", "Bearer "+access_token);
 
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Authorization", "Bearer "+access_token);
+        JSONObject result = requestUtil.requestData(RequestType.NAVER_LOGININFO, "POST", headers, null);
 
-            int responseCode = con.getResponseCode();
-            if (responseCode == 200) System.out.println("네이버 로그인 정보 API 정상");
-            else System.out.println("네이버 로그인 정보 API 에러");
+        String status = (String) result.get("result_status");
 
-            StringBuilder res = get_responce(con);
+        if (Objects.equals(status, "success")) {
+            JSONObject data = (JSONObject) result.get("result_data");
+            JSONObject item = (JSONObject) data.get("response");
 
-            if (responseCode == 200) {
-                JSONParser parsing = new JSONParser();
-
-                Object obj = parsing.parse(res.toString());
-                JSONObject jsonObj = (JSONObject)obj;
-                JSONObject item = (JSONObject)jsonObj.get("response");
-
-                createUser(vo, item);
-            }
-        } catch(Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    public String getKakaoToken(String code) throws UnsupportedEncodingException {
-        String token = "";
-        String clientId = "bbbc3bb1c878a2317fd7f89dec646ea9";
-        String redirectURI = URLEncoder.encode("http://localhost:8080/biz/kakaocallback.do", "UTF-8");
-
-        String apiHost = "https://kauth.kakao.com/oauth/token";
-        String apiURL = String.format(
-                "%s?grant_type=authorization_code&client_id=%s&redirect_uri=%s&code=%s",
-                apiHost, clientId, redirectURI, code
+            user = createUser(item, "naver");
+        } else hookUtil.send_Embed_Hook(
+            HookLevel.WARN,
+            "네이버 로그인 정보 조회 실패",
+            String.format(
+                "Function: %s > %s\n%s",
+                getClass().getName(),
+                "getNaverUserInfo",
+                String.format(
+                    "access_token: %s",
+                    access_token
+                )
+            )
         );
 
-        try {
-            URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("GET");
-            con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-            int responseCode = con.getResponseCode();
-            if (responseCode == 200) System.out.println("카카오 로그인 토큰 API 정상");
-            else System.out.println("카카오 로그인 토큰 API 에러");
-
-            StringBuilder res = get_responce(con);
-
-            if (responseCode == 200) token = get_token(res);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return token;
+        return user;
     }
 
-
-    public void getKakaoUserInfo(UserVO vo, String access_token) {
-        String apiURL = "https://kapi.kakao.com/v2/user/me";
-
-        try{
-            URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Authorization", "Bearer " + access_token);
-            con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-            int responseCode = con.getResponseCode();
-            if (responseCode == 200) System.out.println("카카오 로그인 정보 API 정상");
-            else System.out.println("네이버 카카오 정보 API 에러");
-
-            StringBuilder res = get_responce(con);
-
-            if (responseCode == 200) {
-                JSONParser parsing = new JSONParser();
-
-                Object obj = parsing.parse(res.toString());
-                JSONObject jsonObj = (JSONObject)obj;
-                JSONObject accountObj = (JSONObject)jsonObj.get("kakao_account");
-                JSONObject item = (JSONObject)accountObj.get("profile");
-
-                createUser(vo, item);
-            }
-        } catch(Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    private String get_token(StringBuilder res) throws ParseException {
+    public String getKakaoToken(String code) {
         String token = "";
-        try {
-            JSONParser parsing = new JSONParser();
+        EnvUtil envUtil = new EnvUtil();
+        RequestUtil requestUtil = new RequestUtil();
+        Map<String, Object> headers = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
 
-            Object obj = parsing.parse(res.toString());
-            JSONObject jsonObj = (JSONObject)obj;
+        String restapiKey = envUtil.getValueByKey("KAKAO_RESTKEY");
+        String redirectUrl = envUtil.getValueByKey("KAKAO_LOGIN_REDIRECT");
 
-            token = (String) jsonObj.get("access_token");
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        headers.put("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        params.put("grant_type", "authorization_code");
+        params.put("client_id", restapiKey);
+        params.put("redirect_uri", redirectUrl);
+        params.put("code", code);
+
+        JSONObject result = requestUtil.requestData(RequestType.KAKAO_LOGINTOKEN, "GET", null, params);
+
+        String status = (String) result.get("result_status");
+
+        if (Objects.equals(status, "success")) {
+            JSONObject data = (JSONObject) result.get("result_data");
+            token = (String) data.get("access_token");
+        } else hookUtil.send_Embed_Hook(
+            HookLevel.WARN,
+            "카카오 로그인 토큰 조회 실패",
+            String.format(
+                "Function: %s > %s\n%s",
+                getClass().getName(),
+                "getKakaoToken",
+                String.format(
+                        "code: %s",
+                        code
+                )
+            )
+        );
 
         return token;
     }
 
-    private StringBuilder get_responce(HttpURLConnection con) {
-        StringBuilder res = new StringBuilder();
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+    public UserVO getKakaoUserInfo(String access_token) {
+        UserVO user = new UserVO();
+        EnvUtil envUtil = new EnvUtil();
+        RequestUtil requestUtil = new RequestUtil();
+        Map<String, Object> headers = new HashMap<>();
 
-            for (String line = br.readLine(); line != null; line = br.readLine()) {
-                res.append(line);
-            }
-            br.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        headers.put("Authorization", "Bearer " + access_token);
+        headers.put("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        return res;
+        JSONObject result = requestUtil.requestData(RequestType.KAKAO_LOGININFO, "POST", headers, null);
+
+        String status = (String) result.get("result_status");
+
+        if (Objects.equals(status, "success")) {
+            JSONObject data = (JSONObject) result.get("result_data");
+            JSONObject account = (JSONObject) data.get("kakao_account");
+            JSONObject item = (JSONObject) account.get("profile");
+
+            user = createUser(item, "kakao");
+        } else hookUtil.send_Embed_Hook(
+                HookLevel.WARN,
+                "카카오 로그인 정보 조회 실패",
+                String.format(
+                        "Function: %s > %s\n%s",
+                        getClass().getName(),
+                        "getKakaoUserInfo",
+                        String.format(
+                                "access_token: %s",
+                                access_token
+                        )
+                )
+        );
+
+        return user;
     }
-    private void createUser(UserVO user, JSONObject jsonObject) {
+
+    private UserVO createUser(JSONObject jsonObject, String provider) {
+        UserVO user = new UserVO();
+
         user.setId((String) jsonObject.get("id"));
         user.setEmail((String) jsonObject.get("email"));
         user.setPwd("null");
         user.setNickname((String) jsonObject.get("nickname"));
-        user.setProvider("naver");
+        user.setProvider(provider);
+
+        return user;
     }
 }

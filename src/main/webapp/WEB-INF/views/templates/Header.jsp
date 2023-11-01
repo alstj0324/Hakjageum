@@ -11,7 +11,7 @@
                 <a class="text-uppercase item-anchor" href=<c:url value="/" />> Home</a>
               </li>
               <li class="menu-itemhome1">
-                <a href="bookRecommend.do?category=자기계발" class="text-uppercase item-anchor">도서추천</a>
+                <a href="bookRecommend.do" class="text-uppercase item-anchor">도서추천</a>
               </li>
               <li class="menu-itemhome1 dropdown">
                 <a href="placeRecommend.do">플레이스</a>
@@ -176,13 +176,16 @@
                 let element = createResultItem(i, book);
                 basketResult.append(element);
             }
-        }
 
-        form.css('visibility','visible');
+            form.css('visibility', 'visible');
+        } else {
+            if (confirm("저장 도서가 없습니다. 저장하시겠습니까?")) location.href = "bookRecommend.do";
+        }
     }
 
     function hide(){
-        $("#basketList").css('visibility','hidden');
+        let form = $('#basketList');
+        form.css('visibility', 'hidden');
     }
       // show func
     function getBasketList() {

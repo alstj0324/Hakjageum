@@ -1,4 +1,4 @@
-package com.mySpringWeb.domain;
+package com.mySpringWeb.domain.pay;
 
 
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.mySpringWeb.domain;
+package com.mySpringWeb.domain.board;
 
 import lombok.Getter;
 import lombok.Setter;
