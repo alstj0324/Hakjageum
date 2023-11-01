@@ -20,7 +20,10 @@ public class PaymentServiceImpl implements PaymentService {
 	public void deletePayment(PaymentVO vo) {
 		paymentDAO.deletePayment(vo);
 	}
-	public List<PaymentVO> getPaymentList() {
-		return paymentDAO.getPaymentList();
+//	public List<PaymentVO> getPaymentList() {
+//		return paymentDAO.getPaymentList();
+//	}
+	public List<PaymentVO> getPaymentList(String userid) {
+		return paymentDAO.getPaymentList(userid);
 	}
 }

@@ -26,8 +26,13 @@ public class PaymentDAOSpring {
 		Object [] args = {vo.getTid()};
 		jdbctemplate.update(PAYMENT_DELETE, args);
 	}
-	public List<PaymentVO> getPaymentList() {
+//	public List<PaymentVO> getPaymentList() {
+//		System.out.println("===>Spring JDBC로 getPaymentListPayment() 기능 처리");
+//		return jdbctemplate.query(PAYMENT_GETLIST, new PaymentRowMapper());
+//	}
+	public List<PaymentVO> getPaymentList(String userId) {
 		System.out.println("===>Spring JDBC로 getPaymentListPayment() 기능 처리");
-		return jdbctemplate.query(PAYMENT_GETLIST, new PaymentRowMapper());
+		Object [] args = {userId};
+		return jdbctemplate.query(PAYMENT_GETLIST, args, new PaymentRowMapper());
 	}
 }	
