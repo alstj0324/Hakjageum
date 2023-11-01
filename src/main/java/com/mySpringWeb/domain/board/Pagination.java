@@ -41,27 +41,27 @@ public class Pagination {
 	
 
 	public int getFirstPageNoOnPageList() {
-		lastPageNoOnPageList = (int)(Math.ceil(currentPageNo/10.0)) * 10;
-		
-		firstPageNoOnPageList = lastPageNoOnPageList - 9;
-		return firstPageNoOnPageList;
+	    lastPageNoOnPageList = (int)(Math.ceil(currentPageNo / (double)pageSize)) * pageSize;
+
+	    firstPageNoOnPageList = lastPageNoOnPageList - pageSize + 1;
+	    return firstPageNoOnPageList;
 	}
+
 	
 	public void setFirstPageNoOnPageList(int firstPageNoOnPageList) {
 		this.firstPageNoOnPageList = firstPageNoOnPageList;
 	}
 	
 	public int getLastPageNoOnPageList() {
-		lastPageNoOnPageList = (int)(Math.ceil(getCurrentPageNo()/10.0)) * 10;
-		
-		int realEnd = (int)(Math.ceil((getTotalRecordCount() * 1.0) / getRecordCountPerPage()));
-		
-		
-		if(realEnd < lastPageNoOnPageList) {
-			lastPageNoOnPageList = realEnd;
-		}
-		
-		return lastPageNoOnPageList;
+	    lastPageNoOnPageList = (int)(Math.ceil(currentPageNo / (double)pageSize)) * pageSize;
+
+	    int realEnd = (int)(Math.ceil((getTotalRecordCount() * 1.0) / getRecordCountPerPage()));
+
+	    if(realEnd < lastPageNoOnPageList) {
+	        lastPageNoOnPageList = realEnd;
+	    }
+
+	    return lastPageNoOnPageList;
 	}
 	
 	public void setLastPageNoOnPageList(int lastPageNoOnPageList) {
@@ -69,8 +69,8 @@ public class Pagination {
 	}
 	
 	public int getFirstRecordIndex() {
-		firstRecordIndex = (getCurrentPageNo() - 1) * getRecordCountPerPage();
-		return firstRecordIndex;
+	    firstRecordIndex = (getCurrentPageNo() - 1) * getRecordCountPerPage();
+	    return firstRecordIndex;
 	}
 	
 	public void setFirstRecordIndex(int firstRecordIndex) {
@@ -107,4 +107,25 @@ public class Pagination {
 	public void setRealEnd(int realEnd) {
 		this.realEnd = realEnd;
 	}
+	
+	
+	public String toString() {
+        return String.format(
+            "Pagination[\n" +
+            "\tcurrentPageNo=%s\n" +
+            "\trecordCountPerPage=%s\n" +
+            "\tpageSize=%s\n" +
+            "\ttotalRecordCount=%s\n" +
+            "\trealEnd=%s\n" +
+            "\tfirstPageNoOnPageList=%s\n" +
+            "\tlastPageNoOnPageList=%s\n" +
+            "\tfirstRecordIndex=%s\n" +
+            "\txprev=%s\n" +
+            "\txnext=%s\n" +
+            "]",
+            currentPageNo, recordCountPerPage, pageSize, totalRecordCount, realEnd, firstPageNoOnPageList, lastPageNoOnPageList	,firstRecordIndex, xprev, xnext
+        );
+	}
+	
+	
 }

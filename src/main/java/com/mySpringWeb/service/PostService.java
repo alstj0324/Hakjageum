@@ -15,5 +15,5 @@ public interface PostService {
 	public List<PostVO> getBoardList(String board_code);
 	/*새로작성*/
 	public int getPageCount(String board_code);
-	public List<PostVO> getList(PostVO searchVO);
+	public List<PostVO> getList(PostVO searchVO, String board_code);
 }

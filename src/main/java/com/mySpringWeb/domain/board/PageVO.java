@@ -1,19 +1,41 @@
 package com.mySpringWeb.domain.board;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class PageVO {
 	private int pageIndex = 1;				    //현재페이지
-	private int pageUnit = 10;				    //페이지갯수
-	private int pageSize = 10;	    			//페이지사이즈
-	private int firstIndex = 1;		    		//firstIndex
-	private int recordCountPerPage = 10;		//recordCountPerPage
+	private int pageUnit = 15;				    //페이지당 출력개수
+	private int pageSize = 5;	    			//페이지사이즈
+	private int firstIndex = 0;		    		//firstIndex
+	private int recordCountPerPage = 15;		//recordCountPerPage
 	private int totalCount = 0;				      	//총갯수
 	private int startDate = 0;			    	//시작데이터
 	private int endDate = 0;				    //종료데이터
     private int realEnd = 0;				    //페이징 마지막 숫자
 		
 	private boolean prev, next;	    			//이전,다음버튼
+	private String queryString = "";
+	  
+	  
+	public void setQueryString() throws UnsupportedEncodingException {
+		String qs = "";
+		qs += "&pageIndex="+this.pageIndex;
+	
+		this.queryString = qs;
+	}
 	
 	
+	public String getQueryString() {
+		return queryString;
+	}
+
+
+	public void setQueryString(String queryString) {
+		this.queryString = queryString;
+	}
+
+
 	//getter&setter
   	public int getPageIndex() {
 		return pageIndex;

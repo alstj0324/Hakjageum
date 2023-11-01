@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService{
 		return postDAO.getPageCount(board_code);
 	}
 	@Override
-	public List<PostVO> getList(PostVO searchVO) {
-		 return postDAO.getList(searchVO); 
+	public List<PostVO> getList(PostVO searchVO, String board_code) {
+		 return postDAO.getList(searchVO, board_code); 
 	}
 }

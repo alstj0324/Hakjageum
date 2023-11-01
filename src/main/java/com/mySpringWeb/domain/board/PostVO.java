@@ -1,5 +1,6 @@
 package com.mySpringWeb.domain.board;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 
 import lombok.Getter;
@@ -21,6 +22,15 @@ public class PostVO  extends PageVO{
     private Date deleted_at;
     //추가
     private int totalCount;
+    private String qustr;
+    
+    public void setQustr() throws UnsupportedEncodingException {
+    	
+      	String qs = "";
+      	this.setQueryString();
+      	qs += this.getQueryString();
+      	this.qustr = qs;
+    }
      
     @Override
     public String toString() {

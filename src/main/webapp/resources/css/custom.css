@@ -1559,6 +1559,8 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	background-color: lightgray;
 }
 .comment-paging-li a:hover{
+	color:white;
+}
 	
 
 /*---------------------------------------------------------------------------------*/

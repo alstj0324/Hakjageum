@@ -47,24 +47,41 @@
       			<div class="paging-box">
       				<div class="paging-item">	
 					  <ul id="pagination-wrap">
-					  	  <li class="paging-li"><a href="#">&lt;&lt;</a></li>
-					  	  <li class="paging-li"><a href="#">1</a></li>
-					  	  <li class="paging-li"><a href="#">2</a></li>
-					  	  <li class="paging-li"><a href="#">3</a></li>
-					  	  <li class="paging-li"><a href="#">4</a></li>
-					  	  <li class="paging-li"><a href="#">5</a></li>
-					  	  <li class="paging-li"><a href="main.jsp">&gt;&gt;</a></li>
+					  	  <c:if test="${searchVO.prev}">
+						      <li class="paging-li"><a href="javascript:void(0);" onclick="fn_go_page(${searchVO.startDate - 1}); return false;" aria-controls="dataTable" data-dt-idx="0" tabindex="0">&lt;&lt;</a></li>
+				    	  </c:if>
+					  	  <c:forEach var="num" begin="${searchVO.startDate}" end="${searchVO.endDate}">
+				    		  <li class="paging-li"><a href="javascript:void(0);" onclick="fn_go_page(${num}); return false;" aria-controls="dataTable" data-dt-idx="0" tabindex="0">${num }</a></li>
+				   	 	  </c:forEach>
+					  	  <c:if test="${searchVO.next}">
+				      	  	  <li class="paging-li"><a href="javascript:void(0);" onclick="fn_go_page(${searchVO.endDate + 1}); return false;" aria-controls="dataTable" data-dt-idx="0" tabindex="0">&gt;&gt;</a></li>
+				    	  </c:if>
 					  </ul>				
       				</div>
       			</div>
       			<div class="paging-result">
       				<div class="paging-result-item">
-      					<span>총게시물 ${totCnt} / 페이지 (${post.pageIndex} / ${totalPageCnt})</span>
+      					<span>총게시물 ${totalCount} / 페이지 (${searchVO.pageIndex} / ${totalPageCnt})</span>
       				</div>
       			</div>
       		</div>
       	</div>
-      	<script type="text/javascript">
+      	<div class="write-board">
+      		<c:if test="${user != null}">
+      			<button type="button" class="writeboard-btn" onclick="checkBookList()">글 작성</button>
+      		</c:if> 
+      	</div>
+      </div>
+      <form method="get"  id="listForm" action="listBookBoard.do">
+			<input type="hidden" id="pageIndex" name="pageIndex" val="" />
+	  </form>
+      <script type="text/javascript">
+	      	function fn_go_page(pageNo) {
+	      		console.log("들어간다")
+	      		$("#pageIndex").val(pageNo);
+	      		$("#listForm").submit();
+	      		return false;
+	      	}
       		function checkBookList(){
       			let user_id = $("#user_id").val();
       	        $.ajax({
@@ -90,12 +107,6 @@
       	        return res;
       		}
       	</script>
-      	<div class="write-board">
-      		<c:if test="${user != null}">
-      			<button type="button" class="writeboard-btn" onclick="checkBookList()">글 작성</button>
-      		</c:if> 
-      	</div>
-      </div>
     </section>
     <%@ include file="../templates/UseJS.jsp" %>
   </body>

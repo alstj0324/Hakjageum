@@ -76,7 +76,7 @@ public class PostDAOSpring {
    		+ "  p.writer_id = u.id\r\n"
    		+ "WHERE\r\n"
    		+ "  p.board_code = ? \r\n"
-   		+ "ORDER BY 'id'DESC \r\n"
+   		+ "ORDER BY 'id' ASC \r\n"
    		+ "LIMIT ? OFFSET ?;";
    /*-----------------------------------------------------------------------------------------*/
 
@@ -119,6 +119,11 @@ public class PostDAOSpring {
 	   PostVO vo = jdbctemplate.queryForObject(POST_TOTALCOUNT, new PostPageRowMapper(), args);
 	   int totalCount = vo.getTotalCount();
 	   return totalCount;
+   }
+   public List<PostVO> getList(PostVO searchVO, String board_code){
+	   Object [] args = {board_code, searchVO.getRecordCountPerPage(), searchVO.getFirstIndex()};
+	   List<PostVO> post = jdbctemplate.query(POST_PAGELIST, new PostRowMapper(), args);
+	   return post;
    }
    
 }
