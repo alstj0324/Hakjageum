@@ -1,76 +1,64 @@
 package com.mySpringWeb.utils;
 
-import com.mySpringWeb.domain.BlogVO;
-import com.mySpringWeb.domain.BookVO;
+import com.mySpringWeb.domain.bookrecommend.BlogVO;
+import com.mySpringWeb.domain.RequestType;
+import com.mySpringWeb.domain.webhook.HookLevel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.springframework.ui.Model;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BlogUtil {
-    public void getBlogList(String category, Model model) throws UnsupportedEncodingException {
-        getBlogList(category, model, 1, 10);
+    private final HookUtil hookUtil = new HookUtil();
+
+    public List<BlogVO> getBlogList(String bookname) {
+        return getBlogList(bookname, 1, 100);
     }
+    public List<BlogVO> getBlogList(String bookname, int start, int display) {
+        EnvUtil envUtil = new EnvUtil();
+        String clientId = envUtil.getValueByKey("NAVER_CLIENTID");
+        String secretId = envUtil.getValueByKey("NAVER_SECRETID");
 
-    public void getBlogList(String blog, Model model, int start, int display) throws UnsupportedEncodingException {
-        String clientId = "XSL_8Ps7NFtNXXxfpzVY";
-        String clientSecret = "eLE8nAIerK";
+        RequestUtil requestUtil = new RequestUtil();
 
-        blog = URLEncoder.encode(blog + " 리뷰", "UTF-8");
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("X-Naver-Client-Id", clientId);
+        headers.put("X-Naver-Client-Secret", secretId);
 
-        String apiHost = "https://openapi.naver.com/v1/search/blog.json";
-        String apiURL = String.format(
-                "%s?query=%s&start=%s&display=%s&sort=sim",
-                apiHost, blog, start, display
+        Map<String, Object> params = new HashMap<>();
+        params.put("query", bookname + " 리뷰");
+        params.put("start", start);
+        params.put("display", display);
+        params.put("sort", "sim");
+
+        JSONObject result = requestUtil.requestData(RequestType.NAVER_BLOG_SEARCH, "GET", headers, params);
+
+        String status = (String) result.get("result_status");
+
+        List<BlogVO> blogs = new ArrayList<>();
+
+        if (Objects.equals(status, "success")) {
+            JSONObject data = (JSONObject) result.get("result_data");
+            JSONArray items = (JSONArray) data.get("items");
+
+            for (Object item : items) {
+                BlogVO blog = createBlog((JSONObject) item);
+                blogs.add(blog);
+            }
+        } else hookUtil.send_Embed_Hook(
+            HookLevel.WARN,
+            "블로그 목록 조회 실패",
+            String.format(
+                "Function: %s > %s\n%s",
+                getClass().getName(),
+                "getBlogList",
+                String.format(
+                    "bookname: %s",
+                    bookname
+                )
+            )
         );
-
-        try {
-            URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("GET");
-            con.setRequestProperty("X-Naver-Client-Id", clientId);
-            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
-
-            int responseCode = con.getResponseCode();
-
-            if (responseCode == 200) System.out.println("블로그 검색 API 정상");
-            else System.out.println("블로그 검색 API 에러");
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            StringBuilder res = new StringBuilder();
-
-            for (String line = br.readLine(); line != null; line = br.readLine()) {
-                res.append(line);
-            }
-            br.close();
-
-            if (responseCode == 200) {
-                List<BlogVO> blogs = new ArrayList<>();
-                JSONParser parsing = new JSONParser();
-
-                Object obj = parsing.parse(res.toString());
-                JSONObject jsonObj = (JSONObject) obj;
-                JSONArray items = (JSONArray) jsonObj.get("items");
-
-                for (Object item : items) {
-                    blogs.add(createBlog((JSONObject) item));
-                }
-
-                model.addAttribute("blogs", blogs);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        return blogs;
     }
 
     private BlogVO createBlog(JSONObject jsonObject) {

@@ -1,127 +1,161 @@
 package com.mySpringWeb.utils;
 
-import com.mySpringWeb.domain.BookVO;
+import com.mySpringWeb.domain.bookrecommend.BookVO;
+import com.mySpringWeb.domain.RequestType;
+import com.mySpringWeb.domain.webhook.HookLevel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.springframework.ui.Model;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 public class BookUtil {
+    private final HookUtil hookUtil = new HookUtil();
 
-    @Deprecated
-    public void getBookList(String category, Model model) throws UnsupportedEncodingException {
-        getBookList(category, model, 1, 100);
+    public List<BookVO> getBookList(String category) {
+        return getBookList(category, 1, 100);
     }
 
-    public List<BookVO> getBookInfo(String bookId) {
+    public List<BookVO> getBookInfo(String category) {
+        return getBookList(category, 1, 1);
+    }
+
+    public List<BookVO> getBookList(String category, int start, int display) {
         List<BookVO> books = new ArrayList<>();
-        String clientId = "XSL_8Ps7NFtNXXxfpzVY";
-        String clientSecret = "eLE8nAIerK";
+        EnvUtil envUtil = new EnvUtil();
+        String clientId = envUtil.getValueByKey("NAVER_CLIENTID");
+        String secretId = envUtil.getValueByKey("NAVER_SECRETID");
 
-        try {
-            bookId = URLEncoder.encode(bookId, "UTF-8");
+        RequestUtil requestUtil = new RequestUtil();
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("X-Naver-Client-Id", clientId);
+        headers.put("X-Naver-Client-Secret", secretId);
 
-            String apiHost = "https://openapi.naver.com/v1/search/book_adv.json";
-            String apiURL = String.format(
-                    "%s?d_isbn=%s",
-                    apiHost, bookId
-            );
+        Map<String, Object> params = new HashMap<>();
+        params.put("query", category);
+        params.put("start", start);
+        params.put("display", display);
+        params.put("sort", "sim");
 
-            // 네이버 검색 API 요청
-            URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        JSONObject result = requestUtil.requestData(RequestType.NAVER_BOOKLIST_SEARCH, "GET", headers, params);
 
-            con.setRequestMethod("GET");
-            con.setRequestProperty("X-Naver-Client-Id", clientId);
-            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+        String status = (String) result.get("result_status");
 
-            int responseCode = con.getResponseCode();
+        if (Objects.equals(status, "success")) {
+            JSONObject data = (JSONObject) result.get("result_data");
+            JSONArray items = (JSONArray) data.get("items");
 
-            if (responseCode == 200) System.out.println("도서 검색 API 정상");
-            else System.out.println("도서 검색 API 에러");
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            StringBuilder res = new StringBuilder();
-
-            for (String line = br.readLine(); line != null; line = br.readLine()) {
-                res.append(line);
+            for (Object item : items) {
+                BookVO book = createBook((JSONObject) item);
+                books.add(book);
             }
-            br.close();
-            if (responseCode == 200) {
-                JSONParser parsing = new JSONParser();
+        } else hookUtil.send_Embed_Hook(
+            HookLevel.WARN,
+            "도서 목록 조회 실패",
+            String.format(
+                "Function: %s > %s\n%s",
+                getClass().getName(),
+                "getBookList",
+                String.format(
+                    "category: %s",
+                    category
+                )
+            )
+        );
 
-                Object obj = parsing.parse(res.toString());
-                JSONObject jsonObj = (JSONObject)obj;
-                JSONArray items = (JSONArray) jsonObj.get("items");
-                
-                for (Object item : items) {
-                    BookVO book = createBook((JSONObject) item);
-                    books.add(book);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
         return books;
     }
 
-    public void getBookList(String category, Model model, int start, int display) throws UnsupportedEncodingException {
-        String clientId = "XSL_8Ps7NFtNXXxfpzVY";
-        String clientSecret = "eLE8nAIerK";
+    public List<BookVO> getBookInfo_name(String bookName, int start, int display) {
+        EnvUtil envUtil = new EnvUtil();
+        String clientId = envUtil.getValueByKey("NAVER_CLIENTID");
+        String secretId = envUtil.getValueByKey("NAVER_SECRETID");
 
-        category = URLEncoder.encode(category, "UTF-8");
+        RequestUtil requestUtil = new RequestUtil();
 
-        String apiHost = "https://openapi.naver.com/v1/search/book.json";
-        String apiURL = String.format(
-                "%s?query=%s&start=%s&display=%s&sort=sim",
-                apiHost, category, start, display
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("X-Naver-Client-Id", clientId);
+        headers.put("X-Naver-Client-Secret", secretId);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("d_titl", bookName);
+        params.put("start", start);
+        params.put("display", display);
+        params.put("sort", "sim");
+
+        JSONObject result = requestUtil.requestData(RequestType.NAVER_BOOK_SEARCH, "GET", headers, params);
+
+        String status = (String) result.get("result_status");
+
+        List<BookVO> books = new ArrayList<>();
+
+        if (status == "success") {
+            JSONObject data = (JSONObject) result.get("result_data");
+            JSONArray items = (JSONArray) data.get("items");
+
+            for (Object item : items) {
+                BookVO book = createBook((JSONObject) item);
+                books.add(book);
+            }
+        } else hookUtil.send_Embed_Hook(
+                HookLevel.WARN,
+                "도서 정보 조회 실패",
+                String.format(
+                        "Function: %s > %s\n%s",
+                        getClass().getName(),
+                        "getBookInfo",
+                        String.format(
+                                "bookName: %s",
+                                bookName
+                        )
+                )
         );
+        return books;
+    }
+    public List<BookVO> getBookInfo_id(String bookId, int start, int display) {
+        EnvUtil envUtil = new EnvUtil();
+        String clientId = envUtil.getValueByKey("NAVER_CLIENTID");
+        String secretId = envUtil.getValueByKey("NAVER_SECRETID");
 
-        // 네이버 검색 API 요청
-        try{
-            URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        RequestUtil requestUtil = new RequestUtil();
 
-            con.setRequestMethod("GET");
-            con.setRequestProperty("X-Naver-Client-Id", clientId);
-            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("X-Naver-Client-Id", clientId);
+        headers.put("X-Naver-Client-Secret", secretId);
 
-            int responseCode = con.getResponseCode();
+        Map<String, Object> params = new HashMap<>();
+        params.put("d_isbn", bookId);
+        params.put("start", start);
+        params.put("display", display);
+        params.put("sort", "sim");
 
-            if (responseCode == 200) System.out.println("도서 검색 API 정상");
-            else System.out.println("도서 검색 API 에러");
+        JSONObject result = requestUtil.requestData(RequestType.NAVER_BOOK_SEARCH, "GET", headers, params);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            StringBuilder res = new StringBuilder();
+        String status = (String) result.get("result_status");
 
-            for (String line = br.readLine(); line != null; line = br.readLine()) {
-                res.append(line);
+        List<BookVO> books = new ArrayList<>();
+
+        if (status == "success") {
+            JSONObject data = (JSONObject) result.get("result_data");
+            JSONArray items = (JSONArray) data.get("items");
+
+            for (Object item : items) {
+                BookVO book = createBook((JSONObject) item);
+                books.add(book);
             }
-            br.close();
-            if (responseCode == 200) {
-                List<BookVO> books = new ArrayList<>();
-                JSONParser parsing = new JSONParser();
-
-                Object obj = parsing.parse(res.toString());
-                JSONObject jsonObj = (JSONObject)obj;
-                JSONArray items = (JSONArray)jsonObj.get("items");
-
-                for (Object item : items) {
-                    books.add(createBook((JSONObject) item));
-                }
-                model.addAttribute("books", books);
-            }
-        } catch(Exception e){
-            System.out.println(e);
-        }
+        } else hookUtil.send_Embed_Hook(
+            HookLevel.WARN,
+            "도서 정보 조회 실패",
+            String.format(
+                "Function: %s > %s\n%s",
+                getClass().getName(),
+                "getBookInfo",
+                String.format(
+                    "bookId: %s",
+                    bookId
+                )
+            )
+        );
+        return books;
     }
 
     private BookVO createBook(JSONObject jsonObject) {
@@ -140,27 +174,5 @@ public class BookUtil {
         book.setPublisher((String) jsonObject.get("publisher"));
 
         return book;
-    }
-
-    public JSONArray bookToObject(List<BookVO> placelist) {
-        JSONArray jArray = new JSONArray();
-
-        for (BookVO item : placelist) {
-            JSONObject jObject = new JSONObject();
-
-            jObject.put("title", item.getTitle().split("\\(")[0]);
-            jObject.put("author", item.getAuthor().replaceAll("\\^", ", "));
-            jObject.put("link", item.getLink());
-            jObject.put("image", item.getImage());
-            jObject.put("pubdate", item.getPubdate());
-            jObject.put("isbn", item.getIsbn());
-            jObject.put("description", item.getDescription());
-            jObject.put("discount", item.getDiscount());
-            jObject.put("publisher", item.getPublisher());
-
-            jArray.add(jObject);
-        }
-
-        return jArray;
     }
 }

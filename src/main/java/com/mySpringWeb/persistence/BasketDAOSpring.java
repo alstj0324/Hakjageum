@@ -1,16 +1,13 @@
 package com.mySpringWeb.persistence;
 
-import com.mySpringWeb.domain.BasketVO;
-import com.mySpringWeb.domain.UserVO;
-import com.mySpringWeb.service.BasketService;
+import com.mySpringWeb.domain.bookrecommend.BasketVO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.util.List;
 import java.util.Map;
 
@@ -25,17 +22,14 @@ public class BasketDAOSpring {
 	private final String BASKET_GETLIST = "select * from basket where user_id=? order by book_unique_id desc";
 	
 	
-	public String checkBasket(BasketVO vo) {
+	public boolean checkBasket(BasketVO vo) {
 		System.out.println("===>Spring JDBC로 checkBasket() 기능처리");
-		System.out.println("여기는 BasketDAOSpring"+vo.getUser_id()+","+vo.getBook_unique_id());
 		try {
             Object [] args  = {vo.getUser_id(),vo.getBook_unique_id()};
             jdbctemplate.queryForObject(CHECK_BASKET, new BasketRowMapper(), args);
-            System.out.println("존재하는 책 입니다.");          
-            return "False";
-        }catch(EmptyResultDataAccessException e){
-        	System.out.println("존재하지 않는 책 입니다."); 
-            return "True";
+			return true;
+        } catch(Exception e){
+            return false;
         }
 	}
 	public void addBasket(BasketVO vo) {

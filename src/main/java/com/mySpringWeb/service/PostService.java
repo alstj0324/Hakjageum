@@ -1,7 +1,7 @@
 package com.mySpringWeb.service;
 
 import java.util.List;
-import com.mySpringWeb.domain.PostVO;
+import com.mySpringWeb.domain.board.PostVO;
 
 public interface PostService {
 	public void insertBoard(PostVO vo);

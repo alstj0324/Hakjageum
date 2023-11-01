@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,11 +17,12 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.mySpringWeb.domain.PaymentVO;
-import com.mySpringWeb.domain.UserVO;
+import com.mySpringWeb.domain.pay.PaymentVO;
+import com.mySpringWeb.domain.user.UserVO;
 import com.mySpringWeb.service.PaymentService;
 import com.mySpringWeb.service.UserService;
 
@@ -39,9 +40,14 @@ public class KakaopayAPI2 {
 	final String kakao_adminKey = "3d847ad0fc68439f7949aa9254f80fc8"; //kakao adminkey
 	
 	@RequestMapping(value="Test.do")
-	public String Test(HttpSession session, UserVO user_vo, PaymentVO vo) {
+	public String Test(HttpSession session, UserVO user_vo, PaymentVO vo, Model model) {
 		
+		String userid = (session.getAttribute("user_id")).toString();
+		List<PaymentVO> paymentList = paymentservice.getPaymentList(userid);
+	    model.addAttribute("paymentList", paymentList);
+	    
 		try {
+			System.out.println(paymentList.get(0));
 			System.out.println("tid = " + vo.getTid());
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -215,7 +221,7 @@ public class KakaopayAPI2 {
 		
 		String apiURL = "https://kapi.kakao.com/v1/payment/order?"
 				+"cid="+cid
-				+"&tid="+tid;
+				+"&tid="+"T53f5b7551b66fd443e9";
 		
 		URL url = new URL(apiURL);
 		

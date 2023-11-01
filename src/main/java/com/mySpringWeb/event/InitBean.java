@@ -15,21 +15,14 @@ import java.util.List;
 
 @Component
 public class InitBean {
-    @Autowired
-    private Environment environment;
+    private final HookUtil hookUtil = new HookUtil();
 
     @PostConstruct
     public void init() {
-        try {
-            DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
-            List<EmbedVO> embedList = new ArrayList<>();
-            HookUtil hookUtil = new HookUtil();
-            EmbedVO embedVO = hookUtil.Info_Embed("서버 실행", "✅ 정상적으로 실행되었습니다.");
-            embedList.add(embedVO);
-            HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
-            discordWebhookService.sendWebhook(hookVO);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        hookUtil.send_Embed_Hook(
+            HookLevel.INFO,
+            "서버 실행",
+            "✅ 정상적으로 실행되었습니다."
+        );
     }
 }

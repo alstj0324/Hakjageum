@@ -1,27 +1,18 @@
 package com.mySpringWeb.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.mySpringWeb.utils.LoginUtil;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mySpringWeb.domain.UserVO;
+import com.mySpringWeb.domain.PaymentVO;
+import com.mySpringWeb.domain.user.UserVO;
+import com.mySpringWeb.service.PaymentService;
 import com.mySpringWeb.service.UserService;
 
 @Controller
@@ -54,9 +47,10 @@ public class UserController {
 	public String login(UserVO vo, HttpSession session, Model model) {
 		System.out.println("로그인 처리");
 	    UserVO user = userService.getUserLogin(vo);
+	    
 	    String id = user.getId();
 	    int point = user.getPoint(); 
-		if (user != null) {
+		if (user != null) {			
 			session.setAttribute("user", user);
 			session.setAttribute("user_id", id);
 			session.setAttribute("point", point);
@@ -155,7 +149,7 @@ public class UserController {
 		LoginUtil loginUtil = new LoginUtil();
 		String access_token = loginUtil.getNaverToken(code, state);
 
-		loginUtil.getNaverUserInfo(vo, access_token);
+		loginUtil.getNaverUserInfo(access_token);
 
 		if (userService.checkUser(vo) == null) userService.insertUser(vo);
 
@@ -189,7 +183,7 @@ public class UserController {
 		LoginUtil loginUtil = new LoginUtil();
 		String access_token = loginUtil.getKakaoToken(code);
 
-		loginUtil.getKakaoUserInfo(vo, access_token);
+		loginUtil.getKakaoUserInfo(access_token);
 
 		if (userService.checkUser(vo) == null) userService.insertUser(vo);
 

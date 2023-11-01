@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mySpringWeb.domain.PaymentVO;
+import com.mySpringWeb.domain.pay.PaymentVO;
 import com.mySpringWeb.persistence.PaymentDAOSpring;
 
 @Service("paymentService")
@@ -20,7 +20,10 @@ public class PaymentServiceImpl implements PaymentService {
 	public void deletePayment(PaymentVO vo) {
 		paymentDAO.deletePayment(vo);
 	}
-	public List<PaymentVO> getPaymentList() {
-		return paymentDAO.getPaymentList();
+//	public List<PaymentVO> getPaymentList() {
+//		return paymentDAO.getPaymentList();
+//	}
+	public List<PaymentVO> getPaymentList(String userid) {
+		return paymentDAO.getPaymentList(userid);
 	}
 }

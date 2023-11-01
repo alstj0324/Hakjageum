@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.mySpringWeb.domain.BasketVO;
+import com.mySpringWeb.domain.bookrecommend.BasketVO;
 
 public class BasketRowMapper implements RowMapper<BasketVO>{
 

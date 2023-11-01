@@ -11,7 +11,7 @@
                 <a class="text-uppercase item-anchor" href=<c:url value="/" />> Home</a>
               </li>
               <li class="menu-itemhome1">
-                <a href="bookRecommend.do?category=자기계발" class="text-uppercase item-anchor">도서추천</a>
+                <a href="bookRecommend.do" class="text-uppercase item-anchor">도서추천</a>
               </li>
               <li class="menu-itemhome1 dropdown">
                 <a href="placeRecommend.do">플레이스</a>
@@ -45,13 +45,13 @@
                    aria-expanded="false"> Notice </a>
                 <ul class="dropdown-menu">
                   <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="contact.html">
+                    <a class="text-black text-uppercase dropdown-item" href="Test.do">
                       contact&nbsp
                       <span class="badge bg-secondary">pro</span>
                     </a>
                   </li>
                   <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="Test.do?id=${user.id} }">
+                    <a class="text-black text-uppercase dropdown-item" href="Test.do }">
                       cart&nbsp
                       <span class="badge bg-secondary">pro</span>
                     </a>
@@ -175,17 +175,16 @@
                 let element = createResultItem(i, book);
                 basketResult.append(element);
             }
-            form.css('visibility','visible');
-        }else {
-    		if(confirm("저장된 도서가 없습니다\n도서를 찾아보시겠습니까?")) location.href="bookRecommend.do";
-        }
-        
 
-        
+            form.css('visibility', 'visible');
+        } else {
+            if (confirm("저장 도서가 없습니다. 저장하시겠습니까?")) location.href = "bookRecommend.do";
+        }
     }
 
     function hide(){
-        $("#basketList").css('visibility','hidden');
+        let form = $('#basketList');
+        form.css('visibility', 'hidden');
     }
       // show func
     function getBasketList() {

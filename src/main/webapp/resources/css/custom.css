@@ -1495,8 +1495,8 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	display: inline-block;
 	margin: 3px 0 0;
 }
-.banner-content-board .book-select .book-category input[type="submit"],
-.banner-content-board .book-select .book-search input[type="submit"] {
+.banner-content-board .book-select .book-category button,
+.banner-content-board .book-select .book-search button {
 	display: inline-block;
 	width: 43px;
 	height: 43px;
@@ -1529,7 +1529,7 @@ div.banner-content-board .detail-3 input[type="submit"]{
 }
 .banner-content-board .book-content .book-content-item {
 	display: inline-block;
-	width: 288px;
+	width: 280px;
 	height: 480px;
 	margin-bottom: 30px;
 	overflow: hidden;

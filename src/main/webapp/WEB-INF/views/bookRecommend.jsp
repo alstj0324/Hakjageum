@@ -14,50 +14,96 @@
     <section id="billboard" class="position-relative">
       <div class="banner-content banner-content-board">
         <div class="banner-content-banner">
-          <h2>Book Recommend&nbsp;&nbsp;,&nbsp;&nbsp;Search</h2>
-          <div class="h4">
-            <h4>Item&nbsp;&nbsp;:&nbsp;&nbsp;${param.category}</h4>
-          </div>
+          <h2>도서추천 / 검색</h2>
         </div>
         <div class="book-select">
           <div class="book-category">
-            <form action="bookRecommend.do">
-              <select class="bookRecommend" name="category">
-                <option value="자기계발" selected>카테고리 변경</option>
-                <option value="자기계발">자기계발</option>
-                <option value="에세이">에세이</option>
-                <option value="스프링 부트">Spring Boot</option>
-                <option value="경제">경제</option>
-                <option value="소설">소설</option>
-              </select>
-              <input type="submit" value="Go">
-            </form>
+            <select class="bookRecommend" name="category">
+              <option value="자기계발" selected>카테고리 선택</option>
+              <option value="자기계발">자기계발</option>
+              <option value="에세이">에세이</option>
+              <option value="스프링 부트">Spring Boot</option>
+              <option value="경제">경제</option>
+              <option value="소설">소설</option>
+            </select>
+            <button id="select-category">Go</button>
           </div>
           <div class="book-search">
-            <form action="bookRecommend.do">
-              <input id="category" name="category" type="text" class="book-search-input" placeholder="도서검색 : 도서 제목을 입력하세요">
-              <input type="submit" value="Go">
-            </form>
+            <input type="text" class="book-search-input" name="bookname" placeholder="도서검색 : 도서 제목을 입력하세요">
+            <button id="search-book">Go</button>
           </div>
         </div>
-        <div class="book-content">
-          <c:forEach items="${books}" var="books">
-            <div class="book-content-item">
-              <div class="book-content-img">
-                <a href="${books.link }" target="_blank"><img src="${books.image }" alt="logo"></a>
-              </div>
-              <div class="book-content-result">
-                <div class="item1">${books.title }</div>
-                <div class="item2">${fn:replace(books.author, '^', ',')}</div>
-                <div class="item3">${books.pubdate }</div>
-                <div class="item4">${books.description }</div>
-                <div class="item5"><a href="bookReview.do?category=${books.isbn }&blog=${fn:split(books.title,'(')[0]}&id=${user.id}">도서 리뷰</a></div>
-              </div>
-            </div>
-          </c:forEach>
-        </div>
+        <div class="book-content"></div>
       </div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>
+    <script>
+      $(function () {
+        categorySearch();
+      });
+
+      $('.book-search-input').on('keydown', function(e) {
+        if (e.keyCode === 13) $('#search-book').trigger('click');
+      })
+
+      $('#select-category').on('click', function() {
+          categorySearch();
+      });
+
+      $('#search-book').on('click', function() {
+        let bookname = $('.book-search-input').val();
+        getBookList(bookname);
+      });
+
+      function categorySearch() {
+        let category = $('.bookRecommend').val();
+        getBookList(category);
+      }
+
+      function getBookList(category) {
+          let bookList = [];
+          $.ajax({
+              url: '/biz/api/book/getlist',
+              type: 'GET',
+              data: {
+                  category: category
+              },
+              async: false,
+              dataType: 'json',
+              success: function (data) {
+                  console.log("Get BookList 성공");
+                  bookList = data;
+              },
+              error: function () {
+                  console.log("Get BookList 실패");
+              }
+          });
+
+          let book_content = $('.book-content');
+          if (bookList.length > 0) {
+              book_content.empty();
+              for (let i = 0; i < bookList.length; i++) book_content.append(createbook(i, bookList[i]))
+          }
+      }
+
+      function createbook(seq, book) {
+          let content = []
+          content.push("<div class='book-content-item' id='book_" + seq + "'>");
+          content.push("  <div class='book-content-img'>");
+          content.push("    <a href='" + book.link + "' target='_blank'><img src='" + book.image + "' alt='logo'></a>");
+          content.push("  </div>");
+          content.push("  <div class='book-content-result'>");
+          content.push("    <div class='item1'>" + book.title + "</div>");
+          content.push("    <div class='item2'>" + book.author + "</div>");
+          content.push("    <div class='item3'>" + book.pubdate + "</div>");
+          content.push("    <div class='item5'>");
+          content.push("      <a href='bookReview.do?bookId=" + book.isbn + "'>도서 리뷰</a>");
+          content.push("    </div>");
+          content.push("  </div>");
+          content.push("</div>");
+
+          return content.join("");
+      }
+    </script>
   </body>
 </html>
