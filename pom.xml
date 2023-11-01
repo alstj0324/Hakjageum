@@ -160,7 +160,8 @@
 		    <artifactId>spring-context-support</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>
-		<!-- Web Hook -->
+
+		<!-- Server Annotation -->
 		<dependency>
          	<groupId>javax.annotation</groupId>
          	<artifactId>javax.annotation-api</artifactId>

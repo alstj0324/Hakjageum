@@ -35,17 +35,19 @@ public class KakaopayAPI2 {
 	private UserService userservice;
   
 	BufferedReader br,br2;
-	
+	final String cid = "TC0ONETIME"; //가맹점 코드
 	final String kakao_clientId = "c9e9586c57fe79bc3c0ee0c52ad1a6f2"; //kakao client 아이디(REST API 키)
 	final String kakao_adminKey = "3d847ad0fc68439f7949aa9254f80fc8"; //kakao adminkey
 	
 	@RequestMapping(value="Test.do")
 	public String Test(HttpSession session, UserVO user_vo, PaymentVO vo, Model model) {
-		
+		session.setAttribute("cid", cid);
 		String userid = (session.getAttribute("user_id")).toString();
+		int totalamount = paymentservice.getTotalAmount(userid);
+		session.setAttribute("totalamount", totalamount);
 		List<PaymentVO> paymentList = paymentservice.getPaymentList(userid);
 	    model.addAttribute("paymentList", paymentList);
-	    
+	 
 		try {
 			System.out.println(paymentList.get(0));
 			System.out.println("tid = " + vo.getTid());
@@ -55,16 +57,18 @@ public class KakaopayAPI2 {
 		
 		return "Test";
 	}
+	@RequestMapping(value="payment.do")
+	public String payment() {
+		return "payment";
+	}
 	
 	@RequestMapping(value="kakaoPay.do",method=RequestMethod.GET)
 	public String kakaoPayment(HttpSession session ,HttpServletRequest request) throws IOException, ParseException { 
-		
-		String cid = "TC0ONETIME"; //가맹점 코드
 		String partner_order_id = "Test" + new Date().getTime(); //가맹점 주문번호
 		String partner_user_id = (String) session.getAttribute("user_id"); //가맹점 회원 id
-		String item_name = "50000포인트"; //상품명
+		String item_name = (String) request.getParameter("item_name"); //상품명
 		String quantity = "1"; //상품 수량
-		String total_amount = "50000"; //상품 총액
+		String total_amount = (String) request.getParameter("amount"); //상품 총액
 		String tax_free_amount = "0"; // //상품 비과세 금액
 		String approval_url = "http://localhost:8080/biz/kPayment.do"; //결제 성공 시 redirect url
 		String fail_url = "http://localhost:8080/biz/kPaymentfail.do"; //결제 취소 시 redirect url
@@ -214,14 +218,16 @@ public class KakaopayAPI2 {
 	}
 	
 	@RequestMapping(value="searchKakaoPay.do",method=RequestMethod.GET)
-	public void searchKakaoPay(HttpSession session, UserVO user_vo, PaymentVO vo) throws Exception {
+	public String searchKakaoPay(HttpServletRequest request, HttpSession session, UserVO user_vo, PaymentVO vo) throws Exception {
+		
 		
 		String cid = (String) session.getAttribute("cid"); //가맹점 코드
-		String tid = vo.getTid();; //결제 고유 번호,
+		String tid = request.getParameter("tid"); //결제 고유 번호,
+		String paytime = paymentservice.getPaytime(tid); //api에서 넘어오지 않아서 db에 쿼리해서 얻어야됨
 		
 		String apiURL = "https://kapi.kakao.com/v1/payment/order?"
 				+"cid="+cid
-				+"&tid="+"T53f5b7551b66fd443e9";
+				+"&tid="+tid;
 		
 		URL url = new URL(apiURL);
 		
@@ -248,22 +254,44 @@ public class KakaopayAPI2 {
 		Object obj = parsing.parse(res.toString());
 		JSONObject jsonObj = (JSONObject)obj;
 		JSONObject resObj = (JSONObject) jsonObj.get("amount");
+		String payment_type = (String) jsonObj.get("payment_method_type");//결제 타입
 		
 		System.out.println(resObj);
+		session.setAttribute("tid", jsonObj.get("tid")); //가맹점 코드
+		session.setAttribute("cid", jsonObj.get("cid")); //결제 고유 번호
+		session.setAttribute("order_id", jsonObj.get("partner_order_id")); // 주문 번호
+		session.setAttribute("user_id", jsonObj.get("partner_user_id")); // 유저 id
+		session.setAttribute("payment_type", payment_type); //결제 타입
+		session.setAttribute("item_name", jsonObj.get("item_name")); // 상품 이름
+		session.setAttribute("paytime", paytime); //결제 승인 시간
+		session.setAttribute("amount", resObj.get("total")); // 상품 가격(부가세포함)
+		session.setAttribute("vat", resObj.get("vat")); // 부가세
 		
-		session.setAttribute("tid", jsonObj.get("tid"));
+		if(payment_type == "CARD") { //페이 타입이 카드일경우
+			JSONObject cardObj = (JSONObject) jsonObj.get("select_card_info");
+			session.setAttribute("card_name", cardObj.get("card_corp_name"));
+		}
+		
 		session.setAttribute("cancel_amount", resObj.get("total"));
 		
 		//return Integer.parseInt((resObj.get("total")).toString()); //해당 금액
+		return "paymentDetails";
 	}
 	
 	@RequestMapping(value="payCancel.do", method=RequestMethod.GET)
- 	public void payCancel(HttpSession session, UserVO vo) throws Exception {
+ 	public String payCancel(HttpSession session, UserVO user_vo,Model model, PaymentVO payment_vo) throws Exception {
 	
 		String cid = (String) session.getAttribute("cid"); //가맹점 코드
 		String tid = (String) session.getAttribute("tid"); //결제 고유 번호,
 		int cancel_amount = Integer.parseInt((session.getAttribute("cancel_amount")).toString()); // 취소 금액
 		int cancel_tax_free_amount = 0; //취소 비과세 금액
+		
+		String userid = (String) session.getAttribute("user_id"); 
+		int totalamount = paymentservice.getTotalAmount(userid);
+		System.out.println("total amount : "+totalamount+"cancel_amount : "+cancel_amount);
+		if(totalamount<cancel_amount) {
+			return "";
+		}
 		
 		String cancelApiURL = "https://kapi.kakao.com/v1/payment/cancel?"
 				+"cid="+cid
@@ -300,9 +328,18 @@ public class KakaopayAPI2 {
 		int basepoint = Integer.parseInt((session.getAttribute("point")).toString()); //기존 포인트
 		int totalpoint = basepoint - cancelpoint;
 		
-		vo.setPoint(totalpoint);
+		user_vo.setPoint(totalpoint);
+		payment_vo.setTid(tid);
+
+		paymentservice.deletePayment(payment_vo);
 		
-		userservice.updatePointUser(vo); //유저 포인트 업데이트 부분 
+		userservice.updatePointUser(user_vo); //유저 포인트 업데이트 부분 
+		
+		
+		List<PaymentVO> paymentList = paymentservice.getPaymentList(userid);
+	    model.addAttribute("paymentList", paymentList);
+		
+		return "Test";
 		
 	}
 	

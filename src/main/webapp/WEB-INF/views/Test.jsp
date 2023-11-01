@@ -12,24 +12,49 @@
     <section id="billboard" class="position-relative">
       <div class="banner-content banner-content-board">
       	<h2>point</h2>
-      	<div class="banner-content-pay">
-      		<h2><a href="kakaoPay.do">pay</a></h2>
-      		<h2><a href="searchKakaoPay.do">search</a></h2>
-      		<h2><a href="payCancel.do">cancel</a></h2>
-      		<div class="banner-content-paylist">
-				<c:forEach items="${paymentList }" var="pay">
-				<table class="paylist-table">
-					<tr>
-						<td bgColor=orange>결제금액</td>
-						<td bgColor=orange>결제일</td>
-					</tr>
-					<tr>
-						<%-- <td bgColor=cyan><a href="getBoard.do?tid=${pay.tid }">${pay.tid }</a></td>  --%>
-						<td bgColor=cyan>${pay.amount }</td>
-						<td bgColor=cyan>${pay.paytime }</td>
-					</tr>
-				</table>
-				</c:forEach>
+      	<div class="banner-content-paybox">
+	      	<div class="banner-content-pay">
+	      		<div class="banner-content-paylist">
+	      			<table class="paylist-table">
+							<tr class="first">
+								<td class="paytype">결제수단</td>
+								<td class="paytime">결제금액</td>
+								<td class="paytime">결제일자</td>
+							</tr>
+							<c:forEach items="${paymentList }" var="pay">
+							<tr>
+								<%-- <td bgColor=cyan><a href="getBoard.do?tid=${pay.tid }">${pay.tid }</a></td>  --%>
+								<td><a href="searchKakaoPay.do?tid=${pay.tid }">카카오페이(머니)</a></td>
+								<td>${pay.amount }</td>
+								<td>${pay.paytime }</td>
+							</tr>
+							</c:forEach>
+					</table>
+				</div>
+			</div>
+			<div class="total-point">
+				<div class="relative">
+					<i class="fa-solid fa-receipt"></i>
+					<span>총 결제금액 :</span>
+					<span>${totalamount } </span>원
+				</div>
+			</div>
+			
+			<div class="banner-content-paybar">
+				<div class="paybar-content paybar-content-1">
+					<i class="fa-solid fa-user"></i> ${user_id }
+				</div>
+				<div class="paybar-content paybar-content-2">
+					<h5>Point</h5>
+					<i class="fa-solid fa-book-open"></i>학자금 포인트 : <span>${totalamount }</span>
+				</div>
+				<div class="paybar-content paybar-content-3">
+					<a href="payment.do" class="white-color">
+						<div class="point-payment">
+							<span>충전하기</span>	
+						</div>
+					</a>
+				</div>
 			</div>
 		</div>
 	  </div>
