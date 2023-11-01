@@ -16,6 +16,7 @@ public class PostRowMapper implements RowMapper<PostVO>{
 		post.setTitle(rs.getString("title"));
 		post.setContent(rs.getString("content"));
 		post.setWriter_id(rs.getString("writer_id"));
+		post.setNickname(rs.getString("nickname"));
 		post.setView_count(rs.getInt("view_count"));
 		post.setHobby_code(rs.getString("hobby_code"));
 		post.setBook_id(rs.getString("book_id"));

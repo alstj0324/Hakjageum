@@ -1,6 +1,7 @@
 package com.mySpringWeb.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,15 @@ public class PostServiceImpl implements PostService{
 	@Override
 	public void deleteBoard(String id) {
 		postDAO.deleteBoard(id);	
+	}
+	
+	/*새로작성, 토탈 페이지카운트 구하기*/
+	@Override
+	public int getPageCount(String board_code) {	
+		return postDAO.getPageCount(board_code);
+	}
+	@Override
+	public List<PostVO> getList(PostVO searchVO) {
+		 return postDAO.getList(searchVO); 
 	}
 }
