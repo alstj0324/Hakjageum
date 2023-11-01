@@ -12,6 +12,7 @@ public class PostVO {
     private String title;
     private String content;
     private String writer_id;
+    private String nickname;
     private int view_count;
     private String hobby_code;
     private String book_id;
@@ -28,6 +29,7 @@ public class PostVO {
             "\ttitle=%s\n" +
             "\tcontent=%s\n" +
             "\twriter_id=%s\n" +
+            "\tnickname=%s\n" +
             "\tview_count=%s\n" +
             "\thobby_code=%s\n" +
             "\tbook_id=%s\n" +
@@ -35,7 +37,7 @@ public class PostVO {
             "\tupdated_at=%s\n" +
             "\tdeleted_at=%s\n" +
             "]",
-            id, board_code, title, content, writer_id, view_count, hobby_code, book_id, created_at, updated_at, deleted_at
+            id, board_code, title, content, writer_id, nickname, view_count, hobby_code, book_id, created_at, updated_at, deleted_at
         );
     }
 }
