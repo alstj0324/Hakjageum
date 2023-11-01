@@ -3,7 +3,7 @@ package com.mySpringWeb.persistence;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
-import com.mySpringWeb.domain.UserVO;
+import com.mySpringWeb.domain.user.UserVO;
 
 public class UserRowMapper implements RowMapper<UserVO>{
 

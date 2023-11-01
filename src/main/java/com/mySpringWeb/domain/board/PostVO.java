@@ -1,4 +1,4 @@
-package com.mySpringWeb.domain;
+package com.mySpringWeb.domain.board;
 
 import java.sql.Date;
 
@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class PostVO{
+public class PostVO {
     private int id;
     private String board_code;
     private String title;
@@ -18,7 +18,7 @@ public class PostVO{
     private Date created_at;
     private Date updated_at;
     private Date deleted_at;
-
+    
     @Override
     public String toString() {
         return String.format(

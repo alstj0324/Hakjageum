@@ -75,6 +75,10 @@
           }
 
           let ip =  getMyIp();
+          if (!ip) {
+              alert('당신의 IP를 조회할 수 없습니다.\n이전 페이지로 돌아갑니다.');
+              return history.back();
+          }
           let loc = getMyLoc(ip);
           initMap(loc);
       });
@@ -86,8 +90,7 @@
           if (si === "") {
               select_gun.attr("disabled", true);
               $('select[name=dong]').attr("disabled", true);
-          }
-          else select_gun.attr("disabled", false);
+          } else select_gun.attr("disabled", false);
           select_gun.empty();
           select_gun.append("<option value=''>구/군 선택</option>");
           for (let gun in geo[si]) {
@@ -185,8 +188,11 @@
         let loc = {};
         $.ajax({
           type: "get",
-          url: "/biz/api/loc/get/" + ip,
+          url: "/biz/api/loc/get",
           dataType: "json",
+          data: {
+              ip: ip
+          },
           async: false,
           success: function (data) {
             console.log("Loc API > Get Loc 성공");
@@ -255,7 +261,7 @@
           content.push("  <p>주소: " + place.address + "</p>");
           content.push("  <p>도로명주소: " + place.road_address + "</p>");
           if (place.phone !== "") content.push("  <p>번호: " + place.phone + "</p>");
-          if (place.url !== "") content.push("  <a href='" + place.url + "'>위치 정보 보기</a>");
+          if (place.url !== "") content.push("  <a href='" + place.url + "' target='_blank'>위치 정보 보기</a>");
           content.push("</div>");
 
           return content.join("");
@@ -282,9 +288,13 @@
         let center = map.getCenter();
         $.ajax({
             type: "get",
-            url: "/biz/api/place/" + code + "/" + center.x + "/" + center.y,
+            url: "/biz/api/place/" + code,
             dataType: "json",
             async: false,
+            data: {
+                x: center.x,
+                y: center.y
+            },
             success: function (data) {
                 console.log("Place API > Get Place 성공");
                 placeList = data;
@@ -304,8 +314,13 @@
         let center = map.getCenter();
         $.ajax({
             type: "get",
-            url: "/biz/api/place/search/" + keyword + "/" + center.x + "/" + center.y,
+            url: "/biz/api/place/search",
             dataType: "json",
+            data: {
+                keyword: keyword,
+                x: center.x,
+                y: center.y
+            },
             async: false,
             success: function (data) {
                 console.log("Place API > Get Place Search 성공");

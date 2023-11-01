@@ -2,7 +2,7 @@ package com.mySpringWeb.service;
 
 import java.util.List;
 
-import com.mySpringWeb.domain.PaymentVO;
+import com.mySpringWeb.domain.pay.PaymentVO;
 
 public interface PaymentService {
 	void insertPayment(PaymentVO vo);

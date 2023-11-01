@@ -8,10 +8,7 @@ import com.mySpringWeb.utils.HookUtil;
 import com.mySpringWeb.utils.PlaceUtil;
 import org.json.simple.JSONArray;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,61 +16,65 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/place")
 public class PlaceAPI {
+    private final HookUtil hookUtil = new HookUtil();
 
-    @GetMapping("/cafe/{x}/{y}")
+    @GetMapping("/cafe")
     public ResponseEntity<JSONArray> getCafeList(
-        @PathVariable("x") String x,
-        @PathVariable("y") String y
+        @RequestParam("x") String x,
+        @RequestParam("y") String y
     ) {
         PlaceUtil placeUtil = new PlaceUtil();
         JSONArray arr = placeUtil.getAllPlaceToJSON("카페", "CE7", x, y);
 
-        DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
-        List<EmbedVO> embedList = new ArrayList<>();
-        HookUtil hookUtil = new HookUtil();
-        EmbedVO embedVO = hookUtil.Info_Embed("카페 Place 조회", "x: " + x + "\ny: " + y + "\nData:\n" + arr.toJSONString());
-        embedList.add(embedVO);
-        HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
-        discordWebhookService.sendWebhook(hookVO);
+        hookUtil.send_Embed_Hook(
+            HookLevel.INFO,
+            "카페 Place 조회",
+            String.format(
+                "x: %s\ny: %s",
+                x, y
+            )
+        );
 
         return ResponseEntity.ok(arr);
     }
 
-    @GetMapping("/library/{x}/{y}")
+    @GetMapping("/library")
     public ResponseEntity<JSONArray> getLibraryList(
-            @PathVariable("x") String x,
-            @PathVariable("y") String y
+            @RequestParam String x,
+            @RequestParam String y
     ) {
         PlaceUtil placeUtil = new PlaceUtil();
         JSONArray arr = placeUtil.getAllPlaceToJSON("도서관", "", x, y);
 
-        DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
-        List<EmbedVO> embedList = new ArrayList<>();
-        HookUtil hookUtil = new HookUtil();
-        EmbedVO embedVO = hookUtil.Info_Embed("도서관 Place 조회", "x: " + x + "\ny: " + y + "\nData:\n" + arr.toJSONString());
-        embedList.add(embedVO);
-        HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
-        discordWebhookService.sendWebhook(hookVO);
+        hookUtil.send_Embed_Hook(
+                HookLevel.INFO,
+                "도서관 Place 조회",
+                String.format(
+                        "x: %s\ny: %s",
+                        x, y
+                )
+        );
 
         return ResponseEntity.ok(arr);
     }
 
-    @GetMapping("/search/{keyword}/{x}/{y}")
+    @GetMapping("/search")
     public ResponseEntity<JSONArray> getSearchList(
-            @PathVariable("keyword") String keyword,
-            @PathVariable("x") String x,
-            @PathVariable("y") String y
+            @RequestParam String keyword,
+            @RequestParam String x,
+            @RequestParam String y
     ) {
         PlaceUtil placeUtil = new PlaceUtil();
         JSONArray arr = placeUtil.getAllPlaceToJSON(keyword, "", x, y);
 
-        DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
-        List<EmbedVO> embedList = new ArrayList<>();
-        HookUtil hookUtil = new HookUtil();
-        EmbedVO embedVO = hookUtil.Info_Embed("검색 Place 조회", "keyword: " + keyword + "\nx: " + x + "\ny: " + y + "\nData:\n" + arr.toJSONString());
-        embedList.add(embedVO);
-        HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
-        discordWebhookService.sendWebhook(hookVO);
+        hookUtil.send_Embed_Hook(
+            HookLevel.INFO,
+            "검색 Place 조회",
+            String.format(
+                "keyword: %s\nx: %s\ny: %s",
+                keyword, x, y
+            )
+        );
 
         return ResponseEntity.ok(arr);
     }

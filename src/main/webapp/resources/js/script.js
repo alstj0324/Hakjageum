@@ -20,14 +20,6 @@
       }
     });
 
-    $("#openbasket").on('click', function() {
-      $("#basketList").css('visibility','visible');
-    });
-
-    $("#closebasket").on('click', function() {
-      $("#basketList").css('visibility','visible');
-    });
-
     // Responsive Navigation with Button
     var initHamburgerMenu = function () {
       const hamburger = document.querySelector(".hamburger");
@@ -47,7 +39,8 @@
         navMenu.classList.remove("responsive");
       }
     };
-
+    // Back
+	
     // Payment method
     $('input[type="radio"]').click(function () {
       var inputValue = $(this).attr("value");

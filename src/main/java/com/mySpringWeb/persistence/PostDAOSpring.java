@@ -5,16 +5,27 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import com.mySpringWeb.domain.PostVO;
+import com.mySpringWeb.domain.board.PostVO;
 
 @Repository
 public class PostDAOSpring {
 	@Autowired
 	private JdbcTemplate jdbctemplate;
 	
+	private final String POST_COUNT = "select count(*) as totcnt from postlist where board_code=?";
 	private final String POST_INSERT = "insert into postlist(board_code, title, content, writer_id, hobby_code, book_id) values(?,?,?,?,?,?)";
-	private final String POST_UPDATE = "update postlist set title=?, content=?, book_id=? where id=? "; //수정 
-	private final String POST_GET = "select * from postlist where id=?"; //글 하나 가져오기
+	private final String POST_UPDATE = "update postlist set title=?, content=? where id=? "; //수정 
+	private final String POST_VIEW_COUNT = "update postlist set view_count = view_count + 1 where id = ?"; 
+	private final String POST_GET = "SELECT\r\n"
+			+ "  *\r\n"
+			+ "FROM\r\n"
+			+ "  postlist p\r\n"
+			+ "JOIN\r\n"
+			+ "  users u\r\n"
+			+ "ON\r\n"
+			+ "  p.writer_id = u.id\r\n"
+			+ "WHERE\r\n"
+			+ "  p.id = ?"; //글 하나 가져오기
 	private final String POST_LIST = "SELECT\r\n"
 			+ "  p.id,\r\n"
 			+ "  CASE p.board_code\r\n"
@@ -25,7 +36,7 @@ public class PostDAOSpring {
 			+ "  END AS board_code,\r\n"
 			+ "  p.title,\r\n"
 			+ "  p.content,\r\n"
-			+ "  u.nickname AS writer_id,\r\n"
+			+ "  u.nickname AS writer_id,\r\n"			
 			+ "  p.view_count,\r\n"
 			+ "  CASE p.hobby_code\r\n"
 			+ "    WHEN 'HA0' THEN '독서'\r\n"
@@ -44,7 +55,11 @@ public class PostDAOSpring {
 			+ "ON\r\n"
 			+ "  p.writer_id = u.id\r\n"
 			+ "WHERE\r\n"
-			+ "  p.board_code = ?;"; //해당 게시판의 목록 가져오기
+			+ "  p.board_code = ? \r\n"
+			+ "GROUP BY\r\n"
+			+ "  p.id\r\n"
+			+ "ORDER BY\r\n"
+			+ "  id DESC\r\n"; //해당 게시판의 목록 가져오기
 	private final String POST_LIST_ALL = "SELECT\r\n"
 			+ "  p.id,\r\n"
 			+ "  CASE p.board_code\r\n"
@@ -104,6 +119,8 @@ public class PostDAOSpring {
 			+ "WHERE\r\n"
 			+ "  p.board_code = 'BA1'\r\n"
 			+ "  AND p.hobby_code = 'HA0'";
+	private final String POST_DELETE = "delete from postlist where id=?";
+	
 	
 	
 	public void insertBoard(PostVO vo) {
@@ -114,12 +131,22 @@ public class PostDAOSpring {
 	public void updateBoard(PostVO vo) {
 		System.out.println("===> Spring JDBC로 updateBoard() 기능처리");
 		System.out.println("결과값 :"+vo);
-		jdbctemplate.update(POST_UPDATE, vo.getTitle(), vo.getContent(), vo.getBook_id(), vo.getId());
+		jdbctemplate.update(POST_UPDATE, vo.getTitle(), vo.getContent(), vo.getId());
 	}
 	
-	public PostVO getBoard(PostVO vo) {
+	public void deleteBoard(String id) {
+		System.out.println("===> Spring JDBC로 deleteBoard() 기능처리");
+		jdbctemplate.update(POST_DELETE, id);
+	}
+	
+	public void addCount(String id) {
+		System.out.println("===> Spring JDBC로 addCount() 기능처리");
+		jdbctemplate.update(POST_VIEW_COUNT, id);
+	}
+	
+	public PostVO getBoard(String id) {
         System.out.println("===> Spring JDBC로 getBoard() 기능처리");
-        Object [] args  = {vo.getId()};
+        Object [] args  = {id};
         PostVO post = jdbctemplate.queryForObject(POST_GET, new PostRowMapper(), args);
         return post;
     }
@@ -130,6 +157,5 @@ public class PostDAOSpring {
         List<PostVO> postList = jdbctemplate.query(POST_LIST, new PostRowMapper(), args);
         return postList;
     }
-	
 	
 }

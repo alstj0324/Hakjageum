@@ -5,17 +5,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.mySpringWeb.domain.PostVO;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.mySpringWeb.domain.bookrecommend.BookVO;
+import com.mySpringWeb.domain.board.PostVO;
 import com.mySpringWeb.service.PostService;
+import com.mySpringWeb.utils.BookUtil;
 
 @Controller
 public class BoardController {
 	@Autowired
 	private PostService postService;
 	
-	/*-----------------[이동매핑]-------------------*/
+	/*-----------------[게시판 이동]-------------------*/
 	@RequestMapping(value="listFreeBoard.do")
 	public String freeBoardList(Model model) {
 		System.out.println("글 목록 검색 처리");
@@ -25,8 +30,10 @@ public class BoardController {
 	public String bookBoardList(Model model) {
 		System.out.println("글 목록 검색 처리");
 		String board_code = "BA2";
+		System.out.println("글 목록 검색 처리");
 		List<PostVO> boardList = postService.getBoardList(board_code);
     	model.addAttribute("boardList", boardList);
+	    
     	return "boards/listBookBoard";
 	}
 	@RequestMapping(value="listHobbyBoard.do")
@@ -37,7 +44,7 @@ public class BoardController {
 	public String getBoardtest() {
 		return "boards/insertBookBoard";
 	}
-	/*--------------------------------------------*/
+	/*--------------[게시판 글쓰기]-------------------------*/
 	
 	@RequestMapping(value="insertBookBoard.do", method=RequestMethod.POST)
 	public String insertBookBoard(PostVO vo) {
@@ -46,36 +53,61 @@ public class BoardController {
 		postService.insertBoard(vo);
     	return "redirect:listBookBoard.do";
 	}
-	/*
-	@RequestMapping(value="getBoardList.do")
-	public String getBoardList(Model model) {     
-		System.out.println("글 목록 검색 처리");
-    	List<BoardVO> boardList = boardService.getBoardList();              
-    	model.addAttribute("boardList", boardList);
-  
-    	return "getBoardList";
+	/*-------------------[게시판 업데이트]----------------------------*/
+	@RequestMapping(value="updateBookBoard.do")
+	public String updateBookBoard(String id, Model model) {   
+		PostVO vo = postService.getBoard(id);
+		BookUtil bookUtil = new BookUtil();
+		List<BookVO> bookList = bookUtil.getBookInfo(vo.getBook_id()); //isbn으로 책정보 조회
+        BookVO book = bookList.get(0);//vo 단일형태로 변경(의도)
+        String image = book.getImage(); 
+        String title = book.getTitle().split("\\(")[0];
+        String author = book.getAuthor().replaceAll("\\^",", ");
+    	model.addAttribute("post", vo);
+    	model.addAttribute("image",image);
+    	model.addAttribute("title",title);
+    	model.addAttribute("author",author);
+    	return "boards/updateBookBoard";
 	}
 	
-	@RequestMapping(value="getBoard.do")
-	public String getBoard(BoardVO vo, Model model) {
-		System.out.println("글 상세조회 처리");
-                                
-        vo = boardService.getBoard(vo);                               
-    	model.addAttribute("board", vo);
+	@RequestMapping(value="updateBookBoard.do", method=RequestMethod.POST)
+	public String updateBookBoard(PostVO vo) {
+		System.out.println("BookBoard update처리");
+		postService.updateBoard(vo);
+		return "redirect:listBookBoard.do";
+	}
+	
+	/*-------------------[게시판 삭제]-----------------------*/
+	@RequestMapping(value="deleteBoard.do")
+	public String deleteBoard(@RequestParam String id,@RequestParam String board_code) {
+		System.out.println("글 삭제 처리");
+		postService.deleteBoard(id);
+		if(board_code.equals("BA0")) {
+			return "redirect:listFreeBoard.do";
+		}else if(board_code.equals("BA1")) {
+			return "redirect:listHobbyBoard.do";
+		}else return "redirect:listBookBoard.do"; 
+	}
+	
+	/*----------------[게시판 글 보기]---------------------------*/
+	@RequestMapping(value="getBookBoard.do")
+	public String getBoard(@RequestParam String id, Model model) {
+		System.out.println("Book Board 상세조회 처리" + id);
+        PostVO vo = postService.getBoard(id);//게시글 정보 조회   
+        postService.addCount(id);//조회수 증가
+        BookUtil bookUtil = new BookUtil();
+        List<BookVO> bookList = bookUtil.getBookInfo(vo.getBook_id()); //isbn으로 책정보 조회
+        BookVO book = bookList.get(0);//vo 단일형태로 변경(의도)
+        String image = book.getImage(); 
+        String title = book.getTitle().split("\\(")[0];
+        String author = book.getAuthor().replaceAll("\\^",", ");
+    	model.addAttribute("post", vo);
+    	model.addAttribute("image",image);
+    	model.addAttribute("title",title);
+    	model.addAttribute("author",author);
 
-    	return "getBoard";
+    	return "boards/getBookBoard";
 	}
-	
-	
-	@RequestMapping(value="getBoardList.do")
-	public String getBoardList(Model model) {     
-		System.out.println("글 목록 검색 처리");
-    	List<BoardVO> boardList = boardService.getBoardList();              
-    	model.addAttribute("boardList", boardList);
-  
-    	return "getBoardList";
-	}
-	*/
-	
+	/*--------------------------------------------------------*/
 }
 
