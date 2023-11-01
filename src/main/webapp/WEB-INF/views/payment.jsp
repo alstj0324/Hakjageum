@@ -13,159 +13,68 @@
       <div class="banner-content banner-content-board">
        <h2>payment</h2>
        <div class="payment-box">
-         <div class="payment-box-left">
-         	<button id="changeAmountButton3">
-	       		<div class="point-box point-box-3">
-	       			<div class="krw">KRW 3000</div>
-	       			<div class="i-circle">
-	       				<i class="fa-solid fa-book-open"></i>
-	       				<span class="point-box-number">3000</span>
-	       			</div>
-	       			<div class="point-box-point">
-	       				<span>3,000 학자금 포인트</span>
-	       			</div>
-	       		</div>
-       		</button>
-       		<button id="changeAmountButton5">
-	      		<div class="point-box point-box-5">
-	      			<div class="krw">KRW 5000</div>
-	       			<div class="i-circle">
-	       				<i class="fa-solid fa-book-open"></i>
-	       				<span class="point-box-number">5000</span>
-	       			</div>
-	       			<div class="point-box-point">
-	       				<span>5,000 학자금 포인트</span>
-	       			</div>
-	      		</div>
-      		</button>
-      		<button id="changeAmountButton10">
-	      		<div class="point-box point-box-10">
-	      			<div class="krw">KRW 10000</div>
-	       			<div class="i-circle">
-	       				<i class="fa-solid fa-book-open"></i>
-	       				<span class="point-box-number">10000</span>
-	       			</div>
-	       			<div class="point-box-point">
-	       				<span>10,000 학자금 포인트</span>
-	       			</div>
-	      		</div>
-      		</button>
-      		<button id="changeAmountButton30">
-	      		<div class="point-box point-box-30">
-	      			<div class="krw">KRW 30000</div>
-	       			<div class="i-circle">
-	       				<i class="fa-solid fa-book-open"></i>
-	       				<span class="point-box-number">30000</span>
-	       			</div>
-	       			<div class="point-box-point">
-	       				<span>30,000 학자금 포인트</span>
-	       			</div>
-	      		</div>
-      		</button>
-      		<button id="changeAmountButton50">
-	      		<div class="point-box point-box-50">
-	      			<div class="krw">KRW 50000</div>
-	       			<div class="i-circle">
-	       				<i class="fa-solid fa-book-open"></i>
-	       				<span class="point-box-number">50000</span>
-	       			</div>
-	       			<div class="point-box-point">
-	       				<span>50,000 학자금 포인트</span>
-	       			</div>
-	      		</div>
-      		</button>
-      		<button id="changeAmountButton100">
-	      		<div class="point-box point-box-100">
-	      			<div class="krw">KRW 100000</div>
-	       			<div class="i-circle">
-	       				<i class="fa-solid fa-book-open"></i>
-	       				<span class="point-box-number">100000</span>
-	       			</div>
-	       			<div class="point-box-point">
-	       				<span>100,000 학자금 포인트</span>
-	       			</div>
-	      		</div>
-      		</button>
-         </div>	
+         <div class="payment-box-left"></div>
        	 <div class="payment-box-right-top">
-       	 	<form action="kakaoPay.do">
+       	 	<form action="requestpay.do" onsubmit="return chkUser()">
 	       	 	<span>상품명 : </span>
 	       	 	<input type="text" id="item-name" name="item_name" disabled required>
 	       	 	
 	       	 	<span>금액 : </span>
 	       	 	<input type="text" id="amount" name="amount" disabled >
 	       	 	<span> 원</span>
-	       	 	<input type="submit" value="결제하기">
+            <input type="hidden" name="user_id" value="${user.id}" />
 	       	 	<input type="hidden" id="submit-item-name" name="item_name" value="">
 	       	 	<input type="hidden" id="submit-amount" name="amount" value="">
+						<input type="submit" value="결제하기">
        	 	</form>
        	 </div>   	 
        </div>
       </div>
     </section>
-    
-  	<script>
-        // 버튼 요소와 텍스트 요소를 가져옵니다.
-        var button3 = document.getElementById('changeAmountButton3');
-        var button5 = document.getElementById('changeAmountButton5');
-        var button10 = document.getElementById('changeAmountButton10');
-        var button30 = document.getElementById('changeAmountButton30');
-        var button50 = document.getElementById('changeAmountButton50');
-        var button100 = document.getElementById('changeAmountButton100');
-        var amount = document.getElementById('amount');
-        var item_name = document.getElementById('item-name');
-        var submit_amount = document.getElementById('submit-amount');
-        var submit_item_name = document.getElementById('submit-item-name');
-        var item3 = '3,000 학자금 포인트';
-        var item5 = '5,000 학자금 포인트';
-        var item10 = '10,000 학자금 포인트';
-        var item30 = '30,000 학자금 포인트';
-        var item50 = '50,000 학자금 포인트';
-        var item100 = '100,000 학자금 포인트';
-        var encodeditem3 = encodeURIComponent(item3);
-        var encodeditem5 = encodeURIComponent(item5);
-        var encodeditem10 = encodeURIComponent(item10);
-        var encodeditem30 = encodeURIComponent(item30);
-        var encodeditem50 = encodeURIComponent(item50);
-        var encodeditem100 = encodeURIComponent(item100);
-        // 버튼 클릭 시 텍스트를 변경하는 이벤트 리스너를 추가합니다.
-        button3.addEventListener('click', function () {
-        	item_name.value = item3;
-        	amount.value = 3000;
-            submit_item_name.value = encodeditem3;
-            submit_amount.value = 3000;
-        });
-        button5.addEventListener('click', function () {
-        	item_name.value = item5;
-        	amount.value = 5000;
-        	submit_item_name.value = encodeditem5;
-        	submit_amount.value = 5000;
-        });
-        button10.addEventListener('click', function () {
-        	item_name.value = item10;
-        	amount.value = 10000;
-        	submit_item_name.value = encodeditem10;
-        	submit_amount.value = 10000;
-        });
-        button30.addEventListener('click', function () {
-        	item_name.value = item30;
-        	amount.value = 30000;
-        	submit_item_name.value = encodeditem30;
-        	submit_amount.value = 30000;
-        });
-        button50.addEventListener('click', function () {
-        	item_name.value = item50;
-        	amount.value = 50000;
-        	submit_item_name.value = encodeditem50;
-        	submit_amount.value = 50000;
-        });
-        button100.addEventListener('click', function () {
-        	item_name.value = item100;
-        	amount.value = 100000;
-        	submit_item_name.value = encodeditem100;
-        	submit_amount.value = 100000;
-        });
-    </script>
+
     <%@ include file="templates/UseJS.jsp" %>
+  	<script>
+			let itemlist = [3000, 5000, 10000, 30000, 50000, 100000];
+
+			$(function () {
+				for (let i = 0; i < itemlist.length; i++) {
+					$('.payment-box-left').append(createButton(itemlist[i]));
+					$('.chargeButton#charge_' + itemlist[i]).on('click', function () {
+						$('#amount').val(itemlist[i]);
+						$('#item-name').val(itemlist[i] + ' 학자금 포인트');
+						$('#submit-item-name').val(encodeURIComponent(itemlist[i] + ' 학자금 포인트'));
+						$('#submit-amount').val(encodeURIComponent(itemlist[i] + ''));
+					});
+				}
+			})
+
+      function chkUser() {
+        if('${user.id}' !== '') {
+            return true;
+        } else {
+          alert('로그인 후 이용해주세요.');
+          return false;
+        }
+      }
+
+			function createButton(item) {
+				let content = [];
+
+				content.push('<button class="chargeButton" id="charge_' + item + '">');
+				content.push('	<div class="point-box">');
+				content.push('		<div class="krw">KRW ' + item + '</div>');
+				content.push('		<div class="i-circle">');
+				content.push('			<i class="fa-solid fa-book-open"></i>');
+				content.push('			<span class="point-box-number">' + item + '</span>');
+				content.push('		</div>');
+				content.push('		<div class="point-box-point">');
+				content.push('			<span>' + item + ' 학자금 포인트</span>');
+				content.push('		</div>');
+				content.push('	</div>');
+				content.push('</button>');
+
+				return content.join('');
+			}
+    </script>
   </body>
 </html>

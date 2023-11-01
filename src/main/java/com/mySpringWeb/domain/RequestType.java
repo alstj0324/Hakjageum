@@ -14,6 +14,10 @@ public enum RequestType {
     KAKAO_LOGINAUTH("https://kauth.kakao.com/oauth/authorize"),
     KAKAO_LOGINTOKEN("https://kauth.kakao.com/oauth/token"),
     KAKAO_LOGININFO("https://kapi.kakao.com/v2/user/me"),
+    KAKAO_PAYREADY("https://kapi.kakao.com/v1/payment/ready"),
+    KAKAO_PAYAPPROVE("https://kapi.kakao.com/v1/payment/approve"),
+    KAKAO_PAYINFO("https://kapi.kakao.com/v1/payment/order"),
+    KAKAO_PAYCANCEL("https://kapi.kakao.com/v1/payment/cancel"),
     IP_LOCATION("http://ip-api.com/json/");
 
     private final String url;

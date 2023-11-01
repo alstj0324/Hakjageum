@@ -2109,16 +2109,15 @@ div.relative {
 	background-color: grey;
 	width: 25%;
 	height: 30%;
-	padding: 0px;
-	border: 0px;
-	margin: 10px;
-	margin-top: 75px;
-	transition: 1s;
+	padding: 0;
+	border: 0;
+	margin: 75px 10px 10px;
+	transition: transform .5s;
 }
 .payment-box .payment-box-left button:hover {
 	border: 1px solid grey;
 	box-sizing: border-box;
-	transform: rotateY(360deg);
+	transform: translateY(-10px);
 }
 .payment-box .payment-box-left button .point-box {
 	position: relative;

@@ -38,7 +38,7 @@
       			 		<div class="contents">
       						<div class="content-category" id="content-items">${boardList.board_code }</div>
       						<div class="content-title" id="content-items"><a href="getBookBoard.do?id=${boardList.id}">${boardList.title }</a></div>
-      						<div class="content-writer" id="content-items">${boardList.writer_id }</div>
+      						<div class="content-writer" id="content-items">${boardList.nickname }</div>
       						<div class="content-createtime" id="content-items">${boardList.created_at }</div>
       						<div class="content-viewcount" id="content-items">${boardList.view_count }</div>
       					</div>
