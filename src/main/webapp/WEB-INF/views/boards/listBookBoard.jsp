@@ -29,20 +29,7 @@
       			<div class="item-viewcount" id="main-items">조회수</div>
       		</div>
       		<script type="text/javascript">
-	      		$(function() {
-	                ch();
-	
-	            });
-      			function ch(){
-      				var boardList = new Array();
-          			boardList = ${boardList};
-          			$.each(${boardList}, function(i){
-          				var board_code = boardList[i].board_code
-          				console.log(board_code)
-          			});
-          				
-          			}
-      			}
+	      		
       			
       		</script>
       		<div class="content-container">
@@ -50,7 +37,7 @@
       			 	<c:forEach items="${boardList }" var="boardList">
       			 		<div class="contents">
       						<div class="content-category" id="content-items">${boardList.board_code }</div>
-      						<div class="content-title" id="content-items"><a href="getfreeBoard.do?id=${boardList.id} }">${boardList.title }</a></div>
+      						<div class="content-title" id="content-items"><a href="getBookBoard.do?id=${boardList.id}">${boardList.title }</a></div>
       						<div class="content-writer" id="content-items">${boardList.writer_id }</div>
       						<div class="content-createtime" id="content-items">${boardList.created_at }</div>
       						<div class="content-viewcount" id="content-items">${boardList.view_count }</div>
@@ -60,21 +47,58 @@
       			<div class="paging-box">
       				<div class="paging-item">	
 					  <ul id="pagination-wrap">
-					  	<li class="paging-li"><a href="#">&lt;&lt;</a></li>
-					  	<li class="paging-li"><a href="#">1</a></li>
-					  	<li class="paging-li"><a href="#">2</a></li>
-					  	<li class="paging-li"><a href="#">3</a></li>
-					  	<li class="paging-li"><a href="#">4</a></li>
-					  	<li class="paging-li"><a href="#">5</a></li>
-					  	<li class="paging-li"><a href="main.jsp">&gt;&gt;</a></li>
+					  	  <li class="paging-li"><a href="#">&lt;&lt;</a></li>
+					  	  <li class="paging-li"><a href="#">1</a></li>
+					  	  <li class="paging-li"><a href="#">2</a></li>
+					  	  <li class="paging-li"><a href="#">3</a></li>
+					  	  <li class="paging-li"><a href="#">4</a></li>
+					  	  <li class="paging-li"><a href="#">5</a></li>
+					  	  <li class="paging-li"><a href="main.jsp">&gt;&gt;</a></li>
 					  </ul>				
+      				</div>
+      			</div>
+      			<div class="paging-result">
+      				<div class="paging-result-item">
+      					<span>총게시물 ${totCnt} / 페이지 (${post.pageIndex} / ${totalPageCnt})</span>
       				</div>
       			</div>
       		</div>
       	</div>
+      	<script type="text/javascript">
+      		function checkBookList(){
+      			let user_id = $("#user_id").val();
+      	        $.ajax({
+      	            type: 'get',
+      	            url: '/biz/api/user/basket/checkList',
+      	            dataType: 'text',
+      	            async: false,
+      	            data: {
+      	                "userId": user_id
+      	            },
+      	            success: function(data) {
+      	                console.log("Check basket List Data 성공")
+      	                val = data;
+      	                if(val === "True"){
+      	                	location.href="insertBookBoard.do";
+      	                }else if(data === "False"){
+      	                	if(confirm("저장된 도서가 없습니다\n도서를 찾아보시겠습니까?") === true){
+								location.href="bookRecommend.do";	
+							}else {
+								return false;
+							} 
+      	                }
+      	            },
+      	            error: function() {
+      	                console.log("Get Basket Data 실패")
+      	            }
+      	        })
+
+      	        return res;
+      		}
+      	</script>
       	<div class="write-board">
       		<c:if test="${user != null}">
-      			<a href="insertBookBoard.do">글 작성</a>
+      			<button type="button" class="writeboard-btn" onclick="javascript:checkBookList();">글 작성</button>
       		</c:if> 
       	</div>
       </div>

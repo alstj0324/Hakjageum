@@ -26,4 +26,10 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<PaymentVO> getPaymentList(String userid) {
 		return paymentDAO.getPaymentList(userid);
 	}
+	public String getPaytime(String tid) {
+		return paymentDAO.getPaytime(tid);
+	}
+	public int getTotalAmount(String user_id) {
+		return paymentDAO.getTotalAmount(user_id);
+	}
 }

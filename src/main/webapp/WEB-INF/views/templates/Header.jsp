@@ -166,7 +166,6 @@
         let basketResult = $('#listContainer');
         var user_id = $("#user_id").val();
         let basketList = getBasketList();
-
         if (basketList.length !== 0) {
             basketResult.empty();
 

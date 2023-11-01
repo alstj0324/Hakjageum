@@ -37,6 +37,21 @@ public class BasketAPI {
 
         return ResponseEntity.ok(arr);
     }
+    
+    @GetMapping("/checkList")
+    public ResponseEntity<String> new_checkBasketList(@RequestParam String userId) {
+        String val = basketService.checkBasketList(userId);
+
+        DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
+        List<EmbedVO> embedList = new ArrayList<>();
+        HookUtil hookUtil = new HookUtil();
+        EmbedVO embedVO = hookUtil.Info_Embed("Basket 정보 조회", "UserId: " + userId + "\nData:\n" + val.toString());
+        embedList.add(embedVO);
+        HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
+        discordWebhookService.sendWebhook(hookVO);
+
+        return ResponseEntity.ok(val);
+    }
 
     @GetMapping("/getbookinfo")
     public ResponseEntity<JSONArray> getBasketListToBookInfo(@RequestParam String userId) {

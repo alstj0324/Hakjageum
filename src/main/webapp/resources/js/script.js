@@ -39,7 +39,8 @@
         navMenu.classList.remove("responsive");
       }
     };
-
+    // Back
+	
     // Payment method
     $('input[type="radio"]').click(function () {
       var inputValue = $(this).attr("value");

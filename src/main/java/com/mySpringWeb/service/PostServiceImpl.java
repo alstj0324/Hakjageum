@@ -12,7 +12,8 @@ import com.mySpringWeb.persistence.PostDAOSpring;
 public class PostServiceImpl implements PostService{
 	@Autowired
 	private PostDAOSpring postDAO;
-		
+	
+
 	@Override
 	public void insertBoard(PostVO vo) {
 		postDAO.insertBoard(vo);
@@ -22,13 +23,19 @@ public class PostServiceImpl implements PostService{
 		postDAO.updateBoard(vo);
 	}
 	@Override
-	public PostVO getBoard(PostVO vo) {
-		return postDAO.getBoard(vo);
+	public void addCount(String id) {
+		postDAO.addCount(id);;
+	}
+	@Override
+	public PostVO getBoard(String id) {
+		return postDAO.getBoard(id);
 	}
 	@Override
 	public List<PostVO> getBoardList(String board_code) {
 		return postDAO.getBoardList(board_code);
 	}
-	
-	
+	@Override
+	public void deleteBoard(String id) {
+		postDAO.deleteBoard(id);	
+	}
 }
