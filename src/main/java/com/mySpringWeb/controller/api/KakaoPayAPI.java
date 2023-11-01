@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,14 +58,17 @@ public class KakaoPayAPI {
             JSONObject data = (JSONObject) result.get("result_data");
             JSONObject amountdata = (JSONObject) data.get("amount");
 
-            String itemname = (String) data.get("itemname");
+            String itemname = (String) data.get("item_name");
             String paytype = (String) data.get("payment_method_type");
             String order_id = (String) data.get("partner_order_id");
             String amount = amountdata.get("total").toString();
             String vat = amountdata.get("vat").toString();
-            Date created_at = (Date) payvo.getCreated_at();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            dateFormat.format(payvo.getCreated_at());
+            String created_at = dateFormat.format(payvo.getCreated_at());
 
             result_json.put("cid", cid);
+            result_json.put("nickname", userservice.getUser(payvo.getUser_id()).getNickname());
             result_json.put("itemname", itemname);
             result_json.put("paytype", paytype);
             result_json.put("amount", amount);

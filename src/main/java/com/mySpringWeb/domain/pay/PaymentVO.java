@@ -1,7 +1,6 @@
 package com.mySpringWeb.domain.pay;
 
-
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,7 @@ public class PaymentVO {
 	private String user_id;
 	private int amount;
 	private String paytype;
-	private Date created_at;
+	private Timestamp created_at;
 	
 	public String toString() {
 		return String.format(

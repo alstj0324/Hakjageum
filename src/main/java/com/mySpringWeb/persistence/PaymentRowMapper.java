@@ -17,7 +17,7 @@ public class PaymentRowMapper implements RowMapper<PaymentVO> {
 		payment.setUser_id(rs.getString("user_id"));
 		payment.setAmount(rs.getInt("amount"));
 		payment.setPaytype(rs.getString("paytype"));
-		payment.setCreated_at(rs.getDate("created_at"));
+		payment.setCreated_at(rs.getTimestamp("created_at"));
 		
 		return payment;
 	}
