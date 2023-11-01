@@ -85,11 +85,47 @@
       		</div>
       		<div class="BA2-comment-wrap">
       			<div class="BA2-input-comment-wrap">
-      				<form action="insertComment.do" method="post" onsubmit="javascript:commentInsert()">
-	      				<input type="hidden" name="post_id" value=${post.id } required>
-	      				<input type="hidden" name="writer_id" value=${user.id } required>
-	      				<textarea class="comment" name="content" placeholder="댓글을 작성해주세요" required></textarea>
+      				<form action="insertComment.do" method="post" onsubmit="return commentSubmit()">
+	      				<input type="hidden" id="comment_post_id" name="post_id" value="${post.id }">
+	      				<input type="hidden" id="comment_writer_id" name="writer_id" value="${user_id }">
+	      				<textarea class="comment" id="comment_content" name="content" maxlength="100" placeholder="댓글을 작성해주세요(100자 이내)" required></textarea>
+	      				<div class="comment-submit-container">
+	      					<input type="submit" class="comment-submit" value="댓글달기">
+	      				</div>
       				</form>
+      			</div>
+      			<div class="BA2-comment-items-wrap">
+	      			<c:forEach items="${boardList }" var="boardList">
+	      			 		<div class="contents">
+	      						<div class="content-category" id="content-items">${boardList.board_code }</div>
+	      						<div class="content-title" id="content-items"><a href="getBookBoard.do?id=${boardList.id}">${boardList.title }</a></div>
+	      						<div class="content-writer" id="content-items">${boardList.writer_id }</div>
+	      						<div class="content-createtime" id="content-items">${boardList.created_at }</div>
+	      						<div class="content-viewcount" id="content-items">${boardList.view_count }</div>
+	      					</div>
+	      			 	</c:forEach>
+	      			
+	      			<c:forEach items="${comment }" var="comment">
+	      				<div class="BA2-comment-items">
+		      				<div class="BA2-items-1">${comment.content }</div>
+		      				<div class="BA2-items-2">
+		      					<div class="BA2-items-2-writer">${comment.writer_id}</div>
+		      					<div class="BA2-items-2-date">${comment.created_at}</div>
+		      					<button type="button" class="items-2-delete-btn">삭제</button>
+		      				</div>
+		      			</div>
+	      			</c:forEach>
+      			</div>
+      			<div class="content-paging-wrap">
+      				<ul id="comment-pagination-wrap">
+					  	  <li class="comment-paging-li"><a href="#">&lt;&lt;</a></li>
+					  	  <li class="comment-paging-li"><a href="#">1</a></li>
+					  	  <li class="comment-paging-li"><a href="#">2</a></li>
+					  	  <li class="comment-paging-li"><a href="#">3</a></li>
+					  	  <li class="comment-paging-li"><a href="#">4</a></li>
+					  	  <li class="comment-paging-li"><a href="#">5</a></li>
+					  	  <li class="comment-paging-li"><a href="main.jsp">&gt;&gt;</a></li>
+					  </ul>	
       			</div>
       		</div>
       		
@@ -98,5 +134,30 @@
       </div>
     </section>
     <%@ include file="../templates/UseJS.jsp" %>
+    <script type="text/javascript">
+    
+   	function commentSubmit(){
+   		var post_id = $('#comment_post_id')
+   		var comment = $('#comment_content')
+   		var writer_id = $('#comment_writer_id');
+   		console.log(post_id)
+   		console.log(comment)
+   		if(confirm("댓글을 작성하시겠습니까?")){
+   			if(post_id.val() == undefined){
+   				alert("오류가 있습니다!")
+   				return false;
+   			}
+   			if(writer_id.val() == ""){
+   				alert("로그인 후 작성가능합니다")
+   				return false
+   			} 
+   			if($('#comment_content').val() == undefined){
+   				alert("댓글을 입력해주세요")
+   				return false;
+   			}
+   			return true;
+   		}else return false;
+   	}
+    </script>
   </body>
 </html>

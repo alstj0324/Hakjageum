@@ -1369,19 +1369,154 @@ div.banner-content-board .detail-3 input[type="submit"]{
 	bottom: 0;
 }
 .BA2-comment-wrap .BA2-input-comment-wrap {
-	border: 1px solid black;
 	display: inline-block;
 	position: relative;
+	margin-top: 5px;
 	width: 90%;
+	margin-bottom:5px;
 	height: 60px;
 }
 .BA2-input-comment-wrap .comment{
 	display: inline-block;
-	position: relative;
+	position: absolute;
 	width: 85%;
 	height: 100%;
 	font-size: 13px;
-	line-height: 26px;
+	line-height: 24px;
+	resize: none;
+	overflow:hidden;
+	border: 2px solid rgb(170,170,170);
+	margin: 0;
+	margin-bottom:5px;
+	left: 0;
+}	
+.BA2-input-comment-wrap .comment-submit-container{
+	display: inline-block;
+	position: absolute;
+	width: 13%;
+	height: 60px;
+	margin: 0;
+	right : 0;
+	padding: 0;	
+}
+.comment-submit-container .comment-submit {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+	background-color: gray;
+}
+.BA2-comment-wrap .BA2-comment-items-wrap{
+	display: inline-block;
+	position: relative;
+	width: 90%;
+	height: 165px;
+	overflow-y: scroll;
+	text-align: left;
+}
+.BA2-comment-items-wrap .BA2-comment-items {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	height: 52px;
+	border: 1px solid gray;
+	font-size: 12px;
+	line-height: 22px;
+	border-radius: 5px;
+	margin-bottom: 2px;
+	overflow: hidden;
+}
+.BA2-comment-items .BA2-items-1{
+	position: absolute;
+	display: inline-block;
+	width: 83%;
+	height: 50px;
+	border-right: 2px dashed lightgray;
+	padding:3px 5px 3px 5px; 
+}
+.BA2-comment-items .BA2-items-2{
+	position: absolute;
+	display: inline-block;
+	width: 17%;
+	height: 50px;
+	right: 0; 
+}
+.BA2-items-2 .BA2-items-2-writer{
+	position: absolute;
+	display: inline-block;
+	width: 100%;
+	height: 23px;
+	overflow: hidden;
+	top:0;
+	text-overflow: ellipsis;
+	margin-left: 3px;
+}
+.BA2-items-2 .BA2-items-2-date{
+	position: absolute;
+	display: inline-block;
+	width: 60%;
+	height: 23px;
+	overflow: hidden;
+	bottom:0;
+	text-overflow: ellipsis;
+	margin-left: 3px;
+}
+.BA2-items-2 .items-2-delete-btn{
+	position: absolute;
+	display: inline-block;
+	width: 30%;
+	height: 25px;
+	margin: 0px 5px 3px 0px;;
+	padding:0;
+	bottom:0;
+	right:0;
+	background-color:lightgray;
+	border: 1px solid gray;
+	font-size: 12px;
+	border-radius: 5px;
+}
+.content-paging-wrap{
+	display: inline-block;
+	position: relative;
+	width: 30%;
+	height: 30px;
+}
+#comment-pagination-wrap {
+	font-size: 0;
+	text-align: center;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	flex-direction: row;
+}
+.comment-paging-li {
+	top:0;
+	margin:0;
+	padding:0;
+	display: flex;
+	border: 1px solid gray;
+	width: 28px;
+	height: 28px;
+	margin: 0px 1px 0px 1px;
+	border-radius: 5px;
+	color: black;
+}
+.comment-paging-li a{
+	margin:0;
+	padding:0;
+	width: 28px;
+	height: 28px;
+	color: black;
+	font-size: 12px;
+	line-height: 28px;
+}
+.comment-paging-li:hover{
+	background-color: lightgray;
+}
+.comment-paging-li a:hover{
+	color:white;
 }
 /*---------------------------------------------------------------------------------*/
 /* - -----------------[book Recommend]--------------------------*/

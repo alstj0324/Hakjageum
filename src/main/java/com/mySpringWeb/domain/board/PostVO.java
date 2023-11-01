@@ -1,12 +1,13 @@
 package com.mySpringWeb.domain.board;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class PostVO {
+public class PostVO  extends PageVO{
     private int id;
     private String board_code;
     private String title;
@@ -19,7 +20,18 @@ public class PostVO {
     private Date created_at;
     private Date updated_at;
     private Date deleted_at;
+    //추가
+    private int totalCount;
+    private String qustr;
     
+    public void setQustr() throws UnsupportedEncodingException {
+    	
+      	String qs = "";
+      	this.setQueryString();
+      	qs += this.getQueryString();
+      	this.qustr = qs;
+    }
+     
     @Override
     public String toString() {
         return String.format(
@@ -36,8 +48,18 @@ public class PostVO {
             "\tcreated_at=%s\n" +
             "\tupdated_at=%s\n" +
             "\tdeleted_at=%s\n" +
+            "\ttotalCount=%s\n" +
+            "\tpageIndex=%s\n" +
+            "\tpageUnit=%s\n" +
+            "\tpageSize=%s\n" +
+            "\tfirstIndex=%s\n" +
+            "\trecordCountPerPage=%s\n" +
+            "\tstartDate=%s\n" +
+            "\tendDate=%s\n" +
+            "\trealEnd=%s\n" +
             "]",
-            id, board_code, title, content, writer_id, nickname, view_count, hobby_code, book_id, created_at, updated_at, deleted_at
+            id, board_code, title, content, writer_id, nickname,view_count, hobby_code, book_id, created_at, updated_at, deleted_at, totalCount,
+            this.getPageIndex(), this.getPageUnit(),this.getPageSize(),this.getFirstIndex(),this.getRecordCountPerPage(),this.getStartDate(),this.getEndDate(),this.getRealEnd()
         );
     }
 }
