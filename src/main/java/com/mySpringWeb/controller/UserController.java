@@ -226,7 +226,8 @@ public class UserController {
 		userService.updateUser(vo);
 		UserVO user = userService.getUserLogin(vo); // user정보를 다시가져와서 최신화 
 		session.setAttribute("user", user);
-		return "redirect:usermanage.do";
+		session.invalidate();
+		return "redirect:main.jsp";
 	}
 	@RequestMapping(value="userdelete.do")
 	public String userdelete(UserVO vo) {

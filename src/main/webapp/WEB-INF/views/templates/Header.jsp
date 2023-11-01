@@ -278,6 +278,7 @@
     	    window.location.href = "userupdate.do";
     	  } else {
     	    alert("패스워드가 일치하지 않습니다.");
+    	    inputValue.value = "";
     	  }
     	  
     	  modal.style.display = "none";

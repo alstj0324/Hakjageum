@@ -66,7 +66,7 @@
           		<span>RegisterDate : </span><span class="update-box-userId">${user.create_at }</span>
           	</div>
           	<div class="userupdateBox">
-          		<input type="submit" value="저장하기" class="userupdateBox-submit">
+          		<input id="update-submit" type="submit" value="저장하기" class="userupdateBox-submit">
           	</div>
           </form>
           </c:if>
@@ -87,13 +87,14 @@
       	const passwordcheckTest = document.getElementById("pwd-check-text");
       	const passwordCheckBox = document.getElementById("passwordCheckBox"); 
       	const passwordcheckValue = document.getElementById("pwdcheckValue");
+      	const updateSubmit = document.getElementById("update-submit");
       	
       	checkModalButton.disabled = true; //이미 회원관리 페이지에 들어왔을때 내 정보 수정 못누르게 하기위해 만듦
       	
       	window.addEventListener("beforeunload", function (e){
       		checkModalButton.disabled = false; //회원 관리 페이지에서 나왔을때 다시 누를수 있게 만듦
       		
-      		e.returnValue = "이 페이지를 나가시겠습니까?"; //한번 물어보기
+      		//e.returnValue = "이 페이지를 나가시겠습니까?"; //한번 물어보기
       	});
       	
       	nickNameCB.addEventListener("click", function(){
