@@ -52,9 +52,7 @@ public class UserDAOSpring {
         try {
             Object [] args  = {vo.getId()};
             UserVO user = jdbctemplate.queryForObject(USER_GET, new UserRowMapper(), args);
-            String id = user.getId();
-            System.out.println("["+id+"]");
-            return id;
+            return user.getId();
         }catch(EmptyResultDataAccessException e){
             return null;
         }

@@ -1,10 +1,8 @@
 package com.mySpringWeb.controller.api;
 
 import com.mySpringWeb.domain.bookrecommend.BlogVO;
-import com.mySpringWeb.domain.bookrecommend.BookVO;
 import com.mySpringWeb.domain.webhook.HookLevel;
 import com.mySpringWeb.utils.BlogUtil;
-import com.mySpringWeb.utils.BookUtil;
 import com.mySpringWeb.utils.HookUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
