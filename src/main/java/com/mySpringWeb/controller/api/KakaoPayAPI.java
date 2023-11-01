@@ -11,11 +11,13 @@ import com.mySpringWeb.utils.HookUtil;
 import com.mySpringWeb.utils.RequestUtil;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/pay")
@@ -28,7 +30,7 @@ public class KakaoPayAPI {
 
     private final HookUtil hookUtil = new HookUtil();
 
-    @RequestMapping("/getinfo")
+    @GetMapping("/getinfo")
     public JSONObject getPaymentInfo(@RequestParam String tid) {
         EnvUtil envUtil = new EnvUtil();
         RequestUtil requestUtil = new RequestUtil();
@@ -55,13 +57,18 @@ public class KakaoPayAPI {
 
             String itemname = (String) data.get("itemname");
             String paytype = (String) data.get("payment_method_type");
+            String order_id = (String) data.get("partner_order_id");
             String amount = amountdata.get("total").toString();
-            Date created_at = payvo.getCreated_at();
+            String vat = amountdata.get("vat").toString();
+            Date created_at = (Date) payvo.getCreated_at();
 
+            result_json.put("cid", cid);
             result_json.put("itemname", itemname);
             result_json.put("paytype", paytype);
             result_json.put("amount", amount);
             result_json.put("created_at", created_at);
+            result_json.put("order_id", order_id);
+            result_json.put("vat", vat);
 
             hookUtil.send_Embed_Hook(
                 HookLevel.INFO,
@@ -85,7 +92,7 @@ public class KakaoPayAPI {
         return result_json;
     }
 
-    @RequestMapping("/cancel")
+    @PostMapping("/cancel")
     public String cancelPayment(@RequestParam String tid) {
         EnvUtil envUtil = new EnvUtil();
         RequestUtil requestUtil = new RequestUtil();
@@ -138,10 +145,10 @@ public class KakaoPayAPI {
             );
         }
 
-        return "chargepoint.do";
+        return "redirect:/chargelist.do";
     }
 
-    @RequestMapping("/paylist")
+    @GetMapping("/paylist")
     public List<PaymentVO> getPaymentList(@RequestParam String userId) {
         hookUtil.send_Embed_Hook(
             HookLevel.INFO,

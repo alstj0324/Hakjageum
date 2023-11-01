@@ -42,8 +42,8 @@
 					$('.chargeButton#charge_' + itemlist[i]).on('click', function () {
 						$('#amount').val(itemlist[i]);
 						$('#item-name').val(itemlist[i] + ' 학자금 포인트');
-						$('#submit-item-name').val(encodeURIComponent(itemlist[i] + ' 학자금 포인트'));
-						$('#submit-amount').val(encodeURIComponent(itemlist[i] + ''));
+						$('#submit-item-name').val(itemlist[i] + ' 학자금 포인트');
+						$('#submit-amount').val(itemlist[i] + '');
 					});
 				}
 			})
