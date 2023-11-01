@@ -12,8 +12,10 @@ import com.mySpringWeb.utils.RequestUtil;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -210,8 +212,9 @@ public class PayController {
     }
     // 결제 상세정보
     @RequestMapping(value="chargeinfo.do",method=RequestMethod.GET)
-    public String payment_Info() {
+    public String payment_Info(Model model, @RequestParam String tid) {
         //결제 상세정보
+        model.addAttribute("tid", tid);
         return "paymentDetails";
     }
 
