@@ -120,6 +120,7 @@ public class PostDAOSpring {
 	   int totalCount = vo.getTotalCount();
 	   return totalCount;
    }
+  
    public List<PostVO> getList(PostVO searchVO, String board_code){
 	   Object [] args = {board_code, searchVO.getRecordCountPerPage(), searchVO.getFirstIndex()};
 	   List<PostVO> post = jdbctemplate.query(POST_PAGELIST, new PostRowMapper(), args);

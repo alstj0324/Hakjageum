@@ -44,7 +44,7 @@
       				<div class="BA2-content-box">
       					<div class="BA2-info">
       						<div class="writer">
-      						작성자 : ${post.writer_id }
+      						작성자 : ${post.nickname }
       						</div>
       						<div class="write-time">
       						작성일 : ${post.updated_at }

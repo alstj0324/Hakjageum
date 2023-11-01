@@ -52,9 +52,7 @@ public class UserDAOSpring {
         try {
             Object [] args  = {vo.getId()};
             UserVO user = jdbctemplate.queryForObject(USER_GET, new UserRowMapper(), args);
-            String id = user.getId();
-            System.out.println("["+id+"]");
-            return id;
+            return user.getId();
         }catch(EmptyResultDataAccessException e){
             return null;
         }
@@ -83,12 +81,22 @@ public class UserDAOSpring {
             return "True";
         }
     }
-    
-    
+
+
     public UserVO getUser(UserVO vo) {
         System.out.println("===>Spring JDBC로 getUser() 기능처리");
         try {
             Object [] args  = {vo.getId()};
+            return jdbctemplate.queryForObject(USER_GET, new UserRowMapper(), args);
+        }catch(EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+
+    public UserVO getUser(String userId) {
+        System.out.println("===>Spring JDBC로 getUser() 기능처리");
+        try {
+            Object [] args  = {userId};
             return jdbctemplate.queryForObject(USER_GET, new UserRowMapper(), args);
         }catch(EmptyResultDataAccessException e){
             return null;

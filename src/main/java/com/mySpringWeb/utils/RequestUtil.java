@@ -84,7 +84,7 @@ public class RequestUtil {
     private String createURL(String hostURL, Map<String, Object> params) {
         StringBuilder url = new StringBuilder(hostURL);
 
-        if (params == null || !params.isEmpty()) {
+        if (params != null && !params.isEmpty()) {
             url.append("?");
             for (Map.Entry<String, Object> param : params.entrySet()) {
                 if (param.getValue() instanceof String) {
@@ -120,7 +120,7 @@ public class RequestUtil {
         try {
             con.setRequestMethod(method);
 
-            if (headers == null || !headers.isEmpty()) {
+            if (headers != null && !headers.isEmpty()) {
                 for (Map.Entry<String, Object> header : headers.entrySet()) {
                     con.setRequestProperty(header.getKey(), header.getValue().toString());
                 }

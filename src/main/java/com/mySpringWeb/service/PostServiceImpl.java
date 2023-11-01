@@ -25,7 +25,7 @@ public class PostServiceImpl implements PostService{
 	}
 	@Override
 	public void addCount(String id) {
-		postDAO.addCount(id);;
+		postDAO.addCount(id);
 	}
 	@Override
 	public PostVO getBoard(String id) {

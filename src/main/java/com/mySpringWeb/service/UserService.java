@@ -13,6 +13,7 @@ public interface UserService {
 	String logincheckUser(UserVO vo);
 	String logincheckNickname(UserVO vo);
 	UserVO getUser(UserVO vo);
+	UserVO getUser(String userId);
 	UserVO getUserLogin(UserVO vo);
 	List<UserVO> getUserList();
 }
