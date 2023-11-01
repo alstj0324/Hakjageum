@@ -76,17 +76,11 @@
       	                "userId": user_id
       	            },
       	            success: function(data) {
-      	                console.log("Check basket List Data 성공")
-      	                val = data;
-      	                if(val === "True"){
-      	                	location.href="insertBookBoard.do";
-      	                }else if(data === "False"){
-      	                	if(confirm("저장된 도서가 없습니다\n도서를 찾아보시겠습니까?") === true){
-								location.href="bookRecommend.do";	
-							}else {
-								return false;
-							} 
-      	                }
+											console.log("Check basket List Data 성공")
+											if (data) location.href="insertBookBoard.do";
+											else {
+												if(confirm("저장된 도서가 없습니다\n도서를 찾아보시겠습니까?")) location.href="bookRecommend.do";
+											}
       	            },
       	            error: function() {
       	                console.log("Get Basket Data 실패")
@@ -98,7 +92,7 @@
       	</script>
       	<div class="write-board">
       		<c:if test="${user != null}">
-      			<button type="button" class="writeboard-btn" onclick="javascript:checkBookList();">글 작성</button>
+      			<button type="button" class="writeboard-btn" onclick="checkBookList()">글 작성</button>
       		</c:if> 
       	</div>
       </div>

@@ -139,10 +139,10 @@
     <div class="ListContainer" id="listContainer">
       <p class="ListNone">저장 도서가 없습니다.</p>
     </div>
-    <div class="ListClose" id="ListClose" onClick="javascript:hide();">닫기</div>
+    <div class="ListClose" id="ListClose" onClick="hide()">닫기</div>
   </div>
   <script type="text/javascript">
-    function createResultItem(seq, book) {
+    function header_createResultItem(seq, book) {
         let content = []
         content.push("<div class='ListItem' id='basket_" + seq + "'>");
         content.push("  <div class='ItemImage'>");
@@ -155,7 +155,7 @@
         content.push("  <div class='ItemPublisher' id='Item'>출판사 : " + book.publisher + "</div>");
         content.push("  <div class='ItemPubdate' id='Item'>출간일 : " + book.pubdate + "</div>");
         content.push("  <div class='ItemDiscount' id='Item'>도서가격 : " + book.discount + "</div>");
-        content.push("  <button type='button' class='ItemDelete' onclick='deleteBasket(" + book.isbn + ")'>삭제</button>");
+        content.push("  <button type='button' class='ItemDelete' onclick='header_deleteBasket(" + seq + ", " + book.isbn + ")'>삭제</button>");
         content.push("</div>");
 
         return content.join("");
@@ -172,7 +172,7 @@
             for (let i = 0; i < basketList.length; i++) {
                 let book = basketList[i];
 
-                let element = createResultItem(i, book);
+                let element = header_createResultItem(i, book);
                 basketResult.append(element);
             }
 
@@ -210,23 +210,24 @@
         return res;
     }
 
-    function deleteBasket(isbn) {
+    function header_deleteBasket(seq, isbn) {
         let user_id = $("#user_id").val();
 
         $.ajax({
-            type: 'post',
+            type: 'get',
             url: '/biz/api/user/basket/delete',
             dataType: 'json',
             data: {
-                "userId": user_id,
-                "bookId": isbn
+                userId: user_id,
+                bookId: isbn
             },
             success: function (data) {
                 console.log("Delete Basket Data 성공")
-                if (data === 'False') {
-                    alert("도서가 삭제되었습니다.");
+                if (data) {
+                    alert("도서가 삭제되었습니다.\n" + isbn);
+                    $("#basket_" + seq).remove();
                     return show();
-                } else if (data === 'True') {
+                } else {
                     alert("이미 존재하지 않습니다.")
                 }
             },

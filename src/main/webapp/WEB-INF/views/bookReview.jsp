@@ -95,19 +95,21 @@
             if (userId) {
               $.ajax({
                 type: "get",
-                url: "/biz/api/user/basket/get",
+                url: "/biz/api/user/basket/has",
                 dataType: "json",
                 data: {
-                  "userId": userId
+                  userId: userId,
+                  bookId: bookId
                 },
                 async: false,
                 success: function (data) {
-                  console.log("Get Basket List 성공");
-                  if (data.length > 0) $(".basket-button").html('<button type="button" class="basket" onclick="deleteBasket()">도서삭제</button>');
+                  console.log("Get Basket Has Book 성공");
+
+                  if (data) $(".basket-button").html('<button type="button" class="basket" onclick="deleteBasket()">도서삭제</button>');
                   else $(".basket-button").html('<button type="button" class="basket" onclick="addBasket()">도서저장</button>');
                 },
                 error: function () {
-                  console.log("Get Basket List 실패");
+                  console.log("Get Basket Has Book 실패");
                 }
               })
             }
@@ -162,11 +164,12 @@
               url:"/biz/api/user/basket/add",
               dataType: "json",
               data : {
-                "userId": userId,
-                "bookId": bookId
+                userId: userId,
+                bookId: bookId
               },
               success: function(data){
                 console.log("Add Basket 성공");
+
                 if (data) {
                   alert("도서가 저장되었습니다.");
                   $(".basket-button").html('<button type="button" class="basket" onclick="deleteBasket()">도서삭제</button>');
@@ -186,14 +189,14 @@
               url:"/biz/api/user/basket/delete",
               dataType: "json",
               data : {
-                "userId": userId,
-                "bookId": bookId
+                userId: userId,
+                bookId: bookId
               },
               success: function(data){
                 console.log("Delete Basket 성공");
                 if (data) {
                   alert("도서가 삭제되었습니다.");
-                  $(".basket-button").html('<button type="button" class="basket" onclick="deleteBasket()">도서삭제</button>');
+                  $(".basket-button").html('<button type="button" class="basket" onclick="addBasket()">도서저장</button>');
                 } else alert("저장목록에 존재하지 않는 도서입니다.");
               },
               error:function(){

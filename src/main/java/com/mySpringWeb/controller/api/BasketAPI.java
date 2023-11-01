@@ -1,6 +1,7 @@
 package com.mySpringWeb.controller.api;
 
 import com.mySpringWeb.domain.bookrecommend.BasketVO;
+import com.mySpringWeb.domain.bookrecommend.BookVO;
 import com.mySpringWeb.domain.webhook.HookLevel;
 import com.mySpringWeb.service.BasketService;
 import com.mySpringWeb.utils.BookUtil;
@@ -42,13 +43,14 @@ public class BasketAPI {
     public ResponseEntity<String> new_checkBasketList(@RequestParam String userId) {
         String val = basketService.checkBasketList(userId);
 
-        DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
-        List<EmbedVO> embedList = new ArrayList<>();
-        HookUtil hookUtil = new HookUtil();
-        EmbedVO embedVO = hookUtil.Info_Embed("Basket 정보 조회", "UserId: " + userId + "\nData:\n" + val.toString());
-        embedList.add(embedVO);
-        HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
-        discordWebhookService.sendWebhook(hookVO);
+        hookUtil.send_Embed_Hook(
+            HookLevel.INFO,
+            "Basket 정보 조회",
+            String.format(
+                "UserId: %s",
+                userId
+            )
+        );
 
         return ResponseEntity.ok(val);
     }
@@ -78,10 +80,28 @@ public class BasketAPI {
         return ResponseEntity.ok(bookArr);
     }
 
+
+
+    @GetMapping("/has")
+    public ResponseEntity<Boolean> getBasketListToBookInfo(@RequestParam String userId, @RequestParam String bookId) {
+        boolean res = basketService.checkBasket(new BasketVO(userId, bookId));
+
+        hookUtil.send_Embed_Hook(
+            HookLevel.INFO,
+            "Basket 정보 조회 (BookInfo)",
+            String.format(
+                "UserId: %s\nBookId: %s\n",
+                userId,
+                bookId
+            )
+        );
+
+        return ResponseEntity.ok(res);
+    }
+
     @GetMapping("/add")
     public ResponseEntity<Boolean> addBasketData(@RequestParam String userId, @RequestParam String bookId) {
         BasketVO vo = new BasketVO(userId, bookId);
-
         if (!basketService.checkBasket(vo)) {
             basketService.addBasket(vo);
 
@@ -101,18 +121,19 @@ public class BasketAPI {
     @GetMapping("/delete")
     public ResponseEntity<Boolean> deleteBasketData(@RequestParam String userId, @RequestParam String bookId) {
         BasketVO vo = new BasketVO(userId, bookId);
-
+        System.out.println(vo);
         if (basketService.checkBasket(vo)) {
             basketService.deleteBasket(vo);
 
+            System.out.println(vo);
             hookUtil.send_Embed_Hook(
-                    HookLevel.INFO,
-                    "Basket 정보 삭제",
-                    String.format(
-                            "UserId: %s\nBookId: %s\n",
-                            userId,
-                            bookId
-                    )
+                HookLevel.INFO,
+                "Basket 정보 삭제",
+                String.format(
+                    "UserId: %s\nBookId: %s\n",
+                    userId,
+                    bookId
+                )
             );
             return ResponseEntity.ok(true);
         } else return ResponseEntity.ok(false);

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mySpringWeb.domain.PaymentVO;
+import com.mySpringWeb.domain.pay.PaymentVO;
 import com.mySpringWeb.domain.user.UserVO;
 import com.mySpringWeb.service.PaymentService;
 import com.mySpringWeb.service.UserService;

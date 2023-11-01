@@ -193,6 +193,7 @@ ul#name-dropdown {
 	height: 40px;
 	bottom: -70px;
 	line-height: 40px;
+	cursor: pointer;
 }
 
 
