@@ -65,6 +65,7 @@
                   <div class="group">
                     <label for="pwd" class="label">Password</label>
                     <input id="pwd" name="pwd" type="password" class="input" placeholder="4자 이상 영문,숫자,특수문자 입력"  data-type="password" required>
+                    <button type="button" class="signup-password-clean" id="password-clean">초기화</button>
                   </div>
                   <div class="group">
                     <label for="pwd2" class="label">Password Check</label>
@@ -95,6 +96,25 @@
       </div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>
+    <script>
+    
+    	var passwordClean = document.getElementById("password-clean");
+    	var pwd = document.getElementById("pwd");
+    	var pwd2 = document.getElementById("pwd2");
+    	var pwdCheckValue = document.getElementById("pwdcheckValue");
+    	var pwdCheckText = document.getElementById("pwd-check-text");
+    	
+    	passwordClean.addEventListener("click", function(){
+    		pwd.value = "";
+    		pwd2.value = "";
+    		pwdCheckText.innerText = "비밀번호가 일치하지 않습니다!";
+    		pwdCheckText.style.color = "";
+    		pwd.removeAttribute("readonly");
+    		pwd2.removeAttribute("readonly");
+    		pwdCheckValue.value = "N";
+    	});
+    	
+    </script>
     <script type="text/javascript" src="resources/js/signin.js"></script>
   </body>
 </html>

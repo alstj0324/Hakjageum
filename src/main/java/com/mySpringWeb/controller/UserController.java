@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.mail.internet.MimeMessage;
@@ -220,9 +221,16 @@ public class UserController {
 		return "redirect:usermanage.do";
 	}
 	@RequestMapping(value="userupdate.do", method=RequestMethod.POST)
-	public String userupdate(UserVO vo) {
+	public String userupdate(UserVO vo, HttpServletRequest request, HttpSession session) {
+		vo.setId(request.getParameter("id"));
+		vo.setNickname(request.getParameter("nickname"));
+		vo.setPwd(request.getParameter("pwd"));
+		System.out.println("nickname : "+vo);
 		userService.updateUser(vo);
-		return "redirect:usermanage.do";
+		UserVO user = userService.getUserLogin(vo); // user정보를 다시가져와서 최신화 
+		session.setAttribute("user", user);
+		session.invalidate();
+		return "redirect:main.jsp";
 	}
 	@RequestMapping(value="userdelete.do")
 	public String userdelete(UserVO vo) {
