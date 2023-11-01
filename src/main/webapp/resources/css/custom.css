@@ -312,7 +312,24 @@ input#nickname.input{
 	margin-bottom: 0;
 	margin-top: 5px;
 }
-
+.signup-password-clean {
+	font-size:12px;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	position: absolute;
+	display: inline-block;
+	border: 1px solid white;
+	border-radius:18px;
+	width: 70px;
+	height: 35px;
+	bottom: -56px;
+	right: 10px;
+	line-height: 35px;
+	cursor: pointer;
+	background-color: rgba(255,255,255,0.5);
+	color: black;
+}
 .id-check-button,
 .nick-check-button {
 	font-size:12px;
@@ -582,35 +599,147 @@ div.banner-content-manage:not(p) {
 
 
 /* --------------- [user update] --------------------*/
+.userupdate-button { /* 헤더에 내 정보 수정 button을 바꾸는 css - kyu */
+	display: inline-block;
+	width: 170px;
+	height: 38px;
+	margin: 0px;
+	padding: 0px 0px 0px 15px;
+	transition: .2s;
+}
+.kyu-modal {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	left: 50%;
+	top: 30%;
+	width: 20%;
+	height: 15.7%;
+	background-color: rgba(0, 0, 0, 0.6);
+	border: 4px solid black;
+}
+.modal-relative {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.kyu-modal input {
+	position: absolute;
+	top: 50px;
+	margin: 0px;
+	width: 100%;
+	border: 1px solid white;
+	color: white;
+}
+.kyu-modal input::placeholder {
+	color: white;
+}
+.kyu-modal button {
+	position: absolute;
+	margin: 0px;
+	right: 0px;
+	bottom: -12px;
+	height: 41px;
+	border-radius: 4px 0px 4px 0px;
+}
+.kyu-modal button:hover {
+	background-color: #07F;
+}
+.kyu-modal span {
+	position: absolute;
+	right: 0px;
+	margin: 0px;
+	padding: 0px;
+	font-size: 30px;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	color: white;
+	transition: .3s;
+}
+.kyu-modal span:hover {
+	cursor: pointer;
+	color: #07F;
+}
+.dropdown-item {
+	transition: .2s;
+}
+.userupdate-button:hover,
+.dropdown-item:hover {
+	background-color: #aba8a8;
+}
 div.banner-content-update:not(p) {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	margin-top:10px;
-	width:500px;
-	height:630px;
+	width:900px;
+	height:730px;
 	border-radius:50px;
 	background-color: rgba(0, 0, 0, 0.6);
 	color:white
 }
+.banner-content-update form {
+	margin-left: 200px;
+}
 div.user-update-form {
 	margin-top: 20px;
-	text-align: center;
 }
 div.user-update-form h2{
 	color: white;
-}
-.user-update-table td{
-	color: white;
-	padding-left:30px;
-}
-.user-update-table input{
-	color: white;
+	text-align: center;
 }
 #userupdate-submit {
 	text-align: center;
 	padding-left:0;
+}
+.user-update-form input,
+.user-update-form button,
+.user-update-form span {
+	vertical-align: middle;
+}
+.user-update-form input {
+	margin: 0px;
+	padding: 8px;
+	border: 0px;
+	color: white;
+	font-size: 1.2rem;
+	box-sizing: border-box;
+}
+.user-update-form .userupdateBox {
+	margin: 20px 10px;
+}
+.user-update-form .userupdateBox .updateBox-check {
+	margin-left: 190px;
+}
+.user-update-form .userupdateBox span {
+	display: inline-block;
+	width: 130px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 1.2rem;
+	margin-right: 20px;
+	text-align: right;
+}
+.user-update-form .userupdateBox .update-box-userId {
+	padding-left: 11px;
+	text-align: left;
+}
+.user-update-form .userupdateBox button {
+	margin: 0px;
+	height: 50px;
+	border-radius: 4px;
+}
+
+.user-update-form .userupdateBox-submit {
+	width: 500px;
+	border-radius: 4px;
+	transition: .3s;
+}
+.user-update-form .userupdateBox-submit:hover {
+	background-color: #07F;
 }
 /* ----------------[board 아마 bookboard]----------------------*/
 div.banner-content-board {
