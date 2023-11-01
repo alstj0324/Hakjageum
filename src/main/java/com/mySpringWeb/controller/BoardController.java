@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.mySpringWeb.domain.PostVO;
+import com.mySpringWeb.domain.board.PostVO;
 import com.mySpringWeb.service.PostService;
 
 @Controller

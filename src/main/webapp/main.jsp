@@ -13,7 +13,7 @@
       <div class="banner-content content-light style1 text-center col-md-6">
         <h2 class="banner-title">Self-development</h2>
         <div class="btn-center">
-          <a href="bookRecommend.do?category=자기계발" class="btn btn-medium btn-light">Start Now</a>
+          <a href="bookRecommend.do" class="btn btn-medium btn-light">Start Now</a>
         </div>
       </div>
     </section>

@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.mySpringWeb.domain.PaymentVO;
-import com.mySpringWeb.domain.UserVO;
+import com.mySpringWeb.domain.pay.PaymentVO;
+import com.mySpringWeb.domain.user.UserVO;
 import com.mySpringWeb.service.PaymentService;
 import com.mySpringWeb.service.UserService;
 

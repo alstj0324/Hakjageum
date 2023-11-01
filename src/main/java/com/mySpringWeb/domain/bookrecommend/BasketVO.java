@@ -1,9 +1,13 @@
-package com.mySpringWeb.domain;
+package com.mySpringWeb.domain.bookrecommend;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class BasketVO {
 	private String user_id;
 	private String book_unique_id;

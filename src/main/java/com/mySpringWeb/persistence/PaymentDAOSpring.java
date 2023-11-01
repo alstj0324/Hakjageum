@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.mySpringWeb.domain.PaymentVO;
+import com.mySpringWeb.domain.pay.PaymentVO;
 
 @Repository
 public class PaymentDAOSpring {

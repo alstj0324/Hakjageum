@@ -1,38 +1,66 @@
 package com.mySpringWeb.controller.api;
 
-import com.mySpringWeb.domain.BookVO;
-import com.mySpringWeb.domain.webhook.EmbedVO;
+import com.mySpringWeb.domain.bookrecommend.BookVO;
 import com.mySpringWeb.domain.webhook.HookLevel;
-import com.mySpringWeb.domain.webhook.HookVO;
-import com.mySpringWeb.service.DiscordWebhookServiceImpl;
 import com.mySpringWeb.utils.BookUtil;
 import com.mySpringWeb.utils.HookUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/book")
 public class BookAPI {
+    private final HookUtil hookUtil = new HookUtil();
 
-    /*
-        GET /api/book/get?bookId={bookId}
-     */
-
-    @GetMapping("/get")
-    public ResponseEntity<List<BookVO>> getBookInfo(@RequestParam String bookId) {
+    @GetMapping("/getlist")
+    public ResponseEntity<List<BookVO>> getBookList(@RequestParam String category) {
         BookUtil bookUtil = new BookUtil();
-        List<BookVO> bookList = bookUtil.getBookInfo(bookId);
+        List<BookVO> bookList = bookUtil.getBookList(category);
 
-        DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
-        List<EmbedVO> embedList = new ArrayList<>();
-        HookUtil hookUtil = new HookUtil();
-        EmbedVO embedVO = hookUtil.Info_Embed("Book 조회", "bookId: " + bookId + "\nData:\n" + bookList.toString());
-        embedList.add(embedVO);
-        HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
-        discordWebhookService.sendWebhook(hookVO);
+        hookUtil.send_Embed_Hook(
+            HookLevel.INFO,
+            "Book 목록 조회",
+            String.format(
+                "category: %s",
+                category
+            )
+        );
+
+        return ResponseEntity.ok(bookList);
+    }
+
+    @GetMapping("/getbybookid")
+    public ResponseEntity<List<BookVO>> getBookInfo_id(@RequestParam String bookId) {
+        BookUtil bookUtil = new BookUtil();
+        List<BookVO> bookList = bookUtil.getBookInfo_id(bookId, 1, 1);
+
+        hookUtil.send_Embed_Hook(
+            HookLevel.INFO,
+            "Book 정보 조회",
+            String.format(
+                "bookId: %s",
+                bookId
+            )
+        );
+
+        return ResponseEntity.ok(bookList);
+    }
+
+    @GetMapping("/getbybookname")
+    public ResponseEntity<List<BookVO>> getBookInfo_name(@RequestParam String bookName) {
+        BookUtil bookUtil = new BookUtil();
+        List<BookVO> bookList = bookUtil.getBookInfo_name(bookName, 1, 1);
+
+        hookUtil.send_Embed_Hook(
+            HookLevel.INFO,
+            "Book 정보 조회",
+            String.format(
+                "bookName: %s",
+                bookName
+            )
+        );
 
         return ResponseEntity.ok(bookList);
     }

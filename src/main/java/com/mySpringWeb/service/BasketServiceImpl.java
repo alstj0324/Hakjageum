@@ -1,6 +1,6 @@
 package com.mySpringWeb.service;
 
-import com.mySpringWeb.domain.BasketVO;
+import com.mySpringWeb.domain.bookrecommend.BasketVO;
 import com.mySpringWeb.persistence.BasketDAOSpring;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ public class BasketServiceImpl implements BasketService {
 	private BasketDAOSpring basketDAO;
 
 	@Override
-	public String checkBasket(BasketVO vo) {
+	public boolean checkBasket(BasketVO vo) {
 		return basketDAO.checkBasket(vo);
 	}
 	@Override

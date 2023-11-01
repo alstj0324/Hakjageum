@@ -1,7 +1,7 @@
 package com.mySpringWeb.service;
 
 import java.util.List;
-import com.mySpringWeb.domain.UserVO;
+import com.mySpringWeb.domain.user.UserVO;
 
 public interface UserService {
 	void insertUser(UserVO vo);

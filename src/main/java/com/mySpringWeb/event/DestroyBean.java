@@ -13,19 +13,13 @@ import java.util.List;
 
 @Component
 public class DestroyBean {
-
+    private final HookUtil hookUtil = new HookUtil();
     @PreDestroy
     public void cleanUp() {
-        try {
-            DiscordWebhookServiceImpl discordWebhookService = new DiscordWebhookServiceImpl();
-            List<EmbedVO> embedList = new ArrayList<>();
-            HookUtil hookUtil = new HookUtil();
-            EmbedVO embedVO = hookUtil.Info_Embed("서버 종료", "✅ 정상적으로 종료되었습니다.");
-            embedList.add(embedVO);
-            HookVO hookVO = hookUtil.create_Hook (HookLevel.INFO, embedList);
-            discordWebhookService.sendWebhook(hookVO);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        hookUtil.send_Embed_Hook(
+            HookLevel.INFO,
+            "서버 종료",
+            "✅ 정상적으로 종료되었습니다."
+        );
     }
 }

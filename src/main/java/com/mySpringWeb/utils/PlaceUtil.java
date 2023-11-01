@@ -1,22 +1,18 @@
 package com.mySpringWeb.utils;
 
-import com.mySpringWeb.domain.PlaceVO;
+import com.mySpringWeb.domain.place.PlaceVO;
+import com.mySpringWeb.domain.RequestType;
+import com.mySpringWeb.domain.webhook.HookLevel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class PlaceUtil {
-
+    private final HookUtil hookUtil = new HookUtil();
+    private final MappingUtil mappingUtil = new MappingUtil();
     public JSONArray getAllPlaceToJSON(String keyword, String code, String x, String y) {
-        return placeToObject(getAllPlace(keyword, code, x, y));
+        return mappingUtil.placeToObject(getAllPlace(keyword, code, x, y));
     }
 
     public List<PlaceVO> getAllPlace(String keyword, String code, String x, String y) {
@@ -24,95 +20,88 @@ public class PlaceUtil {
     }
 
     public List<PlaceVO> getPlaceData(String x, String y, String category_group_code, String query, int radius) {
-        List<PlaceVO> placelist = new ArrayList<>();
-        String restapiKey = "78ebcb4c00100253dfd2e6916a21dff5";
-        String apiHost = "https://dapi.kakao.com/v2/local/search/keyword.json";
+        List<PlaceVO> places = new ArrayList<>();
+
+        EnvUtil envUtil = new EnvUtil();
+        RequestUtil requestUtil = new RequestUtil();
+        Map<String, Object> headers = new HashMap<>();
+
+        String restapiKey = envUtil.getValueByKey("KAKAO_RESTKEY");
+        headers.put("Authorization", "KakaoAK " + restapiKey);
+        int size = 10;
 
         for (int page = 1; page <= 2; page++) {
-            try {
-                String keyword = URLEncoder.encode(query, "UTF-8");
+            Map<String, Object> params = new HashMap<>();
+            params.put("category_group_code", category_group_code);
+            params.put("x", x);
+            params.put("y", y);
+            params.put("radius", radius);
+            params.put("page", page);
+            params.put("size", size);
+            params.put("query", query);
 
-                String apiURL = String.format(
-                        "%s?category_group_code=%s&x=%s&y=%s&radius=%d&page=%d&size=10&query=%s",
-                        apiHost, category_group_code, x, y, radius, page, keyword
-                );
+            JSONObject result = requestUtil.requestData(RequestType.KAKAO_PLACE_KEYWORD_SEARCH, "GET", headers, params);
 
-                URL url = new URL(apiURL);
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            String status = (String) result.get("result_status");
 
-                con.setRequestMethod("GET");
-                con.setRequestProperty("Authorization", "KakaoAK " + restapiKey);
+            if (Objects.equals(status, "success")) {
+                JSONObject data = (JSONObject) result.get("result_data");
+                JSONArray items = (JSONArray) data.get("documents");
 
-                int responseCode = con.getResponseCode();
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                StringBuilder res = new StringBuilder();
-
-                for (String line = br.readLine(); line != null; line = br.readLine()) {
-                    res.append(line);
+                for (Object item : items) {
+                    PlaceVO place = createPlace((JSONObject) item);
+                    if (!places.contains(place)) places.add(place);
                 }
-                br.close();
-
-                if (responseCode == 200) {
-                    JSONParser parsing = new JSONParser();
-                    Object obj = parsing.parse(res.toString());
-                    JSONObject jsonObj = (JSONObject)obj;
-                    JSONArray documents = (JSONArray) jsonObj.get("documents");
-
-                    for (Object item : documents) {
-                        PlaceVO placeVO = createPlace((JSONObject) item);
-                        if (!placelist.contains(placeVO)) placelist.add(placeVO);
-                    }
-
-                    if(documents.size() != 10) break;
-                }
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            } else hookUtil.send_Embed_Hook(
+                    HookLevel.WARN,
+                    "플레이스 목록 조회 실패",
+                    String.format(
+                            "Function: %s > %s\n%s",
+                            getClass().getName(),
+                            "getPlaceData",
+                            String.format(
+                                    "category_group_cde: %s\nx: %s\ny: %s\nradius: %s\npage: %s\nsize: %s\nquery: %s",
+                                    category_group_code, x, y, radius, page, size, query
+                            )
+                    )
+            );
         }
-        return placelist;
+        return places;
     }
 
     public JSONObject getMyloc(String ip) {
-        JSONObject result = new JSONObject();
-        String apiHost = "http://ip-api.com";
+        JSONObject loc = new JSONObject();
+        RequestUtil requestUtil = new RequestUtil();
+        Map<String, Object> params = new HashMap<>();
 
-        String apiURL = String.format(
-                "%s/json/%s",
-                apiHost, ip
+        params.put("fields", 16576);
+
+        JSONObject result = requestUtil.requestData(RequestType.IP_LOCATION, "GET", null, params, ip);
+
+        String status = (String) result.get("result_status");
+
+        if (Objects.equals(status, "success")) {
+            JSONObject data = (JSONObject) result.get("result_data");
+
+            loc.put("x", data.get("lat").toString());
+            loc.put("y", data.get("lon").toString());
+        } else hookUtil.send_Embed_Hook(
+            HookLevel.WARN,
+            "IP 좌표 조회 실패",
+            String.format(
+                "Function: %s > %s\n%s",
+                getClass().getName(),
+                "getMyloc",
+                String.format(
+                    "ip: %s",
+                    ip
+                )
+            )
         );
 
-        try {
-            URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("GET");
-
-            int responseCode = con.getResponseCode();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            StringBuilder res = new StringBuilder();
-
-            for (String line = br.readLine(); line != null; line = br.readLine()) {
-                res.append(line);
-            }
-            br.close();
-
-            if (responseCode == 200) {
-                JSONParser parsing = new JSONParser();
-                Object obj = parsing.parse(res.toString());
-                JSONObject jsonObj = (JSONObject) obj;
-
-                result.put("x", jsonObj.get("lat").toString());
-                result.put("y", jsonObj.get("lon").toString());
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return result;
+        return loc;
     }
 
-    // VO 생성이 필요하다면 진행
     private PlaceVO createPlace(JSONObject jsonObject) {
         PlaceVO place = new PlaceVO();
 
@@ -125,26 +114,5 @@ public class PlaceUtil {
         place.setY((String) jsonObject.get("x"));
 
         return place;
-    }
-
-    // VO를 JSON Object로 변환
-    public JSONArray placeToObject(List<PlaceVO> placelist) {
-        JSONArray jArray = new JSONArray();
-
-        for (PlaceVO item : placelist) {
-            JSONObject jObject = new JSONObject();
-
-            jObject.put("name", item.getName());
-            jObject.put("address", item.getAddress());
-            jObject.put("road_address", item.getRoad_address());
-            jObject.put("phone", item.getPhone());
-            jObject.put("url", item.getUrl());
-            jObject.put("x", item.getX());
-            jObject.put("y", item.getY());
-
-            jArray.add(jObject);
-        }
-
-        return jArray;
     }
 }
