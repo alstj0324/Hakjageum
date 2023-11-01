@@ -2215,24 +2215,45 @@ div.relative {
 }
 /*================================================================== PaymentDetails.jsp*/
 
+div.banner-content-paymentDetails {
+	width: 1000px;
+}
 .relative {
 	width: 100%;
 	height: 91%;
 }
 .relative .payment-details-box {
-	border: 1px solid red;
+	border: 2px solid grey;
 	margin-left: 5rem;
-	width: 40%;
+	width: 60%;
 	height: 100%;
 	color: black;
 }
+.payment-details-box i,
+.payment-details-box span {
+	vertical-align: middle;
+}
+.payment-details-box i {
+	font-size: 18px;
+	position: absolute;
+	transform: translateY(-50%);
+	top: 50%;
+}
+.payment-details-box span {
+	display: inline-block;
+	width: 110px;
+	text-align: end; 
+	font-weight: bold;
+}
 .payment-details-box .width-100-persent {
+	position: relative;
 	width: 100%;
 	height: 50%;
+	padding-left: 10px;
+	border-bottom: 1px solid grey;
 }
 .payment-details-box .payment-details-top {
 	position: relative;
-	border: 1px solid blue;	
 	width: 100%;
 	height: 15%;
 }
@@ -2244,22 +2265,76 @@ div.relative {
 	width: 50%;
 	line-height: 43.2px;
 }
-.payment-details-box .payment-details-top .payment-details-top-left{
+.payment-details-box .payment-details-top .payment-details-top-left {
 	border-right: 1px solid grey;
+}
+.payment-details-box .payment-details-top .payment-details-top-left i {
+	color: rgb(7, 196, 7);
+}
+.payment-details-box .payment-details-top .payment-details-top-right i {
+	color: rgb(247, 161, 3);	
 }
 .payment-details-box .payment-details-top .payment-details-top-right{
 	right: 0px;
 }
 .payment-details-box .payment-details-middle {
-	border: 1px solid green;
+	position: relative;	
 	width: 100%;
 	height: 55%;
 }
+.payment-details-middle .payment-details-name,
+.payment-details-middle .payment-details-type {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	height: 20%;
+	line-height: 64.44px;
+}
+.payment-details-middle i {
+	padding-left: 10px;
+	color: rgba(20, 187, 216, 0.637);
+}
 .payment-details-box .payment-details-bottom {
-	border: 1px solid pink;
 	width: 100%;
 	height: 30%;
 }
 
-
+.payment-details-box .payment-details-bottom .payment-details-amount,
+.payment-details-box .payment-details-bottom .payment-details-vat {
+	position: relative;
+}
+.payment-details-box .payment-details-bottom .payment-details-amount span,
+.payment-details-box .payment-details-bottom .payment-details-vat span {
+	margin-left: 40%;
+	font-size: 1.2rem;
+}
+.payment-details-box .payment-details-bottom .payment-details-vat {
+	border-top: 1px solid grey;
+}
+.payment-details-box .payment-details-bottom .payment-details-time {
+	position: absolute;
+	bottom: 0px;
+	width: 596px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+}
+.payment-details-paycancel {
+	position: absolute;
+	transition: .2s;
+	cursor: pointer;
+	background-color: black;
+	width: 200px;
+	right: 54px;
+	bottom: 40px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	border-radius: 4px;
+	color: white;
+}
+.payment-details-paycancel:hover {
+	cursor: pointer;
+	background-color: #F07;
+}
 
