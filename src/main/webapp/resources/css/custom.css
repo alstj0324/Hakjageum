@@ -1,5 +1,17 @@
 @charset "UTF-8";
 
+/* Noto Sans 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* ================================ Header ================================  */
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+ul.dropdown-menu > li {
+	text-align: center;
+}
+
 div.banner-content-banner {
 	background-color: rgba(0,0,0,0.6);
 	width: 100%;
@@ -33,7 +45,7 @@ div.banner-content-login a:not(p){
 
 /*------------------[Section]--------------------*/
 section#billboard {
-	background-image: url('/biz/resources/images/banner-image.jpg');
+	background-image: url('/resources/images/banner-image.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
