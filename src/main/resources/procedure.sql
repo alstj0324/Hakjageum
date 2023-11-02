@@ -100,7 +100,7 @@ create procedure `insert_post` (
     p_content varchar(1000),
     p_hobby_code varchar(100),
     p_board_code varchar(100),
-    p_writer_id int,
+    p_writer_id varchar(100),
     p_book_id int
 )
 begin
