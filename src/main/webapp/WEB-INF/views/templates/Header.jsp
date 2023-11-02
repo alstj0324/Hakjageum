@@ -234,7 +234,7 @@
             success: function (data) {
                 console.log("Delete Basket Data 성공")
                 if (data) {
-                    alert("도서가 삭제되었습니다.\n" + isbn);
+                    alert("도서가 삭제되었습니다.\n");
                     $("#basket_" + seq).remove();
                     return show();
                 } else {

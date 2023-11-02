@@ -23,4 +23,6 @@ public class CommentServiceImpl implements CommentService{
 	public List<CommentVO> getCommentList(String post_id) {
 		return commentDAO.getCommentList(post_id);
 	}
+	
+	
 }
