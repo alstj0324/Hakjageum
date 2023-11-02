@@ -106,12 +106,14 @@
 	      			 	</c:forEach>
 	      			
 	      			<c:forEach items="${comment }" var="comment">
-	      				<div class="BA2-comment-items">
+	      				<div class="BA2-comment-items" >
 		      				<div class="BA2-items-1">${comment.content }</div>
 		      				<div class="BA2-items-2">
 		      					<div class="BA2-items-2-writer">${comment.writer_id}</div>
 		      					<div class="BA2-items-2-date">${comment.created_at}</div>
-		      					<button type="button" class="items-2-delete-btn">삭제</button>
+		      					<c:if test="${user.id eq comment.writer_id || user.role_id eq 1}">
+		      						<button type="button" class="items-2-delete-btn" onclick='deleteComment("+${comment.comment_id }+","+${comment.post_id}+")'>삭제</button>
+		      					</c:if>
 		      				</div>
 		      			</div>
 	      			</c:forEach>
@@ -135,13 +137,18 @@
     </section>
     <%@ include file="../templates/UseJS.jsp" %>
     <script type="text/javascript">
-    
+    function deleteComment(comment_id, post_id){
+
+    	if(confirm("댓글을 삭제하시겠습니까?")){
+    		location.href="deleteComment.do?comment_id="+comment_id+"&post_id="+post_id;
+    	}else return false;
+    	
+    }    
    	function commentSubmit(){
    		var post_id = $('#comment_post_id')
    		var comment = $('#comment_content')
    		var writer_id = $('#comment_writer_id');
-   		console.log(post_id)
-   		console.log(comment)
+   		
    		if(confirm("댓글을 작성하시겠습니까?")){
    			if(post_id.val() == undefined){
    				alert("오류가 있습니다!")

@@ -20,12 +20,10 @@ public class CommentDAOSpring {
 		System.out.println("===> Spring JDBC로 insertComment() 기능처리");
 		jdbctemplate.update(COMMENT_INSERT, vo.getPost_id(), vo.getWriter_id(), vo.getContent());
 	}
-	
 	public void deleteComment(String comment_id) {
 		System.out.println("===> Spring JDBC로 deleteComment() 기능처리");
 		jdbctemplate.update(COMMENT_DELETE, comment_id);
 	}
-	
 	public List<CommentVO> getCommentList(String post_id) {
 		System.out.println("===> Spring JDBC로 getCommentList() 기능처리");
 		Object [] args  = {post_id};

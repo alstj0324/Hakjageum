@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class PostVO  extends PageVO{
+public class PostVO  extends PageVO {
     private int id;
     private String board_code;
     private String title;

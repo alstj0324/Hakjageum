@@ -2,7 +2,6 @@ package com.mySpringWeb.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -154,6 +153,12 @@ public class BoardController {
     	return "redirect:getBookBoard.do?id="+vo.getPost_id();
 	}
 	
+	@RequestMapping(value="deleteComment.do", method=RequestMethod.GET)
+	public String deleteComment(String comment_id, String post_id) {
+		System.out.println("댓글 삭제 처리");
+		commentService.deleteComment(comment_id);
+		return "redirect:getBookBoard.do?id="+post_id;
+	}
 	
 	
 	
