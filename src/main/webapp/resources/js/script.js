@@ -2,6 +2,10 @@
 
   "use strict";
 
+  $('#editinfo-checkpassword').on('shown.bs.modal', function () {
+    $('#editinfo-input-password').trigger('focus')
+  })
+
   $(document).ready(function () {
     $('.navbar').on('click', '.search-toggle', function (e) {
       var selector = $(this).data('selector');

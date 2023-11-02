@@ -1308,7 +1308,7 @@ blockquote cite {
 /* Animation */
 .text-animation {
   animation: animated-text 4s linear 1s 1 normal both,
-    animated-cursor 600ms linear infinite;
+  animated-cursor 600ms linear infinite;
 }
 
 /* text animation */
@@ -1337,31 +1337,6 @@ blockquote cite {
 /*====================================================================*/
 /* 5. CONTENT ELEMENTS */
 /*====================================================================*/
-
-/*--------------------------------------------------------------
-/** 5.1 General Tabs
---------------------------------------------------------------*/
-
-/* Dropdown */
-.dropdown-menu {
-  --bs-dropdown-border-radius: 0;
-  --bs-dropdown-border-width: 0;
-}
-
-.dropdown-item {
-  --bs-dropdown-item-padding-y: 0.25rem;
-  --bs-dropdown-item-padding-x: 1rem;
-  --bs-dropdown-link-color: var(--bs-black);
-  --bs-dropdown-item-border-radius: 0;
-}
-
-.dropdown-item.active,
-.dropdown-item:active {
-  --bs-dropdown-link-active-color: var(--bs-light);
-  --bs-dropdown-link-active-bg: var(--bs-light);
-}
-
-
 
 /*--------------------------------------------------------------
 /** 5.2 Accordions
@@ -1697,17 +1672,6 @@ header#header .header-wrap {
 
 nav.primary-nav {
   padding: 20px 0;
-}
-
-.navbar li .sub-page {
-  font-size: 15px;
-}
-
-.navbar li {
-  font-size: 1em;
-  font-family: var(--heading-font);
-  font-weight: 700;
-  padding-right: 32px;
 }
 
 .primary-nav li.menu-item a:hover,

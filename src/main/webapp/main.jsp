@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%@ include file="WEB-INF/views/templates/UseCSS.jsp" %>
   </head>
-  <body class="hompage bg-accent-light">
+  <body>
     <%@ include file="WEB-INF/views/templates/Header.jsp" %>
     <section id="billboard" class="position-relative">
       <div class="banner-content content-light style1 text-center col-md-6">
