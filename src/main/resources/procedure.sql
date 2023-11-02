@@ -87,10 +87,10 @@ create procedure `get_postcount` (
 )
 begin
     select
-        count(*)
-    from postlist p
-    where p.board_code = b_code and p.deleted_at is null
-    order by p.id desc;
+        count(*) as totalCount
+    from postlist
+    where board_code = b_code and deleted_at is null
+    order by id desc;
 end;
 
 drop procedure if exists insert_post;
@@ -98,10 +98,10 @@ drop procedure if exists insert_post;
 create procedure `insert_post` (
     p_title varchar(100),
     p_content varchar(1000),
-    p_hobby_code varchar(100),
+    p_hobby_code varchar(20),
     p_board_code varchar(100),
-    p_writer_id int,
-    p_book_id int
+    p_writer_id varchar(100),
+    p_book_id varchar(20)
 )
 begin
     insert into postlist (
@@ -135,9 +135,9 @@ end;
 drop procedure if exists update_post;
 
 create procedure `update_post` (
-    p_id int,
     p_title varchar(100),
-    p_content varchar(1000)
+    p_content varchar(1000),
+    p_id int
 )
 begin
     update postlist
@@ -192,7 +192,7 @@ begin
         c.comment_id as comment_id
     from commentlist c
     where c.post_id = p_id and c.deleted_at is null
-    order by c.created_at desc;
+    order by c.comment_id desc;
 end;
 
 drop procedure if exists delete_comment;
@@ -204,4 +204,31 @@ begin
     update commentlist
     set deleted_at = now()
     where comment_id = c_id;
+end;
+
+drop procedure if exists get_postlist_limit;
+
+create procedure `get_postlist_limit`(
+    b_code varchar(100),
+    p_limit int,
+    p_offset int
+)
+begin
+    select
+        p.id as id,
+        p.title as title,
+        p.content as content,
+        p.book_id as book_id,
+        replace_uniquecode(p.hobby_code) as hobby_code,
+        replace_uniquecode(p.board_code) as board_code,
+        p.view_count as view_count,
+        p.writer_id as writer_id,
+        replace_nickname(p.writer_id) as nickname,
+        p.created_at as created_at,
+        p.updated_at as updated_at,
+        p.deleted_at as deleted_at
+    from postlist p
+    where p.board_code = b_code and p.deleted_at is null
+    order by p.id desc
+    limit p_limit offset p_offset;
 end;

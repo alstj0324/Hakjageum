@@ -155,6 +155,18 @@
 
       $('#btn-place-search').click(function () {
           let keyword = $('#place-search-input').val();
+
+          for (let marker of markerList) {
+              marker.setMap(null);
+          }
+
+          for (let infoWindow of infoWindowList) {
+              infoWindow.setMap(null);
+          }
+
+          markerList = [];
+          infoWindowList = [];
+          
           let placelist = getPlaceSearchList(keyword);
           createPlaceMap(placelist)
       })

@@ -1,14 +1,20 @@
 package com.mySpringWeb.persistence;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import com.mySpringWeb.domain.user.UserVO;
 
 @Repository
-public class UserDAOSpring {
+public class UserDAOSpring extends HttpServlet{
     @Autowired
     private JdbcTemplate jdbctemplate;
 
@@ -40,7 +46,6 @@ public class UserDAOSpring {
     public void roleupdateUser(UserVO vo) {
         System.out.println("===>Spring JDBC로 roleupdateUser() 기능처리");
         jdbctemplate.update(USER_ROLEUPDATE,vo.getRole_id(),vo.getId());
-
     }
     public void deleteUser(UserVO vo) {
         System.out.println("===>Spring JDBC로 deleteUser() 기능처리");
@@ -72,8 +77,9 @@ public class UserDAOSpring {
     public String logincheckNickname (UserVO vo) {
     	System.out.println("===>Spring JDBC로 loginUserNick() 기능처리");
     	try {
+    		RowMapper<String> rowMapper = (rs, rowNum) -> rs.getString("nickname");
             Object [] args  = {vo.getNickname()};
-            jdbctemplate.queryForObject(USER_NICKGET, new UserRowMapper(), args);
+            jdbctemplate.queryForObject(USER_NICKGET, rowMapper, args);
             System.out.println("존재하는 닉네임 입니다.");          
             return "False";
         }catch(EmptyResultDataAccessException e){

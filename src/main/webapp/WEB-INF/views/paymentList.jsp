@@ -31,7 +31,7 @@
 					<div class="total-point">
 						<div class="relative">
 							<i class="fa-solid fa-receipt"></i>
-							<span class="paylist-charge-total-point">총 결제금액 : 0원</span>
+							<span id="paylist-charge-total-point">총 결제금액 : 0원</span>
 						</div>
 					</div>
 					<div class="banner-content-paybar">
@@ -103,6 +103,7 @@
 									content.push(createPayList(data[i]));
 									total_amount += data[i].amount;
 								}
+
 								$('#paylist-charge-total-point').text('총 결제금액 : ' + total_amount + '원');
 							} else {
 								content.push('<tr>');
