@@ -16,7 +16,7 @@
             <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
             <div class="login-form">
               <div class="sign-in-htm">
-                <form id="mainLogin" action="login.do" method="post">
+                <form id="loginForm" action="login.do" method="post">
                   <div class="group">
                     <label for="user" class="label" id="user-label">ID</label>
                     <input id="user" name="id" type="text" class="input">
@@ -44,28 +44,28 @@
                   <div class="group">
                     <label for="id" class="label">ID</label>
                     <input id="id" name="id" type="text" class="input" placeholder="영문,숫자 4~12자로 입력." required>
-                    <button type="button" class="id-check-button" id="check-button" onClick="idCheck()">중복검사</button>
+                    <button type="button" class="id-check-button sign-button-div" id="check-button" onClick="idCheck()">중복검사</button>
                     <div class="id-check-text" id="id-check-text" >아이디 중복체크가 필요합니다!</div>
                     <input type="hidden" id="idcheckValue" value="N">
                   </div>
                   <div class="group" id="group1">
                     <label for="email" class="label">Email Address</label>
                     <input id="email" name="email" type="text" class="input" placeholder="이메일 형식으로 입력."  required>
-                    <div class="mail-check-button" id="check-button" onClick="emailCheck()">이메일<br>인증</div>
+                    <div class="mail-check-button sign-button-div" id="check-button" onClick="emailCheck()">이메일<br>인증</div>
                     <div class="mail-check-text" id="mail-check-text">이메일 인증이 필요합니다!</div>
                     <input type="hidden" id="emailcheckValue" value="N">
                   </div>
                   <div class="group">
                     <label for="nickname" class="label">Nickname</label>
                     <input id="nickname" name="nickname" type="text" class="input" placeholder="한,영,숫자 2~15자로 입력" required>
-                    <button type="button" class="nick-check-button" id="nick-check-button" onClick="nickCheck()">중복검사</button>
+                    <button type="button" class="nick-check-button sign-button-div" id="nick-check-button" onClick="nickCheck()">중복검사</button>
                     <div class="nick-check-text" id="nick-check-text">닉네임 중복체크가 필요합니다!</div>
                     <input type="hidden" id="nickcheckValue" value="N">
                   </div>
                   <div class="group">
                     <label for="pwd" class="label">Password</label>
                     <input id="pwd" name="pwd" type="password" class="input" placeholder="4자 이상 영문,숫자,특수문자 입력"  data-type="password" required>
-                    <button type="button" class="signup-password-clean" id="password-clean">초기화</button>
+                    <button type="button" class="signup-password-clean sign-button-div" id="password-clean">초기화</button>
                   </div>
                   <div class="group">
                     <label for="pwd2" class="label">Password Check</label>
@@ -96,13 +96,28 @@
       </div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>
-    <script>	
-    	$(function(){
-    		var status = "${status}";
-    		if(status == "false"){
-    			alert("로그인에 실패했습니다!");
-    			location.href="login.do";
-    		}
+    <script>
+		
+   		 $(document).ready(function() {
+    	  $("#loginForm").submit(function(event) {
+    	    event.preventDefault(); // 폼 제출 동작 중단
+
+    	    // 아이디와 패스워드를 가져옴
+    	    var username = $("#user").val();
+    	    var password = $("#pass").val();
+
+    	    // 서버로 POST 요청을 보냄
+    	    $.post("login.do", { username: username, password: password }, function(data) {
+    	      if (data === "success") {
+    	        // 로그인 성공
+    	        alert("로그인 성공!");
+    	        window.location.href = "/biz/main.jsp"; // 로그인 후 리다이렉트
+    	      } else {
+    	        // 로그인 실패
+    	        alert("아이디나 패스워드가 잘못되었습니다.");
+    	      }
+    	    });
+    	  });
     	});
     
     	var passwordClean = document.getElementById("password-clean");
