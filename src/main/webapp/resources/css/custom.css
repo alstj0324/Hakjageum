@@ -39,7 +39,7 @@ section#billboard {
 	background-size: cover;
 	height: 100%;
 }
-
+ 
 /*------------------[Banner]-------------------*/
 .banner-title {
 	font-size: 3rem;
@@ -198,6 +198,12 @@ ul#name-dropdown {
 
 
 /*----------------[login]---------------------*/
+
+div.banner-content-login .sign-button-div,
+div.banner-content-login .sign-button-div:hover {
+	border: 1px solid white;
+}
+
 *,:after,:before{box-sizing:border-box;}
 .clearfix:after,.clearfix:before{content:'';display:table}
 .clearfix:after{clear:both;display:block}

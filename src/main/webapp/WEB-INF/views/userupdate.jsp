@@ -74,13 +74,13 @@
       </div>
    	  <%@ include file="templates/UseJS.jsp" %>
       <script>
-      	const nickName = document.getElementById("nickname");
+     	const nickName = document.getElementById("nickname");	
+	    const nickNameC = document.getElementById("nickNameCheck");
       	const password = document.getElementById("pwd");
       	const password2 = document.getElementById("pwd2");
       	const nickNameCB = document.getElementById("nickNameChangeButton");
       	const passwordCB = document.getElementById("passwordChangeButton");
       	const passwordCancel = document.getElementById("passwordCancel");
-      	const nickNameC = document.getElementById("nickNameCheck");
       	const nickNameCC = document.getElementById("nickNameCheckCancel");
       	const nickcheckValue = document.getElementById("nickcheckValue");
       	const nickcheckTest = document.getElementById("nick-check-text");
@@ -96,7 +96,6 @@
       		
       		//e.returnValue = "이 페이지를 나가시겠습니까?"; //한번 물어보기
       	});
-      	
       	nickNameCB.addEventListener("click", function(){
       		nickName.style.border = "1px solid white";
       		nickNameCB.style.display = "none";
