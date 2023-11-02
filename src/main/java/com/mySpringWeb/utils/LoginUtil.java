@@ -102,7 +102,7 @@ public class LoginUtil {
         params.put("redirect_uri", redirectUrl);
         params.put("code", code);
 
-        JSONObject result = requestUtil.requestData(RequestType.KAKAO_LOGINTOKEN, "GET", null, params);
+        JSONObject result = requestUtil.requestData(RequestType.KAKAO_LOGINTOKEN, "GET", headers, params);
 
         String status = (String) result.get("result_status");
 
@@ -144,7 +144,11 @@ public class LoginUtil {
             JSONObject account = (JSONObject) data.get("kakao_account");
             JSONObject item = (JSONObject) account.get("profile");
 
-            user = createUser(item, "kakao");
+            JSONObject res = new JSONObject();
+            res.put("id", String.valueOf(data.get("id")));
+            res.put("email", account.get("email"));
+            res.put("nickname", item.get("nickname"));
+            user = createUser(res, "kakao");
         } else hookUtil.send_Embed_Hook(
                 HookLevel.WARN,
                 "카카오 로그인 정보 조회 실패",

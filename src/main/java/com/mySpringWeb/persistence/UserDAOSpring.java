@@ -13,7 +13,7 @@ public class UserDAOSpring {
     private JdbcTemplate jdbctemplate;
 
     private final String USER_INSERT = "insert into users(id,pwd,nickname,email,provider) values(?,?,?,?,?)";
-    private final String USER_UPDATE = "update users set pwd=?, nickname=?, email=?, role_id=? where id=?";
+    private final String USER_UPDATE = "update users set pwd=?, nickname=? where id=?";
     private final String USER_POINTUPDATE = "update users set point=? where id=?";
     private final String USER_ROLEUPDATE = "update users set role_id=? where id=?";
     private final String USER_DELETE = "delete from users where id=?";
@@ -31,7 +31,7 @@ public class UserDAOSpring {
 
     public void updateUser(UserVO vo) {
         System.out.println("===>Spring JDBC로 updateUser() 기능처리");
-        jdbctemplate.update(USER_UPDATE,vo.getPwd(),vo.getNickname(),vo.getEmail(), vo.getRole_id(),vo.getId());
+        jdbctemplate.update(USER_UPDATE,vo.getPwd(),vo.getNickname(),vo.getId());
     }
     public void updatePointUser(UserVO vo) {
     	System.out.println("===>Spring JDBC로 updatePointUser() 기능처리");
@@ -52,9 +52,7 @@ public class UserDAOSpring {
         try {
             Object [] args  = {vo.getId()};
             UserVO user = jdbctemplate.queryForObject(USER_GET, new UserRowMapper(), args);
-            String id = user.getId();
-            System.out.println("["+id+"]");
-            return id;
+            return user.getId();
         }catch(EmptyResultDataAccessException e){
             return null;
         }
@@ -83,12 +81,22 @@ public class UserDAOSpring {
             return "True";
         }
     }
-    
-    
+
+
     public UserVO getUser(UserVO vo) {
         System.out.println("===>Spring JDBC로 getUser() 기능처리");
         try {
             Object [] args  = {vo.getId()};
+            return jdbctemplate.queryForObject(USER_GET, new UserRowMapper(), args);
+        }catch(EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+
+    public UserVO getUser(String userId) {
+        System.out.println("===>Spring JDBC로 getUser() 기능처리");
+        try {
+            Object [] args  = {userId};
             return jdbctemplate.queryForObject(USER_GET, new UserRowMapper(), args);
         }catch(EmptyResultDataAccessException e){
             return null;

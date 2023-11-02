@@ -93,33 +93,32 @@
               <c:if test="${user != null}">
                 <li>
                   <a style="color:gold;" href="#" class="text-uppercase item-anchor dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">[${user.nickname}]</a>
-                   <ul class="dropdown-menu" id="name-dropdown">
-	                  <li class="sub-page pe-0">
-	                    <a class="text-black text-uppercase dropdown-item" href="getBoardBook.do">
-	                      내 정보 수정
-	                      <span class="badge bg-secondary">Go</span>
-	                    </a>
-	                  </li>
-	                  <li class="sub-page pe-0">
-	                    <div class="text-black text-uppercase dropdown-item" id="openbasket" onClick="javascript:show();">
-	                      내 저장 도서
-	                      <span class="badge bg-secondary">Open</span>
-	                    </div>
-	                  </li>
-	                  <c:if test="${user.role_id != 0}">
-		                  <li class="sub-page pe-0">
-		                    <a class="text-black text-uppercase dropdown-item" href="usermanage.do">
-		                      회원 관리
-		                      <span class="badge bg-secondary">Go</span>
-		                    </a>
-		                  </li>
-		              </c:if>
-	               </ul>
-	              </li>
+                  <ul class="dropdown-menu" id="name-dropdown">
+                    <li class="sub-page pe-0">
+                      <button id="checkModalButton" class="text-black text-uppercase dropdown-item userupdate-button" type="button">내 정보 수정
+                        <span class="badge bg-secondary">Go</span>
+                      </button>
+                    </li>
+                    <li class="sub-page pe-0">
+                      <div class="text-black text-uppercase dropdown-item" id="openbasket" onClick="javascript:show();">
+                        내 저장 도서
+                        <span class="badge bg-secondary">Open</span>
+                      </div>
+                    </li>
+                    <c:if test="${user.role_id != 0}">
+                      <li class="sub-page pe-0">
+                        <a class="text-black text-uppercase dropdown-item" href="usermanage.do">
+                          회원 관리
+                          <span class="badge bg-secondary">Go</span>
+                        </a>
+                      </li>
+                    </c:if>
+                  </ul>
+                </li>
                 <li>
                   <a href="logout.do" class="text-uppercase item-anchor">LOGOUT</a>
                 </li>
-                
+
               </c:if>
               <c:if test="${user == null}">
                 <li>
@@ -128,6 +127,17 @@
               </c:if>
             </ul>
           </div>
+
+          <div id="myModal" class="modal">
+            <div class="modal-content kyu-modal">
+              <div class="relative modal-relative">
+                <span class="close" id="closeModal">&times;</span>
+                <input type="password" id="inputValue" placeholder="패스워드를 입력해주세요.">
+                <button id="submitValue">확인</button>
+              </div>
+            </div>
+          </div>
+
         </nav>
       </div>
     </div>
@@ -186,7 +196,7 @@
         let form = $('#basketList');
         form.css('visibility', 'hidden');
     }
-      // show func
+    // show func
     function getBasketList() {
         let user_id = $("#user_id").val();
         let res;
@@ -236,5 +246,39 @@
             }
         })
     }
+
+    const checkModalButton = document.getElementById("checkModalButton");
+    const modal = document.getElementById("myModal");
+    const closeModal = document.getElementById("closeModal");
+    const inputValue = document.getElementById("inputValue");
+    const submitValue = document.getElementById("submitValue");
+    
+    checkModalButton.addEventListener("click", function() {
+    		modal.style.display = "block";
+    	});
+
+    	// 모달 닫기 버튼 클릭 이벤트 처리
+    	closeModal.addEventListener("click", function() {
+    		modal.style.display = "none";
+    	});
+
+    	// 확인 버튼 클릭 이벤트 처리
+    	submitValue.addEventListener("click", function() {
+    	  const enteredValue = inputValue.value;
+    	  
+    	  // 서버에서 가져온 값 (예: 서버에서 가져온 값이 "exampleValue"인 경우)
+    	  const serverValue = "${user.pwd}";
+    	  
+    	  if (enteredValue === serverValue) {
+    	    // 입력한 값과 서버에서 가져온 값이 일치할 경우 다른 URL로 이동
+    	    window.location.href = "userupdate.do";
+    	  } else {
+    	    alert("패스워드가 일치하지 않습니다.");
+    	    inputValue.value = "";
+    	  }
+    	  
+    	  modal.style.display = "none";
+    	});
+    
   </script>
 </header>

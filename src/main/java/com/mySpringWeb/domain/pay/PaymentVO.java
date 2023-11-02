@@ -1,27 +1,36 @@
 package com.mySpringWeb.domain.pay;
 
-
-import java.util.Date;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
+@NoArgsConstructor
 public class PaymentVO {
-	private String tid; // 카카오페이에서 넘어오는 결제당 고유값
-	private String user_id; // 유저를 구별할수있는 id
-	private int amount; // 결제 금액
-	private Date paytime; // 결제 승인 시간 
-	
+	private String tid;
+	private String user_id;
+	private int amount;
+	private String paytype;
+	private Timestamp created_at;
+
+	public String getCreated_at() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return dateFormat.format(created_at);
+	}
 	public String toString() {
 		return String.format(
 			"PaymentVO[\n" +
 			"\ttid=%s\n" +
 			"\tuser_id=%s\n" +
 			"\tamount=%s\n" +
-			"\tpayment=%s\n" +
+			"\tcreated_at=%s\n" +
+			"\tpaytype=%s\n" +
 			"]",
-			tid, user_id, amount, paytime
+			tid, user_id, amount, created_at, paytype
 		);
 	}
 }
