@@ -88,7 +88,7 @@
       	const passwordCheckBox = document.getElementById("passwordCheckBox"); 
       	const passwordcheckValue = document.getElementById("pwdcheckValue");
       	const updateSubmit = document.getElementById("update-submit");
-      	
+
       	checkModalButton.disabled = true; //이미 회원관리 페이지에 들어왔을때 내 정보 수정 못누르게 하기위해 만듦
       	
       	window.addEventListener("beforeunload", function (e){
@@ -96,6 +96,36 @@
       		
       		//e.returnValue = "이 페이지를 나가시겠습니까?"; //한번 물어보기
       	});
+      
+      		
+      	if(provider=="naver" || provider=="kakao"){ // local이 아니면 비밀번호 설정 불가능
+      		passwordCB.style.display = "none";
+      	}else {
+      		passwordCB.addEventListener("click", function(){
+          		password.style.border = "1px solid white";
+          		password.value = "";
+          		passwordCancel.style.display = "inline-block";
+          		passwordCB.style.display = "none";
+          		passwordCheckBox.style.display = "block";
+          		password2.style.border = "1px solid white";
+          		passwordcheckTest.style.border = "block"
+          		password2.value = "";
+          		passwordcheckTest.style.color = "";
+          		passwordcheckValue.value = "N";
+          		passwordcheckTest.innerText = "비밀번호가 일치하지 않습니다!";
+          		password.removeAttribute("readonly");
+          		password2.removeAttribute("readonly");
+          	});
+          	passwordCancel.addEventListener("click", function(){
+          		password.setAttribute("readonly","readonly");
+          		passwordCheckBox.style.display = "none";
+          		passwordCancel.style.display = "none";
+          		password.style.display = "inline-block";
+          		password.style.border = "0px";
+          		password.value = "${user.pwd }"; //""를 안붙여주면 숫자는 상관없는데 문자열이 안됨
+          		passwordCB.style.display = "inline-block";
+          	});
+      	}
       	nickNameCB.addEventListener("click", function(){
       		nickName.style.border = "1px solid white";
       		nickNameCB.style.display = "none";
@@ -116,30 +146,7 @@
       		nickName.value = "${user.nickname }"; //""를 안붙여주면 숫자는 상관없는데 문자열이 안됨
       		nickcheckTest.style.display = "none";
       	});
-      	passwordCB.addEventListener("click", function(){
-      		password.style.border = "1px solid white";
-      		password.value = "";
-      		passwordCancel.style.display = "inline-block";
-      		passwordCB.style.display = "none";
-      		passwordCheckBox.style.display = "block";
-      		password2.style.border = "1px solid white";
-      		passwordcheckTest.style.border = "block"
-      		password2.value = "";
-      		passwordcheckTest.style.color = "";
-      		passwordcheckValue.value = "N";
-      		passwordcheckTest.innerText = "비밀번호가 일치하지 않습니다!";
-      		password.removeAttribute("readonly");
-      		password2.removeAttribute("readonly");
-      	});
-      	passwordCancel.addEventListener("click", function(){
-      		password.setAttribute("readonly","readonly");
-      		passwordCheckBox.style.display = "none";
-      		passwordCancel.style.display = "none";
-      		password.style.display = "inline-block";
-      		password.style.border = "0px";
-      		password.value = "${user.pwd }"; //""를 안붙여주면 숫자는 상관없는데 문자열이 안됨
-      		passwordCB.style.display = "inline-block";
-      	});
+      	
       </script>
       <script type="text/javascript" src="resources/js/signin.js"></script>
     </section>

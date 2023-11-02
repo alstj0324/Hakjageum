@@ -76,7 +76,7 @@
               </c:if>
             </ul>
           </div>
-
+			
           <div id="myModal" class="modal">
             <div class="modal-content kyu-modal">
               <div class="relative modal-relative">
@@ -92,7 +92,7 @@
     </div>
   </div>
   <input type="hidden" id="user_id" value="${user.id}">
-
+  
   <div class="basketList" id="basketList">
     <div class="basketHead">내 도서 목록</div>
     <div class="ListContainer" id="listContainer">
@@ -101,6 +101,7 @@
     <div class="ListClose" id="ListClose" onClick="hide()">닫기</div>
   </div>
   <script type="text/javascript">
+  	
     function header_createResultItem(seq, book) {
         let content = []
         content.push("<div class='ListItem' id='basket_" + seq + "'>");
@@ -201,9 +202,16 @@
     const closeModal = document.getElementById("closeModal");
     const inputValue = document.getElementById("inputValue");
     const submitValue = document.getElementById("submitValue");
-    
+    const provider = "${user.provider}" ;
+  	console.log("provider 1 : "+provider);
+  	console.log("provider 3 : "+"${user.provider}");
+  	
     checkModalButton.addEventListener("click", function() {
-    		modal.style.display = "block";
+    		if(provider=="local") {
+    	  		modal.style.display = "block";
+    		}else {
+    			window.location.href = "userupdate.do";
+    		}	
     	});
 
     	// 모달 닫기 버튼 클릭 이벤트 처리
