@@ -98,6 +98,7 @@
     <%@ include file="templates/UseJS.jsp" %>
     <script>
     
+    
     	var passwordClean = document.getElementById("password-clean");
     	var pwd = document.getElementById("pwd");
     	var pwd2 = document.getElementById("pwd2");
