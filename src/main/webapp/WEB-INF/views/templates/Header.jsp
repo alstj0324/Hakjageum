@@ -8,7 +8,7 @@
           <div class="main-menu">
             <ul class="menu-list  list-unstyled d-flex m-0 ">
               <li class="menu-itemhome1 dropdown">
-                <a class="text-uppercase item-anchor" href=<c:url value="/" />> Home</a>
+                <a class="text-uppercase item-anchor" href=<c:url value="/" />>홈</a>
               </li>
               <li class="menu-itemhome1">
                 <a href="bookRecommend.do" class="text-uppercase item-anchor">도서추천</a>
@@ -16,59 +16,8 @@
               <li class="menu-itemhome1 dropdown">
                 <a href="placeRecommend.do">플레이스</a>
               </li>
-              <li class="menu-itemhome1 dropdown">
-                <a class="text-uppercase item-anchor dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false">게시판</a>
-                <ul class="dropdown-menu">
-                  <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="listFreeBoard.do">
-                      자유 게시판&nbsp
-                      <span class="badge bg-secondary">Go</span>
-                    </a>
-                  </li>
-                  <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="listBookBoard.do">
-                      도서 게시판&nbsp
-                      <span class="badge bg-secondary">Go</span>
-                    </a>
-                  </li>
-                  <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="listHobbyBoard.do">
-                      취미 게시판&nbsp
-                      <span class="badge bg-secondary">Go</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="menu-itemhome1 dropdown">
-                <a class="text-uppercase item-anchor dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false"> Notice </a>
-                <ul class="dropdown-menu">
-                  <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="Test.do">
-                      contact&nbsp
-                      <span class="badge bg-secondary">pro</span>
-                    </a>
-                  </li>
-                  <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="Test.do }">
-                      cart&nbsp
-                      <span class="badge bg-secondary">pro</span>
-                    </a>
-                  </li>
-                  <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="checkout.html">
-                      checkout&nbsp
-                      <span class="badge bg-secondary">pro</span>
-                    </a>
-                  </li>
-                  <li class="sub-page pe-0">
-                    <a class="text-black text-uppercase dropdown-item" href="my-account.html">
-                      account&nbsp
-                      <span class="badge bg-secondary">pro</span>
-                    </a>
-                  </li>
-                </ul>
+              <li class="menu-itemhome1">
+                <a href="listBookBoard.do" class="text-uppercase item-anchor">도서게시판</a>
               </li>
             </ul>
             <div class="hamburger">

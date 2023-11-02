@@ -14,11 +14,6 @@ public class PostDAOSpring {
    private JdbcTemplate jdbctemplate;
 
    /*
-      parms: board_code
-    */
-   private final String POST_COUNT = "call get_postcount(?)";
-
-   /*
       parms: title, content, board_code, hobby_code, writer_id, book_id
     */
    private final String POST_INSERT = "call insert_post(?, ?, ?, ?, ?, ?)";
@@ -42,42 +37,16 @@ public class PostDAOSpring {
       parms: board_code
     */
    private final String POST_LIST = "call get_postlist(?)";
-   
-   //-----------------------------------------------------------------------------------------추가
-   private final String POST_TOTALCOUNT = "select count(*) as totalCount from postlist where board_code = ?;";
-   private final String POST_PAGELIST = "SELECT\r\n"
-   		+ "  p.id,\r\n"
-   		+ "  CASE p.board_code\r\n"
-   		+ "    WHEN 'BA0' THEN '자유게시판'\r\n"
-   		+ "    WHEN 'BA1' THEN '취미게시판'\r\n"
-   		+ "    WHEN 'BA2' THEN '도서게시판'\r\n"
-   		+ "    ELSE ''\r\n"
-   		+ "  END AS board_code,\r\n"
-   		+ "  p.title,\r\n"
-   		+ "  p.content,\r\n"
-   		+ "  p.writer_id,\r\n"
-   		+ "  u.nickname AS nickname,\r\n"
-   		+ "  p.view_count,\r\n"
-   		+ "  CASE p.hobby_code\r\n"
-   		+ "    WHEN 'HA0' THEN '독서'\r\n"
-   		+ "    WHEN 'HA1' THEN '여행'\r\n"
-   		+ "    WHEN 'HA2' THEN '운동'\r\n"
-   		+ "    ELSE ''\r\n"
-   		+ "  END AS hobby_code,\r\n"
-   		+ "  p.book_id,\r\n"
-   		+ "  p.created_at,\r\n"
-   		+ "  p.updated_at,\r\n"
-   		+ "  p.deleted_at\r\n"
-   		+ "FROM\r\n"
-   		+ "  postlist p\r\n"
-   		+ "JOIN\r\n"
-   		+ "  users u\r\n"
-   		+ "ON\r\n"
-   		+ "  p.writer_id = u.id\r\n"
-   		+ "WHERE\r\n"
-   		+ "  p.board_code = ? \r\n"
-   		+ "ORDER BY 'id' ASC \r\n"
-   		+ "LIMIT ? OFFSET ?;";
+
+    /*
+       parms: board_code
+     */
+   private final String POST_TOTALCOUNT = "call get_postcount(?)";
+
+    /*
+       parms: board_code, limit, offset
+     */
+   private final String POST_PAGELIST = "call get_postlist_limit(?, ?, ?)";
    /*-----------------------------------------------------------------------------------------*/
 
    public void insertBoard(PostVO vo) {
