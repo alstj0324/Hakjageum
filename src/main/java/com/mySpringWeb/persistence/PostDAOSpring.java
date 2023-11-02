@@ -51,13 +51,13 @@ public class PostDAOSpring {
 
    public void insertBoard(PostVO vo) {
         System.out.println("===> Spring JDBC로 insertBoard() 기능처리");
-        jdbctemplate.update(POST_INSERT, vo.getTitle(), vo.getContent(), vo.getHobby_code(), vo.getBoard_code(), vo.getWriter_id(), vo.getBook_id());
+        jdbctemplate.update(POST_INSERT, vo.getTitle(), vo.getContent(), vo.getHobby_code(), vo.getBoard_code(), vo.getWriter_id(), vo.getBook_id() );
     }
    
    public void updateBoard(PostVO vo) {
       System.out.println("===> Spring JDBC로 updateBoard() 기능처리");
       System.out.println("결과값 :"+vo);
-      jdbctemplate.update(POST_UPDATE, vo.getTitle(), vo.getContent(), vo.getId());
+      jdbctemplate.update(POST_UPDATE,vo.getTitle(), vo.getContent(), vo.getId());
    }
    
    public void deleteBoard(String id) {

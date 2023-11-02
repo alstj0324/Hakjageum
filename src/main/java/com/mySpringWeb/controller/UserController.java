@@ -40,7 +40,7 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	protected JavaMailSender mailSender;
-
+  
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
 	public String login() {
 		return "login";
@@ -52,7 +52,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
-	public void login(UserVO vo, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void login(UserVO vo, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("로그인 처리");
 		String Rid = request.getParameter("username");
 		String Rpwd = request.getParameter("password");
@@ -60,47 +60,27 @@ public class UserController {
 		List<UserVO> userList = userService.getUserList();
 		
 		UserVO foundUser = null;
-        for (UserVO user : userList) {
-            if (user.getId().equals(Rid) && user.getPwd().equals(Rpwd)) {
-                foundUser = user;
-                break;
-            }
-        }
-        if (foundUser != null) {
-            // 로그인 성공 시
-        	response.getWriter().write("success");
-        	UserVO user1 = userService.getUserLogin(foundUser);
-        	String id = user1.getId();
+    for (UserVO user : userList) {
+      if (user.getId().equals(Rid) && user.getPwd().equals(Rpwd)) {
+        foundUser = user;
+        break;
+      }
+    }
+		if (foundUser != null) {
+			response.getWriter().write("success");
+			// 로그인 성공 시
+			UserVO user1 = userService.getUserLogin(foundUser);
+			String id = user1.getId();
 			int point = user1.getPoint();
 			session.setAttribute("user", user1);
 			session.setAttribute("user_id", id);
 			session.setAttribute("point", point);
-			
-        } else {
-            // 로그인 실패 시
-        	response.getWriter().write("failure");
-        }
+		} else {
+			// 로그인 실패 시
+			response.getWriter().write("failure");
+		}
 	}
 	
-	@RequestMapping(value="mainlogin.do", method=RequestMethod.POST)
-	@ResponseBody
-	public String mainlogin(@RequestParam String id,@RequestParam String pwd, HttpSession session) {
-		System.out.println("로그인 처리");
-		UserVO vo = new UserVO();
-		vo.setId(id);
-		vo.setPwd(pwd);
-	    UserVO user = userService.getUserLogin(vo);
-	    if(user != null) {
-	    	id = user.getId();
-		    int point = user.getPoint();
-		    session.setAttribute("user", user);
-			session.setAttribute("user_id", id);
-			session.setAttribute("point", point);
-			return "Success";
-	    }else {
-	    	return "False";
-	    }
-	}
 
 	/*------------[회원가입 중 id 중복검사]-----------*/
 	@RequestMapping(value = "idCheck.do", method = RequestMethod.GET)

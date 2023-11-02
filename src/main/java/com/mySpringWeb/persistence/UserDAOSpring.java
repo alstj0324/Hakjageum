@@ -115,6 +115,7 @@ public class UserDAOSpring extends HttpServlet{
             Object [] args  = {vo.getId(), vo.getPwd()};
             return jdbctemplate.queryForObject(USER_LOGIN, new UserRowMapper(), args);
         }catch(EmptyResultDataAccessException e){
+        	System.out.println("로그인 실패");
             return null;
         }
     }
