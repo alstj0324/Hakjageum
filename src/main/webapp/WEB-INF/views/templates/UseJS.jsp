@@ -25,7 +25,7 @@
         content.push("<div class='ListItem' id='basket_" + seq + "'>");
         content.push("  <div class='ItemImage'>");
         content.push("    <a href='" + book.link + "'>");
-        content.push("      <img src='" + book.image + "' />");
+        content.push("      <img src='" + book.image + "'  alt='' />");
         content.push("    </a>");
         content.push("  </div>");
         content.push("  <div class='ItemTitle' id='Item'>" + book.title + "</div>");
@@ -42,7 +42,6 @@
     function show() {
         let form = $('#basketList');
         let basketResult = $('#listContainer');
-        var user_id = $("#user_id").val();
         let basketList = getBasketList();
         if (basketList.length !== 0) {
             basketResult.empty();
@@ -139,9 +138,16 @@
     const closeModal = document.getElementById("closeModal");
     const inputValue = document.getElementById("inputValue");
     const submitValue = document.getElementById("submitValue");
+    const provider = "${user.provider}" ;
+    console.log("provider 1 : "+provider);
+    console.log("provider 3 : "+"${user.provider}");
 
     checkModalButton.addEventListener("click", function() {
-        modal.style.display = "block";
+        if(provider === "local") {
+            modal.style.display = "block";
+        }else {
+            window.location.href = "userupdate.do";
+        }
     });
 
     // 모달 닫기 버튼 클릭 이벤트 처리

@@ -2,7 +2,6 @@ package com.mySpringWeb.controller.api;
 
 import com.mySpringWeb.domain.RequestType;
 import com.mySpringWeb.domain.pay.PaymentVO;
-import com.mySpringWeb.domain.user.UserVO;
 import com.mySpringWeb.domain.webhook.HookLevel;
 import com.mySpringWeb.service.PaymentService;
 import com.mySpringWeb.service.UserService;

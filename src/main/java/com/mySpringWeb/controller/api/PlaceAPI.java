@@ -1,17 +1,11 @@
 package com.mySpringWeb.controller.api;
 
-import com.mySpringWeb.domain.webhook.EmbedVO;
 import com.mySpringWeb.domain.webhook.HookLevel;
-import com.mySpringWeb.domain.webhook.HookVO;
-import com.mySpringWeb.service.DiscordWebhookServiceImpl;
 import com.mySpringWeb.utils.HookUtil;
 import com.mySpringWeb.utils.PlaceUtil;
 import org.json.simple.JSONArray;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/place")
