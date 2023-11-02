@@ -12,12 +12,10 @@
     <section id="billboard" class="position-relative">
       <div class="BookBoardForm-Container">
       	<div class="BookBoardForm-description-container">
-      		<div class="BookBoardForm-description">
-      			BookBoard Form
-      		</div>
+      		<div class="BookBoardForm-description">BookBoard Form</div>
       		<div class="backbtnContainer">
-          		<button type="button" class="backbtn" onclick="back()">이전 페이지로 이동</button>
-            </div>	
+						<button type="button" class="backbtn" onclick="back()">이전 페이지로 이동</button>
+					</div>
       	</div>
       	<div class=BookBoardFormMain-Container>
       		<div class="BookBoard-Form">

@@ -103,6 +103,7 @@
 	    });	
     
     
+    
     	var passwordClean = document.getElementById("password-clean");
     	var pwd = document.getElementById("pwd");
     	var pwd2 = document.getElementById("pwd2");

@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mySpringWeb.domain.RequestType;
@@ -49,6 +50,7 @@ public class UserController {
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
 	public String login(UserVO vo, HttpSession session, Model model) {
 		System.out.println("로그인 처리");
+    
 		UserVO user = userService.getUserLogin(vo);
 		if(user != null) {
 			String id = user.getId();
@@ -59,8 +61,29 @@ public class UserController {
 			return "redirect:/";
 		}else {
 			String status = "false";
-			session.setAttribute("status", status);;
-			return "login";}
+			session.setAttribute("status", status);
+			return "login";
+    }
+	}
+	
+	@RequestMapping(value="mainlogin.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String mainlogin(@RequestParam String id,@RequestParam String pwd, HttpSession session) {
+		System.out.println("로그인 처리");
+		UserVO vo = new UserVO();
+		vo.setId(id);
+		vo.setPwd(pwd);
+	    UserVO user = userService.getUserLogin(vo);
+	    if(user != null) {
+	    	id = user.getId();
+		    int point = user.getPoint();
+		    session.setAttribute("user", user);
+			session.setAttribute("user_id", id);
+			session.setAttribute("point", point);
+			return "Success";
+	    }else {
+	    	return "False";
+	    }
 	}
 
 	/*------------[회원가입 중 id 중복검사]-----------*/
