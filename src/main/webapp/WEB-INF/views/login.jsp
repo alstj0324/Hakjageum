@@ -44,28 +44,28 @@
                   <div class="group">
                     <label for="id" class="label">ID</label>
                     <input id="id" name="id" type="text" class="input" placeholder="영문,숫자 4~12자로 입력." required>
-                    <button type="button" class="id-check-button" id="check-button" onClick="idCheck()">중복검사</button>
+                    <button type="button" class="id-check-button sign-button-div" id="check-button" onClick="idCheck()">중복검사</button>
                     <div class="id-check-text" id="id-check-text" >아이디 중복체크가 필요합니다!</div>
                     <input type="hidden" id="idcheckValue" value="N">
                   </div>
                   <div class="group" id="group1">
                     <label for="email" class="label">Email Address</label>
                     <input id="email" name="email" type="text" class="input" placeholder="이메일 형식으로 입력."  required>
-                    <div class="mail-check-button" id="check-button" onClick="emailCheck()">이메일<br>인증</div>
+                    <div class="mail-check-button sign-button-div" id="check-button" onClick="emailCheck()">이메일<br>인증</div>
                     <div class="mail-check-text" id="mail-check-text">이메일 인증이 필요합니다!</div>
                     <input type="hidden" id="emailcheckValue" value="N">
                   </div>
                   <div class="group">
                     <label for="nickname" class="label">Nickname</label>
                     <input id="nickname" name="nickname" type="text" class="input" placeholder="한,영,숫자 2~15자로 입력" required>
-                    <button type="button" class="nick-check-button" id="nick-check-button" onClick="nickCheck()">중복검사</button>
+                    <button type="button" class="nick-check-button sign-button-div" id="nick-check-button" onClick="nickCheck()">중복검사</button>
                     <div class="nick-check-text" id="nick-check-text">닉네임 중복체크가 필요합니다!</div>
                     <input type="hidden" id="nickcheckValue" value="N">
                   </div>
                   <div class="group">
                     <label for="pwd" class="label">Password</label>
                     <input id="pwd" name="pwd" type="password" class="input" placeholder="4자 이상 영문,숫자,특수문자 입력"  data-type="password" required>
-                    <button type="button" class="signup-password-clean" id="password-clean">초기화</button>
+                    <button type="button" class="signup-password-clean sign-button-div" id="password-clean">초기화</button>
                   </div>
                   <div class="group">
                     <label for="pwd2" class="label">Password Check</label>
@@ -97,6 +97,11 @@
     </section>
     <%@ include file="templates/UseJS.jsp" %>
     <script>
+	    $(document).ready(function() {
+       	    var status = "${status}";
+        	alert("dkdk"+status);
+	    });	
+    
     
     	var passwordClean = document.getElementById("password-clean");
     	var pwd = document.getElementById("pwd");
