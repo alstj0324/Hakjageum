@@ -52,7 +52,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
-	public void login(UserVO vo, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void login(UserVO vo, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("로그인 처리");
 		String Rid = request.getParameter("username");
 		String Rpwd = request.getParameter("password");
@@ -66,19 +66,19 @@ public class UserController {
         break;
       }
     }
-    if (foundUser != null) {
-      // 로그인 성공 시
-      response.getWriter().write("success");
-      UserVO user1 = userService.getUserLogin(foundUser);
-      String id = user1.getId();
-      int point = user1.getPoint();
-      session.setAttribute("user", user1);
-      session.setAttribute("user_id", id);
-      session.setAttribute("point", point);
-    } else {
-        // 로그인 실패 시
-      response.getWriter().write("failure");
-    }
+		if (foundUser != null) {
+			response.getWriter().write("success");
+			// 로그인 성공 시
+			UserVO user1 = userService.getUserLogin(foundUser);
+			String id = user1.getId();
+			int point = user1.getPoint();
+			session.setAttribute("user", user1);
+			session.setAttribute("user_id", id);
+			session.setAttribute("point", point);
+		} else {
+			// 로그인 실패 시
+			response.getWriter().write("failure");
+		}
 	}
 	
 

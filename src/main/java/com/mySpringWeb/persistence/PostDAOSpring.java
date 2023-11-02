@@ -57,7 +57,7 @@ public class PostDAOSpring {
    public void updateBoard(PostVO vo) {
       System.out.println("===> Spring JDBC로 updateBoard() 기능처리");
       System.out.println("결과값 :"+vo);
-      jdbctemplate.update(POST_UPDATE, vo.getId() ,vo.getTitle(), vo.getContent() );
+      jdbctemplate.update(POST_UPDATE,vo.getTitle(), vo.getContent(), vo.getId());
    }
    
    public void deleteBoard(String id) {
