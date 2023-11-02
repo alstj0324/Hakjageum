@@ -23,7 +23,7 @@
       		<div class="BookBoard-Form">
       			<input type="hidden" id="user_id" value="${user.id}"><!-- ajax에 사용 -->
       			<form action="insertBookBoard.do" method="post">
-      				<input type="hidden" name="writer_id" id="writer_id" value=${user.id } required>
+      				<input type="hidden" name="writer_id" id="writer_id" value="${user.id }" required>
       				<input type="hidden" name="board_code" id="board_code" value="BA2">
       				<input type="hidden" name="book_id" id="book_id" value="">
 	      			<div class="BookBoard-Form-description">
