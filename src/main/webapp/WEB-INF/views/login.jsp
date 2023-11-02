@@ -16,7 +16,7 @@
             <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
             <div class="login-form">
               <div class="sign-in-htm">
-                <form action="login.do" method="post">
+                <form id="loginForm" action="login.do" method="post">
                   <div class="group">
                     <label for="user" class="label" id="user-label">ID</label>
                     <input id="user" name="id" type="text" class="input">
@@ -97,12 +97,28 @@
     </section>
     <%@ include file="templates/UseJS.jsp" %>
     <script>
-	    $(document).ready(function() {
-       	    var status = "${status}";
-        	alert("dkdk"+status);
-	    });	
-    
-    
+		
+   		 $(document).ready(function() {
+    	  $("#loginForm").submit(function(event) {
+    	    event.preventDefault(); // 폼 제출 동작 중단
+
+    	    // 아이디와 패스워드를 가져옴
+    	    var username = $("#user").val();
+    	    var password = $("#pass").val();
+
+    	    // 서버로 POST 요청을 보냄
+    	    $.post("login.do", { username: username, password: password }, function(data) {
+    	      if (data === "success") {
+    	        // 로그인 성공
+    	        alert("로그인 성공!");
+    	        window.location.href = "/biz/main.jsp"; // 로그인 후 리다이렉트
+    	      } else {
+    	        // 로그인 실패
+    	        alert("아이디나 패스워드가 잘못되었습니다.");
+    	      }
+    	    });
+    	  });
+    	});
     
     	var passwordClean = document.getElementById("password-clean");
     	var pwd = document.getElementById("pwd");
