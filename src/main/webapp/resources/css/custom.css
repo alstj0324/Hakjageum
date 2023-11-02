@@ -1,5 +1,30 @@
 @charset "UTF-8";
 
+body {
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+ul.dropdown-menu {
+	border-radius: 10px;
+}
+
+ul.dropdown-menu > li {
+	text-align: center;
+	padding: 0 0.5rem !important;
+	box-sizing: content-box;
+	white-space: nowrap;
+	font-family: initial;
+	font-size: 1rem;
+}
+
+ul.dropdown-menu > li > a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	white-space: break-spaces;
+	cursor: pointer;
+}
+
 div.banner-content-banner {
 	background-color: rgba(0,0,0,0.6);
 	width: 100%;
