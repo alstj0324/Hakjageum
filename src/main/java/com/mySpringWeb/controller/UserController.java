@@ -38,7 +38,9 @@ public class UserController {
 	protected JavaMailSender mailSender;
 	
 	@RequestMapping(value="login.do", method=RequestMethod.GET)
-	public String login() {
+	public String login(Model model) {
+		String status = "";
+    	model.addAttribute("status",status);
 		return "login";
 	}
 
@@ -57,31 +59,16 @@ public class UserController {
 		    session.setAttribute("user", user);
 			session.setAttribute("user_id", id);
 			session.setAttribute("point", point);
+			String status = "true";
+			model.addAttribute("status",status);
 			return "redirect:/";
 	    }else {
+	    	String status = "false";
+	    	model.addAttribute("status",status);
 	    	return "login";
 	    }
 	}
 	
-	@RequestMapping(value="mainlogin.do", method=RequestMethod.POST)
-	@ResponseBody
-	public String mainlogin(@RequestParam String id,@RequestParam String pwd, HttpSession session) {
-		System.out.println("로그인 처리");
-		UserVO vo = new UserVO();
-		vo.setId(id);
-		vo.setPwd(pwd);
-	    UserVO user = userService.getUserLogin(vo);
-	    if(user != null) {
-	    	id = user.getId();
-		    int point = user.getPoint();
-		    session.setAttribute("user", user);
-			session.setAttribute("user_id", id);
-			session.setAttribute("point", point);
-			return "Success";
-	    }else {
-	    	return "False";
-	    }
-	}
 
 	/*------------[회원가입 중 id 중복검사]-----------*/
 	@RequestMapping(value="idCheck.do", method=RequestMethod.GET)

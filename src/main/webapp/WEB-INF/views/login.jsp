@@ -16,7 +16,7 @@
             <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
             <div class="login-form">
               <div class="sign-in-htm">
-                <form action="login.do" method="post">
+                <form id="mainLogin" action="login.do" method="post">
                   <div class="group">
                     <label for="user" class="label" id="user-label">ID</label>
                     <input id="user" name="id" type="text" class="input">
@@ -96,8 +96,14 @@
       </div>
     </section>
     <%@ include file="templates/UseJS.jsp" %>
-    <script>
-    
+    <script>	
+    	$(function(){
+    		var status = "${status}";
+    		if(status == "false"){
+    			alert("로그인에 실패했습니다!");
+    			location.href="login.do";
+    		}
+    	});
     
     	var passwordClean = document.getElementById("password-clean");
     	var pwd = document.getElementById("pwd");
