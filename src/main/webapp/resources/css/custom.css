@@ -2188,7 +2188,6 @@ ul#name-dropdown {
 /*================================================================== PayList.jsp*/
 div.relative {
 	position: relative;
-	display: flex;
 }
 .banner-content-board .banner-content-paybox {
 	position: relative;
@@ -2301,6 +2300,7 @@ div.relative {
 	background-color: #07F;
 }
 /*================================================================== Payment.jsp*/
+
 .payment-box {
 	position: relative;
 	display: inline-block;
@@ -2427,10 +2427,12 @@ div.relative {
 div.banner-content-paymentDetails {
 	width: 1000px;
 }
+
 .relative {
 	width: 100%;
 	height: 91%;
 }
+
 .relative .payment-details-box {
 	border: 2px solid grey;
 	margin-left: 5%;

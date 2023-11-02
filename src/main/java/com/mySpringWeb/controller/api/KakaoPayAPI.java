@@ -13,10 +13,8 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +62,6 @@ public class KakaoPayAPI {
             String amount = amountdata.get("total").toString();
             String vat = amountdata.get("vat").toString();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            dateFormat.format(payvo.getCreated_at());
             String created_at = dateFormat.format(payvo.getCreated_at());
 
             result_json.put("cid", cid);
@@ -96,62 +93,6 @@ public class KakaoPayAPI {
         }
 
         return result_json;
-    }
-
-    @PostMapping("/cancel")
-    public String cancelPayment(@RequestParam String tid) {
-        EnvUtil envUtil = new EnvUtil();
-        RequestUtil requestUtil = new RequestUtil();
-        Map<String, Object> headers = new HashMap<>();
-        Map<String, Object> params = new HashMap<>();
-        PaymentVO payvo = paymentservice.getPayment(tid);
-
-        String kakao_adminKey = envUtil.getValueByKey("KAKAO_ADMINKEY");
-        String cid = envUtil.getValueByKey("KAKAO_PAY_CID");
-        String userid = payvo.getUser_id();
-        int amount = payvo.getAmount();
-        int tax_amount = 0;
-
-        UserVO uservo = userservice.getUser(userid);
-        int hasamount = uservo.getPoint();
-        if (hasamount < amount) return "";
-
-        headers.put("Authorization", "KakaoAK " + kakao_adminKey);
-        headers.put("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-        params.put("cid", cid);
-        params.put("tid", tid);
-        params.put("cancel_amount", amount);
-        params.put("cancel_tax_free_amount", tax_amount);
-
-        JSONObject result = requestUtil.requestData(RequestType.KAKAO_PAYCANCEL, "POST", headers, params);
-
-        String status = (String) result.get("result_status");
-
-        if (Objects.equals(status, "success")) {
-            uservo.setPoint(hasamount - amount);
-            paymentservice.deletePayment(payvo);
-            userservice.updateUser(uservo);
-
-            hookUtil.send_Embed_Hook(
-                HookLevel.INFO,
-                "KakaoPay 결제 취소",
-                String.format(
-                    "cid: %s\ntid: %s\ncancel_amount: %d\ncancel_tax_amount: %d",
-                    cid, tid, amount, tax_amount
-                )
-            );
-        } else {
-            hookUtil.send_Embed_Hook(
-                HookLevel.WARN,
-                "KakaoPay 결제 취소 실패",
-                String.format(
-                    "cid: %s\ntid: %s\ncancel_amount: %d\ncancel_tax_amount: %d",
-                    cid, tid, amount, tax_amount
-                )
-            );
-        }
-
-        return "redirect:/chargelist.do";
     }
 
     @GetMapping("/paylist")

@@ -18,10 +18,10 @@
 	      			<table class="paylist-table">
 								<thead class="first">
 									<tr>
-										<th>결제수단</th>
-										<th>결제금액</th>
-										<th>결제일</th>
-										<th>결제상세</th>
+										<th class="text-center">결제수단</th>
+										<th class="text-center">결제금액</th>
+										<th class="text-center">결제일</th>
+										<th class="text-center">결제상세</th>
 									</tr>
 								</thead>
 								<tbody></tbody>
@@ -31,8 +31,7 @@
 					<div class="total-point">
 						<div class="relative">
 							<i class="fa-solid fa-receipt"></i>
-							<span>총 결제금액 :</span>
-							<span id="paylist-charge-total-point"></span>원
+							<span class="paylist-charge-total-point">총 결제금액 : 0원</span>
 						</div>
 					</div>
 					<div class="banner-content-paybar">
@@ -104,7 +103,7 @@
 									content.push(createPayList(data[i]));
 									total_amount += data[i].amount;
 								}
-								$('#playlist-charge-total-point').text(total_amount);
+								$('#paylist-charge-total-point').text('총 결제금액 : ' + total_amount + '원');
 							} else {
 								content.push('<tr>');
 								content.push('	<td colspan="3">결제내역이 없습니다.</td>');

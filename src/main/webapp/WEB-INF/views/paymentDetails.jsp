@@ -55,10 +55,10 @@
          		</div>
          	</div>
          </div>
-         <form action="/biz/api/pay/cancel" method="post">
-			<input type="hidden" name="tid" value="${tid}">
-			<input type="submit" value="결제취소" class="payment-details-paycancel">
-		</form>
+         <form action="/biz/chargecancel.do" method="post">
+					<input type="hidden" name="tid" value="${tid}">
+					<input type="submit" value="결제취소" class="payment-details-paycancel">
+				</form>
        </div>
       </div>
     </section>

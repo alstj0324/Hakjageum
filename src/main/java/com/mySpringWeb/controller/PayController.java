@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -210,12 +211,69 @@ public class PayController {
         //결제 목록
         return "paymentList";
     }
-    // 결제 상세정보
+
     @RequestMapping(value="chargeinfo.do",method=RequestMethod.GET)
     public String payment_Info(Model model, @RequestParam String tid) {
         //결제 상세정보
         model.addAttribute("tid", tid);
         return "paymentDetails";
+    }
+
+    @RequestMapping(value="chargecancel.do", method=RequestMethod.POST)
+    public String cancelPayment(@RequestParam String tid) {
+        EnvUtil envUtil = new EnvUtil();
+        RequestUtil requestUtil = new RequestUtil();
+        Map<String, Object> headers = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
+        PaymentVO payvo = paymentservice.getPayment(tid);
+
+        String kakao_adminKey = envUtil.getValueByKey("KAKAO_ADMINKEY");
+        String cid = envUtil.getValueByKey("KAKAO_PAY_CID");
+        String userid = payvo.getUser_id();
+        int amount = payvo.getAmount();
+        int tax_amount = 0;
+
+        UserVO uservo = userservice.getUser(userid);
+        int hasamount = uservo.getPoint();
+        if (hasamount < amount) return "redirect:/chargelist.do";
+
+        headers.put("Authorization", "KakaoAK " + kakao_adminKey);
+        headers.put("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        params.put("cid", cid);
+        params.put("tid", tid);
+        params.put("cancel_amount", amount);
+        params.put("cancel_tax_free_amount", tax_amount);
+
+        JSONObject result = requestUtil.requestData(RequestType.KAKAO_PAYCANCEL, "POST", headers, params);
+
+        String status = (String) result.get("result_status");
+
+        if (Objects.equals(status, "success")) {
+            uservo.setPoint(hasamount - amount);
+
+            paymentservice.deletePayment(payvo);
+            userservice.updatePointUser(uservo);
+
+            hookUtil.send_Embed_Hook(
+                HookLevel.INFO,
+                "KakaoPay 결제 취소",
+                String.format(
+                        "cid: %s\ntid: %s\ncancel_amount: %d\ncancel_tax_amount: %d",
+                        cid, tid, amount, tax_amount
+                )
+            );
+        } else {
+            hookUtil.send_Embed_Hook(
+                HookLevel.WARN,
+                "KakaoPay 결제 취소 실패",
+                String.format(
+                        "cid: %s\ntid: %s\ncancel_amount: %d\ncancel_tax_amount: %d",
+                        cid, tid, amount, tax_amount
+                )
+            );
+        }
+
+        return "redirect:/chargelist.do";
     }
 
     @RequestMapping(value="kPaymentfail.do",method=RequestMethod.GET)

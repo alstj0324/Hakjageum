@@ -1,6 +1,8 @@
 package com.mySpringWeb.domain.pay;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +16,11 @@ public class PaymentVO {
 	private int amount;
 	private String paytype;
 	private Timestamp created_at;
-	
+
+	public String getCreated_at() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return dateFormat.format(created_at);
+	}
 	public String toString() {
 		return String.format(
 			"PaymentVO[\n" +

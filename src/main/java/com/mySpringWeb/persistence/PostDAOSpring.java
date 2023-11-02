@@ -82,7 +82,7 @@ public class PostDAOSpring {
 
    public void insertBoard(PostVO vo) {
         System.out.println("===> Spring JDBC로 insertBoard() 기능처리");
-        jdbctemplate.update(POST_INSERT,vo.getBoard_code(), vo.getTitle(), vo.getContent(), vo.getWriter_id(), vo.getHobby_code(), vo.getBook_id());
+        jdbctemplate.update(POST_INSERT, vo.getTitle(), vo.getContent(), vo.getHobby_code(), vo.getBoard_code(), vo.getWriter_id(), vo.getBook_id());
     }
    
    public void updateBoard(PostVO vo) {

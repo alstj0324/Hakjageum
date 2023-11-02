@@ -48,10 +48,7 @@ function idCheck() {
                    }     
                }
            },
-           error:function(request, status, error){
-
-               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-           }
+           error:function() {}
        })
    }  
 /*-----------------------------------------------------------------------------------*/ 
@@ -163,51 +160,48 @@ function nickCheck() {
                    }     
                }
            },
-           error:function(request, status, error){
-
-               alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-           }
+           error:function() {}
        })
    }
 /*-----------------------------------------------------------------------------------*/ 
 var pwdCheckform= RegExp(/^[A-Za-z0-9`~!@@#$%^&*|₩₩₩'₩";:₩/?]{4,}$/);
 
 $(function(){
-   /*패스워드 1차체크*/
-   $("#pwd2").focusin(function(){
-       if($("#pwd").val() == ""){
-           alert("패스워드 입력바람"); 
-           $("#pwd").val("").focus();
-           return false;
-         }
-         if(($("#pwd").val()).search(/\s/) != -1) {
-           alert("입력값 내에 공백이 존재합니다!");
-          $("#pwd").focus();
-           return false; 
-        } 
-        if(!pwdCheckform.test($("#pwd").val())){
-          alert("형식에 맞게 입력해주세요");
-          $("#pwd").focus();
-          return false;
+    /*패스워드 1차체크*/
+    $("#pwd2").focusin(function(){
+        if($("#pwd").val() == ""){
+            alert("패스워드 입력바람");
+            $("#pwd").val("").focus();
+            return false;
         }
-   }); 
+        if(($("#pwd").val()).search(/\s/) != -1) {
+            alert("입력값 내에 공백이 존재합니다!");
+            $("#pwd").focus();
+            return false;
+        }
+        if(!pwdCheckform.test($("#pwd").val())){
+            alert("형식에 맞게 입력해주세요");
+            $("#pwd").focus();
+            return false;
+        }
+    });
 
-   /*패스워드 2차체크*/
-   $("#pwd2").keyup(function(){
-       if(($("#pwd").val())===($("#pwd2").val())){
-           $("#pwd-check-text").text("비밀번호가 일치합니다!");
-           $("#pwd-check-text").css("color","lightgreen");
-           $("#pwdcheckValue").val("Y");
-           $("#pwd").attr("readonly",true);
-           $("#pwd2").attr("readonly",true);
-           
-       }else{
-           $("#pwd-check-text").text("비밀번호가 일치하지 않습니다!");
-            $("#pwd-check-text").css("color","rgb(255, 139, 133)"); 
+    /*패스워드 2차체크*/
+    $("#pwd2").keyup(function(){
+        if(($("#pwd").val())===($("#pwd2").val())){
+            $("#pwd-check-text").text("비밀번호가 일치합니다!");
+            $("#pwd-check-text").css("color","lightgreen");
+            $("#pwdcheckValue").val("Y");
+            $("#pwd").attr("readonly",true);
+            $("#pwd2").attr("readonly",true);
+
+        }else{
+            $("#pwd-check-text").text("비밀번호가 일치하지 않습니다!");
+            $("#pwd-check-text").css("color","rgb(255, 139, 133)");
             $("#pwdcheckValue").val("N");
-       }
-   });
-}); 
+        }
+    });
+});
 /*-----------------------------------------------------------------------------------*/
 function check(){
     if($("#idcheckValue").val() != "Y"){

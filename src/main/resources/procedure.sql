@@ -112,13 +112,13 @@ begin
         board_code,
         writer_id
     ) values (
-                 p_title,
-                 p_content,
-                 p_book_id,
-                 p_hobby_code,
-                 p_board_code,
-                 p_writer_id
-             );
+         p_title,
+         p_content,
+         p_book_id,
+         p_hobby_code,
+         p_board_code,
+         p_writer_id
+     );
 end;
 
 drop procedure if exists inc_viewcount;
