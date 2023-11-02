@@ -1,5 +1,6 @@
 package com.mySpringWeb.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
@@ -12,10 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mySpringWeb.domain.RequestType;
 import com.mySpringWeb.utils.EnvUtil;
 import com.mySpringWeb.utils.LoginUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -36,7 +40,7 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	protected JavaMailSender mailSender;
-
+  
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
 	public String login() {
 		return "login";
@@ -48,43 +52,35 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
-	public String login(UserVO vo, HttpSession session, Model model) {
+	public void login(UserVO vo, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("로그인 처리");
-    
-		UserVO user = userService.getUserLogin(vo);
-		if(user != null) {
-			String id = user.getId();
-			int point = user.getPoint();
-			session.setAttribute("user", user);
-			session.setAttribute("user_id", id);
-			session.setAttribute("point", point);
-			return "redirect:/";
-		}else {
-			String status = "false";
-			session.setAttribute("status", status);
-			return "login";
+		String Rid = request.getParameter("username");
+		String Rpwd = request.getParameter("password");
+		
+		List<UserVO> userList = userService.getUserList();
+		
+		UserVO foundUser = null;
+    for (UserVO user : userList) {
+      if (user.getId().equals(Rid) && user.getPwd().equals(Rpwd)) {
+        foundUser = user;
+        break;
+      }
+    }
+    if (foundUser != null) {
+      // 로그인 성공 시
+      response.getWriter().write("success");
+      UserVO user1 = userService.getUserLogin(foundUser);
+      String id = user1.getId();
+      int point = user1.getPoint();
+      session.setAttribute("user", user1);
+      session.setAttribute("user_id", id);
+      session.setAttribute("point", point);
+    } else {
+        // 로그인 실패 시
+      response.getWriter().write("failure");
     }
 	}
 	
-	@RequestMapping(value="mainlogin.do", method=RequestMethod.POST)
-	@ResponseBody
-	public String mainlogin(@RequestParam String id,@RequestParam String pwd, HttpSession session) {
-		System.out.println("로그인 처리");
-		UserVO vo = new UserVO();
-		vo.setId(id);
-		vo.setPwd(pwd);
-	    UserVO user = userService.getUserLogin(vo);
-	    if(user != null) {
-	    	id = user.getId();
-		    int point = user.getPoint();
-		    session.setAttribute("user", user);
-			session.setAttribute("user_id", id);
-			session.setAttribute("point", point);
-			return "Success";
-	    }else {
-	    	return "False";
-	    }
-	}
 
 	/*------------[회원가입 중 id 중복검사]-----------*/
 	@RequestMapping(value = "idCheck.do", method = RequestMethod.GET)
