@@ -53,7 +53,6 @@ public class UserController {
 
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
 	public void login(UserVO vo, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println("로그인 처리");
 		String Rid = request.getParameter("username");
 		String Rpwd = request.getParameter("password");
 		

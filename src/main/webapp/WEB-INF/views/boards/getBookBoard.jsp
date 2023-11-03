@@ -118,17 +118,6 @@
 		      			</div>
 	      			</c:forEach>
       			</div>
-      			<div class="content-paging-wrap">
-      				<ul id="comment-pagination-wrap">
-					  	  <li class="comment-paging-li"><a href="#">&lt;&lt;</a></li>
-					  	  <li class="comment-paging-li"><a href="#">1</a></li>
-					  	  <li class="comment-paging-li"><a href="#">2</a></li>
-					  	  <li class="comment-paging-li"><a href="#">3</a></li>
-					  	  <li class="comment-paging-li"><a href="#">4</a></li>
-					  	  <li class="comment-paging-li"><a href="#">5</a></li>
-					  	  <li class="comment-paging-li"><a href="main.jsp">&gt;&gt;</a></li>
-					  </ul>	
-      			</div>
       		</div>
       		
       		

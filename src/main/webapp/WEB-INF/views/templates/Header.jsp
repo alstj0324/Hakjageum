@@ -24,9 +24,6 @@
         <li class="nav-item">
           <a class="nav-link text-white" href="/biz/listBookBoard.do">도서게시판</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="#">설명</a>
-        </li>
       </ul>
 
       <c:if test="${user == null}">
@@ -43,8 +40,9 @@
             <li><span class="dropdown-itemtext px-2" id="user-point"></span></li>
             <li><a href="/biz/chargepoint.do"><span class="badge bg-success content-light">충전하기</span></a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a id="checkModalButton" class="dropdown-item userupdate-button">내 정보 수정 <span class="badge bg-secondary"><i class="fa-solid fa-pen-to-square"></i></span></a></li>
+            <li><a class="dropdown-item userupdate-button" id="checkModalButton">내 정보 수정 <span class="badge bg-secondary"><i class="fa-solid fa-pen-to-square"></i></span></a></li>
             <li><a class="dropdown-item" onClick="show();">내 도서 목록 <span class="badge bg-secondary"><i class="fa-solid fa-list"></i></span></a></li>
+            <li><a class="dropdown-item" href="/biz/chargelist.do">충전내역 <span class="badge bg-secondary"><i class="fa-solid fa-receipt"></i></span></a></li>
             <c:if test="${user.role_id != 0}">
               <li><a class="dropdown-item" href="/biz/usermanage.do">회원관리 <span class="badge bg-secondary"><i class="fa-solid fa-person"></i></span></a></li>
             </c:if>

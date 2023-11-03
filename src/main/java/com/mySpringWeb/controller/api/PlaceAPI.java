@@ -52,6 +52,47 @@ public class PlaceAPI {
         return ResponseEntity.ok(arr);
     }
 
+    @GetMapping("/studycafe")
+    public ResponseEntity<JSONArray> getStudyCafeList(
+            @RequestParam String x,
+            @RequestParam String y
+    ) {
+        PlaceUtil placeUtil = new PlaceUtil();
+        JSONArray arr = placeUtil.getAllPlaceToJSON("스터디카페", "", x, y);
+
+        hookUtil.send_Embed_Hook(
+            HookLevel.INFO,
+            "스터디카페 Place 조회",
+            String.format(
+                    "x: %s\ny: %s",
+                    x, y
+            )
+        );
+
+        return ResponseEntity.ok(arr);
+    }
+
+
+    @GetMapping("/bookstore")
+    public ResponseEntity<JSONArray> getBookStoreList(
+            @RequestParam String x,
+            @RequestParam String y
+    ) {
+        PlaceUtil placeUtil = new PlaceUtil();
+        JSONArray arr = placeUtil.getAllPlaceToJSON("서점", "", x, y);
+
+        hookUtil.send_Embed_Hook(
+            HookLevel.INFO,
+            "서점 Place 조회",
+            String.format(
+                "x: %s\ny: %s",
+                x, y
+            )
+        );
+
+        return ResponseEntity.ok(arr);
+    }
+
     @GetMapping("/search")
     public ResponseEntity<JSONArray> getSearchList(
             @RequestParam String keyword,

@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -60,8 +61,7 @@ public class KakaoPayAPI {
             String order_id = (String) data.get("partner_order_id");
             String amount = amountdata.get("total").toString();
             String vat = amountdata.get("vat").toString();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String created_at = dateFormat.format(payvo.getCreated_at());
+            String created_at = (String) data.get("created_at");
 
             result_json.put("cid", cid);
             result_json.put("nickname", userservice.getUser(payvo.getUser_id()).getNickname());

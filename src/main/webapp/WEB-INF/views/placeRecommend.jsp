@@ -33,6 +33,8 @@
               <option>카테고리 선택</option>
               <option value="cafe">카페</option>
               <option value="library">도서관</option>
+              <option value="bookstore">서점</option>
+              <option value="studycafe">스터디카페</option>
             </select>
             <button class="btn-place" id="btn-place-select">표시하기</button>
           </div>
