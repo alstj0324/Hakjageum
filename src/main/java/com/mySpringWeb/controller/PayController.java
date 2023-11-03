@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.util.Date;
@@ -123,7 +124,7 @@ public class PayController {
 
     // 결제 승인
     @RequestMapping(value="approvepay.do", method=RequestMethod.GET)
-    public String payment_Approval(HttpServletRequest request, HttpSession session) {
+    public String payment_Approval(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         EnvUtil envUtil = new EnvUtil();
         RequestUtil requestUtil = new RequestUtil();
         Map<String, Object> headers = new HashMap<>();
@@ -187,6 +188,12 @@ public class PayController {
                     pg_token
                 )
             );
+//            try {
+//                response.getWriter().write("success");
+//            } catch (Exception e) {
+//                System.out.println("성공 메시지 전송 실패");
+//                e.printStackTrace();
+//            }
         } else hookUtil.send_Embed_Hook(
             HookLevel.WARN,
             "결제 승인 요청 실패",
@@ -202,7 +209,7 @@ public class PayController {
             )
         );
 
-        return "redirect:/chargepoint.do";
+        return "redirect:/chargelist.do";
     }
     // 결제 목록
     @RequestMapping(value="chargelist.do",method=RequestMethod.GET)
