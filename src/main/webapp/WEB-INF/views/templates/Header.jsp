@@ -24,9 +24,6 @@
         <li class="nav-item">
           <a class="nav-link text-white" href="/biz/listBookBoard.do">도서게시판</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="#">설명</a>
-        </li>
       </ul>
 
       <c:if test="${user == null}">
