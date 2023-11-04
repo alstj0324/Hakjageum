@@ -176,8 +176,8 @@
 								if(confirm("저장된 도서가 없습니다\n도서를 찾아보시겠습니까?") === true){
 									location.href="bookRecommend.do";	
 								}else {
-									alert("자유게시판으로 이동합니다.")
-									location.href="listFreeBoard.do";
+									alert("도서게시판으로 이동합니다.")
+									location.href="listBookBoard.do";
 								} 
 								
 							}
